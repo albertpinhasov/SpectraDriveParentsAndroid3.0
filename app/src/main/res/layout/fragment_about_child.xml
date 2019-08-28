@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="32dp"
+    android:paddingTop="20dp"
+    android:paddingRight="32dp"
+    tools:context="com.spectradrive.Activities.AddChild.AboutChildFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please, tell us about your child.\nLikes/dislike/triggers."
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/txtAbout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="40dp"
+        android:gravity="top"
+        android:hint="Start typing here" />
+
+    <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressImageButton
+        android:id="@+id/btnNext"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/ic_arrow_forward_black_24dp"
+        android:tint="@android:color/white"
+        app:initialCornerAngle="30dp"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
+
+    <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/btnNextChild"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Next Child" />
+
+</LinearLayout>

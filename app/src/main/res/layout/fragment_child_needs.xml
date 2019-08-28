@@ -1,0 +1,130 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.spectradrive.Activities.AddChild.ChildNeedsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal"
+            android:text="Child's Special Needs"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="To make sure your child gets the smoothest ride, please, help us by selecting your child's special needs."
+            android:textAlignment="center" />
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="5dp"
+            android:button="@drawable/cb_selector"
+            android:paddingLeft="5dp"
+            android:text="Visually impaired"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_selector"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Hearing impaired" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_selector"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Development delay" />
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_selector"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Autism spectrum" />
+
+        <CheckBox
+            android:id="@+id/checkBox5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_selector"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Intellectual Disability" />
+
+        <CheckBox
+            android:id="@+id/checkBox6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_selector"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Emotional Disturbance" />
+
+        <CheckBox
+            android:id="@+id/checkBox7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_selector"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Multiple Disabilities" />
+
+        <CheckBox
+            android:id="@+id/checkBox8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/cb_selector"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Other" />
+
+
+        <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_arrow_forward_black_24dp"
+            android:tint="@android:color/white"
+            app:initialCornerAngle="30dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
+    </LinearLayout>
+
+</ScrollView>

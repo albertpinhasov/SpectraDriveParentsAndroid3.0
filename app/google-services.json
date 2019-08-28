@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "847665168892",
+    "firebase_url": "https://spectradrive-e27bb.firebaseio.com",
+    "project_id": "spectradrive-e27bb",
+    "storage_bucket": "spectradrive-e27bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847665168892:android:c1339cabf8015943",
+        "android_client_info": {
+          "package_name": "com.spectradrive.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "847665168892-1n7eau3dnhenfdd90s04nrmktk2oc2tf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spectradrive.android",
+            "certificate_hash": "8b92a23a68e2bea24583131b9602af0510aaa0ac"
+          }
+        },
+        {
+          "client_id": "847665168892-q5j28qe0368v7aatok54d0lh0bdtr2s5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spectradrive.android",
+            "certificate_hash": "1293322fcd6c3be6ef8130d01bab8b32db3f8020"
+          }
+        },
+        {
+          "client_id": "847665168892-0cd5nggklm43risl6fe8lb5e6gm6j017.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhS3Xav9JllyVE0ks-myypZ44eOWsiLAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "847665168892-0cd5nggklm43risl6fe8lb5e6gm6j017.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "847665168892-2p0o6khv1cea71gvjnnf0olm4dto5u7r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spectra.SpectraDriveDrivers"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847665168892:android:c1abdd928bd0f0b5",
+        "android_client_info": {
+          "package_name": "com.spectradrive.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "847665168892-jru9tk94a21bgs6q7at6ahbqpb4ok4ha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spectradrive.driver",
+            "certificate_hash": "c1730df04a684871f161408705da15a6480e1946"
+          }
+        },
+        {
+          "client_id": "847665168892-0cd5nggklm43risl6fe8lb5e6gm6j017.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhS3Xav9JllyVE0ks-myypZ44eOWsiLAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "847665168892-0cd5nggklm43risl6fe8lb5e6gm6j017.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "847665168892-2p0o6khv1cea71gvjnnf0olm4dto5u7r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spectra.SpectraDriveDrivers"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
