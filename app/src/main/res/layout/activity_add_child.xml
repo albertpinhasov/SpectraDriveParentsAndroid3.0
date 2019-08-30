@@ -9,7 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="10dp"
-    tools:context="com.spectradrive.Activities.AddChild.AddChildActivity">
+    tools:context="com.spectraparent.Activities.AddChild.AddChildActivity">
 
 
     <RelativeLayout

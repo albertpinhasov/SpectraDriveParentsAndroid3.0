@@ -24,6 +24,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:context="com.spectradrive.Fragments.RidesFragment"
+        tools:context="com.spectraparent.Fragments.RidesFragment"
         tools:listitem="@layout/fragment_rides" />
 </LinearLayout>

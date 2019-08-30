@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spectradrive.Activities.AddTrustedPerson.PersonRelationFragment">
+    tools:context="com.spectraparent.Activities.AddTrustedPerson.PersonRelationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -290,7 +290,7 @@
 
         </LinearLayout>
 
-        <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressImageButton
+        <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton
             android:id="@+id/btnNext"
             android:layout_width="60dp"
             android:layout_height="60dp"

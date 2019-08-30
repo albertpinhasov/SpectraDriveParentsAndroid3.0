@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
-    tools:context="com.spectradrive.Activities.AddTrustedPerson.AddTrustedPersonIntroActivity">
+    tools:context="com.spectraparent.Activities.AddTrustedPerson.AddTrustedPersonIntroActivity">
 
 
     <TextView

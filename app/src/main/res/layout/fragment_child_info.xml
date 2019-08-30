@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spectradrive.Activities.AddChild.AddChildActivity">
+    tools:context="com.spectraparent.Activities.AddChild.AddChildActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

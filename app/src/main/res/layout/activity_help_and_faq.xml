@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.spectradrive.Activities.FAQActivity.HelpAndFAQActivity">
+    tools:context="com.spectraparent.Activities.FAQActivity.HelpAndFAQActivity">
     <include layout="@layout/toolbar"/>
     <ScrollView
         android:layout_width="match_parent"

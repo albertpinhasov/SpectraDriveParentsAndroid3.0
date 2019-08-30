@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spectradrive.Fragments.PersonalInfoFragment">
+    tools:context="com.spectraparent.Fragments.PersonalInfoFragment">
 
     <LinearLayout
         android:layout_marginLeft="35dp"
@@ -77,7 +77,7 @@
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary" />
 
-        <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressImageButton
+        <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton
             android:id="@+id/btnNext"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -89,7 +89,7 @@
             app:initialCornerAngle="30dp"
             app:spinning_bar_color="#FFF"
             app:spinning_bar_padding="6dp"
-            app:spinning_bar_width="4dp"/>
+            app:spinning_bar_width="4dp" />
     </LinearLayout>
 
 </ScrollView>

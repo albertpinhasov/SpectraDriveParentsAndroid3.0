@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.spectradrive.Activities.AddTrustedPerson.AddAPersonFragment">
+    tools:context="com.spectraparent.Activities.AddTrustedPerson.AddAPersonFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
             android:text="PHONE NUMBER"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-        <com.spectradrive.Helpers.CustomMaskedEditText.MaskedEditText
+        <com.spectraparent.Helpers.CustomMaskedEditText.MaskedEditText
             android:id="@+id/txtPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             android:inputType="textEmailAddress" />
 
 
-        <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressImageButton
+        <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton
             android:id="@+id/btnNext"
             android:layout_width="60dp"
             android:layout_height="60dp"

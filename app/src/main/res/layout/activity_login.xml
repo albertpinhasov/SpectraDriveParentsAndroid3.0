@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:paddingLeft="35dp"
         android:paddingRight="35dp"
-        tools:context="com.spectradrive.Activities.LoginActivity">
+        tools:context="com.spectraparent.Activities.LoginActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,15 +49,15 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
-                        android:text="+1"
+                        android:text="+91"
 android:focusable="false"
                         android:textSize="20sp" />
 
-                    <com.spectradrive.Helpers.CustomMaskedEditText.MaskedEditText
+                    <com.spectraparent.Helpers.CustomMaskedEditText.MaskedEditText
                         android:id="@+id/txtPhoneNumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.7"
                         android:hint="000 000 0000"
                         android:inputType="number"
                         android:paddingLeft="10dp"
@@ -67,7 +67,7 @@ android:focusable="false"
                 </LinearLayout>
 
 
-                <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressButton
+                <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressButton
                     android:id="@+id/btnLogin"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"

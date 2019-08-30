@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.spectraparent.Fragments.RateUsFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="210dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_rate_us" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="whould you rate our app experience" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:numStars="5"
+        android:outlineAmbientShadowColor="#ffd800"
+        android:outlineSpotShadowColor="#ffd800"
+        android:progressTint="#ffd800"
+        android:rating="4"
+        android:stepSize="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="Please spend 5 seconds to rate us on App Store" />
+
+    <Button
+        android:id="@+id/btnGoAppStore"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:text="Go to App Store" />
+</LinearLayout>

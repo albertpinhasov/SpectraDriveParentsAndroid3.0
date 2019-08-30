@@ -6,7 +6,7 @@
     android:layout_marginLeft="35dp"
     android:layout_marginRight="35dp"
     android:orientation="vertical"
-    tools:context="com.spectradrive.Fragments.EnterCodeFragment">
+    tools:context="com.spectraparent.Fragments.EnterCodeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 app:cardElevation="1dp"
                 tools:cardBackgroundColor="@color/colorBackground">
 
-                <com.spectradrive.Helpers.DigitEditText
+                <com.spectraparent.Helpers.DigitEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -68,7 +68,7 @@
                 app:cardElevation="1dp"
                 tools:cardBackgroundColor="@color/colorBackground">
 
-                <com.spectradrive.Helpers.DigitEditText
+                <com.spectraparent.Helpers.DigitEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -88,7 +88,7 @@
                 app:cardCornerRadius="5dp"
                 app:cardElevation="1dp">
 
-                <com.spectradrive.Helpers.DigitEditText
+                <com.spectraparent.Helpers.DigitEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -108,7 +108,7 @@
                 app:cardCornerRadius="5dp"
                 app:cardElevation="1dp">
 
-                <com.spectradrive.Helpers.DigitEditText
+                <com.spectraparent.Helpers.DigitEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -128,7 +128,7 @@
                 app:cardCornerRadius="5dp"
                 app:cardElevation="1dp">
 
-                <com.spectradrive.Helpers.DigitEditText
+                <com.spectraparent.Helpers.DigitEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -148,7 +148,7 @@
                 app:cardCornerRadius="5dp"
                 app:cardElevation="1dp">
 
-                <com.spectradrive.Helpers.DigitEditText
+                <com.spectraparent.Helpers.DigitEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -198,7 +198,7 @@
 
         </LinearLayout>
 
-        <com.spectradrive.Helpers.loading_button_lib.customViews.CircularProgressButton
+        <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/btnConfirm"
             android:layout_width="150dp"
             android:layout_height="match_parent"
