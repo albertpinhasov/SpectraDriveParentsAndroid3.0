@@ -9,7 +9,7 @@ public class DriverModel {
 
         private String vehicleRegistrationDocument;
 
-        private String currentLocation;
+        private LocationModel currentLocation;
 
         private String vehicleImageUploadDocument;
 
@@ -75,10 +75,10 @@ public class DriverModel {
         public String getVehicleRegistrationDocument(){
             return this.vehicleRegistrationDocument;
         }
-        public void setCurrentLocation(String currentLocation){
+        public void setCurrentLocation(LocationModel currentLocation){
             this.currentLocation = currentLocation;
         }
-        public String getCurrentLocation(){
+        public LocationModel getCurrentLocation(){
             return this.currentLocation;
         }
         public void setVehicleImageUploadDocument(String vehicleImageUploadDocument){

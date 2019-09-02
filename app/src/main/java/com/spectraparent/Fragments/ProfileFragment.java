@@ -116,7 +116,7 @@ public class ProfileFragment extends Fragment {
         args.putString("from", "edit_profile");
         addAPersonFragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, addAPersonFragment)
+                .add(R.id.container, addAPersonFragment)
                 .commit();
     }
 
@@ -127,7 +127,7 @@ public class ProfileFragment extends Fragment {
         args.putString("from", "add_Trusted");
         addAPersonFragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, addAPersonFragment)
+                .add(R.id.container, addAPersonFragment)
                 .commit();
     }
 }

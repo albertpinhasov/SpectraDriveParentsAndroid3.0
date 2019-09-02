@@ -36,6 +36,7 @@ import com.spectraparent.android.R;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -43,6 +44,8 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.txtPhoneNumber)
     EditText mPhoneNumber;
+    @BindView(R.id.etCountryCode)
+    EditText etCountryCode;
 
     @BindView(R.id.btnLogin)
     CircularProgressButton mBtnLogin;
@@ -67,7 +70,7 @@ public class LoginActivity extends BaseActivity {
             public void onVerificationFailed(FirebaseException e) {
 
                 mBtnLogin.revertAnimation();
-                DialogsHelper.showAlert(mSelf,"Could not send","Verification code could not be sent as following error occurred: " + e.getLocalizedMessage(),"Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(mSelf, "Could not send", "Verification code could not be sent as following error occurred: " + e.getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
 
             }
 
@@ -96,9 +99,9 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-if(s.toString().length() == 12){
-    KeyboardUtils.hideKeyboard(mSelf, null);
-}
+                if (s.toString().length() == 12) {
+                    KeyboardUtils.hideKeyboard(mSelf, null);
+                }
             }
         });
 
@@ -106,7 +109,7 @@ if(s.toString().length() == 12){
     }
 
 
-    void sendVerificationCode(){
+    void sendVerificationCode() {
         mBtnLogin.startAnimation();
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -119,26 +122,26 @@ if(s.toString().length() == 12){
 
 
     @OnClick(R.id.btnLogin)
-    void onLogin(){
+    void onLogin() {
 
-        mUser.setPhoneNumber("+91" + mPhoneNumber.getText().toString());
+        mUser.setPhoneNumber(etCountryCode.getText().toString() + mPhoneNumber.getText().toString());
 
-        if(mUser.getPhoneNumber().trim().isEmpty() || mUser.getPhoneNumber().length() < 5){
-            DialogsHelper.showAlert(this,"Invalid Number","Please enter a valid mobile phone number so that we can send you a verification code in SMS","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
-        }else {
+        if (mUser.getPhoneNumber().trim().isEmpty() || mUser.getPhoneNumber().length() < 5) {
+            DialogsHelper.showAlert(this, "Invalid Number", "Please enter a valid mobile phone number so that we can send you a verification code in SMS", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+        } else {
             sendVerificationCode();
         }
     }
 
     @OnClick(R.id.btnRegister)
-    void onRegister(){
+    void onRegister() {
         Intent intent = new Intent(mSelf, RegisterActivity.class);
         startActivity(intent);
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
 
-      FirebaseAuth  mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -149,10 +152,10 @@ if(s.toString().length() == 12){
                         } else {
                             mBtnLogin.revertAnimation();
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                DialogsHelper.showAlert(mSelf,"Invalid Code","Verification code entered is wrong, please try again with correct code","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                                DialogsHelper.showAlert(mSelf, "Invalid Code", "Verification code entered is wrong, please try again with correct code", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
 
-                            }else {
-                                DialogsHelper.showAlert(mSelf,"Verification failed",task.getException().getLocalizedMessage(),"Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                            } else {
+                                DialogsHelper.showAlert(mSelf, "Verification failed", task.getException().getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                             }
                         }
                     }
@@ -171,26 +174,27 @@ if(s.toString().length() == 12){
                 WebAPIResponseModel<UserModel> student = new Gson().fromJson(response, listType);
                 mBtnLogin.revertAnimation();
 
-                if(student != null){
+                if (student != null) {
                     if (student.isSuccess()) {
                         LocalStorage.storeStudent(student.getData());
-                        LocalStorage.storeTrustedPerson(student.getData().getTrustedPersons());
+                        if (student.getData().getTrustedPersons() != null && student.getData().getTrustedPersons().size() > 0)
+                            LocalStorage.storeTrustedPerson(student.getData().getTrustedPersons().get(0));
 
-                        if(student.getData().getFirstName() != null && student.getData().getFirstName().length() >0){
+                        if (student.getData().getFirstName() != null && student.getData().getFirstName().length() > 0) {
                             Intent intent = new Intent(mSelf, MainHomeActivity.class);
                             startActivity(intent);
                             finish();
-                        }else {
+                        } else {
                             Intent intent = new Intent(mSelf, RegisterActivity.class);
                             intent.putExtra("isFromLogin", true);
                             startActivity(intent);
                             finish();
                         }
-                    }else {
-                        DialogsHelper.showAlert(mSelf,"Server error",student.getMessage(),"Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                    } else {
+                        DialogsHelper.showAlert(mSelf, "Server error", student.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     }
-                }else {
-                    DialogsHelper.showAlert(mSelf,"Server error","Internal server error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                } else {
+                    DialogsHelper.showAlert(mSelf, "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                 }
 
             }
@@ -202,7 +206,7 @@ if(s.toString().length() == 12){
             public void onErrorResponse(VolleyError error) {
                 mBtnLogin.revertAnimation();
                 System.out.println(error);
-                DialogsHelper.showAlert(mSelf,"Network error","Network error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(mSelf, "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
             }
         }, new HashMap<String, String>());
 

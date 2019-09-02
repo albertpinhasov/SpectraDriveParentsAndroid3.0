@@ -77,11 +77,11 @@ public class UserModel {
         this.title = title;
     }
 
-    public String getPhoto() {
+    public Photo getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Photo photo) {
         this.photo = photo;
     }
 
@@ -113,13 +113,13 @@ public class UserModel {
     private String homeLocation;
     private String userId;
     private String title;
-    private String photo;
+    private Photo photo;
     private boolean isFirstLogin;
     private String role;
     private int gender;
 
     private ArrayList<Child> child;
-    private TrustedPersonModel trustedPersons;
+    private ArrayList<TrustedPersonModel> trustedPersons;
 
     public String getFirstName() {
         return firstName;
@@ -169,11 +169,11 @@ public class UserModel {
         this.child = child;
     }
 
-    public TrustedPersonModel getTrustedPersons() {
+    public ArrayList<TrustedPersonModel> getTrustedPersons() {
         return trustedPersons;
     }
 
-    public void setTrustedPersons(TrustedPersonModel trustedPersons) {
+    public void setTrustedPersons(ArrayList<TrustedPersonModel> trustedPersons) {
         this.trustedPersons = trustedPersons;
     }
 }

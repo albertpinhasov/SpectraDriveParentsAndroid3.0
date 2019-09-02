@@ -74,8 +74,8 @@ public class AddAPersonFragment extends Fragment {
     @BindView(R.id.tvDob)
     TextView tvDob;
 
-    @BindView(R.id.txtPhoneNumber)
-    MaskedEditText mPhoneNumber;
+    @BindView(R.id.mPhoneNo)
+    EditText mPhoneNo;
 
     @BindView(R.id.txtEmail)
     EditText mEmail;
@@ -127,7 +127,7 @@ public class AddAPersonFragment extends Fragment {
             UserModel userModel = LocalStorage.getStudent();
             mFirstName.setText(userModel.getFirstName());
             mLastName.setText(userModel.getLastName());
-            mPhoneNumber.setText(userModel.getPhoneNumber());
+            mPhoneNo.setText(userModel.getPhoneNumber());
             mEmail.setText(userModel.getEmail());
         } else if (from.equals("add_Trusted")) {
             tvDob.setVisibility(View.VISIBLE);
@@ -135,7 +135,7 @@ public class AddAPersonFragment extends Fragment {
             TrustedPersonModel trustedPerson = LocalStorage.getTrustedPerson();
             mFirstName.setText(trustedPerson.getFirstName());
             mLastName.setText(trustedPerson.getLastName());
-            mPhoneNumber.setText(trustedPerson.getPhoneNumber());
+            mPhoneNo.setText(trustedPerson.getPhoneNumber());
             mDob.setText(trustedPerson.getdOB());
             mEmail.setText(trustedPerson.getEmail());
         }
@@ -149,7 +149,7 @@ public class AddAPersonFragment extends Fragment {
         String firstName = mFirstName.getText().toString();
         String lastName = mLastName.getText().toString();
         String dob = mDob.getText().toString();
-        String phoneNumber = mPhoneNumber.getText().toString();
+        String phoneNumber = mPhoneNo.getText().toString();
         String email = mEmail.getText().toString();
 
         if (firstName.length() < 2) {
@@ -256,10 +256,10 @@ public class AddAPersonFragment extends Fragment {
                 String resultResponse = new String(response.data);
                 System.out.println("Response " + WebApi.SignInUrl + "======>" + new Gson().toJson(resultResponse));
 
-                Type type = new TypeToken<WebAPIResponseModel<TrustedPersonModel>>() {
+                Type type = new TypeToken<WebAPIResponseModel<ArrayList<TrustedPersonModel>>>() {
                 }.getType();
 
-                WebAPIResponseModel<TrustedPersonModel> data = new Gson().fromJson(resultResponse, type);
+                WebAPIResponseModel<ArrayList<TrustedPersonModel>> data = new Gson().fromJson(resultResponse, type);
 
                 if (data == null) {
                     DialogsHelper.showAlert(getContext(), "Server Error", "Internal server error, please try again later.", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
@@ -363,4 +363,5 @@ public class AddAPersonFragment extends Fragment {
 
         VolleyUtils.getInstance(getActivity()).addToRequestQueue(multipartRequest);
     }
+
 }

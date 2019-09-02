@@ -26,7 +26,7 @@ public class RideModel {
 
     private String comments;
 
-    private String createdOn;
+    private Date createdOn;
 
     public boolean isActive() {
         return isActive;
@@ -37,13 +37,13 @@ public class RideModel {
     }
 
     private String updatedOn;
-    private TrustedPersonModel trustedPersons;
+    private ArrayList<TrustedPersonModel> trustedPersons;
 
-    public TrustedPersonModel getTrustedPersons() {
+    public ArrayList<TrustedPersonModel> getTrustedPersons() {
         return trustedPersons;
     }
 
-    public void setTrustedPersons(TrustedPersonModel trustedPersons) {
+    public void setTrustedPersons(ArrayList<TrustedPersonModel> trustedPersons) {
         this.trustedPersons = trustedPersons;
     }
 
@@ -109,10 +109,10 @@ public class RideModel {
     public String getComments(){
         return this.comments;
     }
-    public void setCreatedOn(String createdOn){
+    public void setCreatedOn(Date createdOn){
         this.createdOn = createdOn;
     }
-    public String getCreatedOn(){
+    public Date getCreatedOn(){
         return this.createdOn;
     }
     public void setUpdatedOn(String updatedOn){

@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#fff"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.spectraparent.Activities.AddTrustedPerson.AddAPersonFragment">
@@ -70,13 +71,12 @@
             android:text="PHONE NUMBER"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-        <com.spectraparent.Helpers.CustomMaskedEditText.MaskedEditText
-            android:id="@+id/txtPhoneNumber"
+        <EditText
+            android:id="@+id/mPhoneNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/_00_000_000_0000"
             android:inputType="number"
-            app:mask="+91 ### ### ####" />
+            />
 
         <TextView
             android:layout_width="match_parent"

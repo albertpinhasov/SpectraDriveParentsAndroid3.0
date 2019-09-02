@@ -156,7 +156,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
 
         mBtn9.setTag("9");
 
-        for(Button btn: mBtns){
+        for (Button btn : mBtns) {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -175,30 +175,29 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
         mImages.add(mImage3);
         mImages.add(mImage4);
 
-        for(ImageView img: mImages){
+        for (ImageView img : mImages) {
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onImageClicked((ImageView)v);
+                    onImageClicked((ImageView) v);
                 }
             });
         }
     }
 
     private void onButtonClicked(Button v) {
-        if(mPerson == null)
+        if (mPerson == null)
             mPerson = LocalStorage.getTrustedPerson();
 
         unCheckAll();
-        if(v.getTag() == null){
+        if (v.getTag() == null) {
             v.setBackground(getActivity().getResources().getDrawable(R.drawable.relation_button_border_selected));
             v.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
             v.setTag("88");
             mPerson.setRelationToChild(v.getText().toString());
-        }else {
+        } else {
 
-            if(v.getTag().toString().equals("9"))
-            {
+            if (v.getTag().toString().equals("9")) {
                 openPopup();
                 return;
             }
@@ -209,47 +208,47 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
         }
     }
 
-    void unCheckAll(){
-        for(Button btn: mBtns){
+    void unCheckAll() {
+        for (Button btn : mBtns) {
             btn.setBackground(getActivity().getResources().getDrawable(R.drawable.relation_button_border));
             btn.setTextColor(getActivity().getResources().getColor(R.color.black));
-            if(btn.getTag()!= null && !btn.getTag().toString().equals("9"))
-            btn.setTag(null);
+            if (btn.getTag() != null && !btn.getTag().toString().equals("9"))
+                btn.setTag(null);
         }
     }
 
     private void openPopup() {
-       Intent intent = new Intent(getActivity(), OtherPersonRelationActivity.class);
-       startActivityForResult(intent, 3);
+        Intent intent = new Intent(getActivity(), OtherPersonRelationActivity.class);
+        startActivityForResult(intent, 3);
     }
 
     private void onImageClicked(ImageView v) {
-        if(mPerson == null)
+        if (mPerson == null)
             mPerson = LocalStorage.getTrustedPerson();
 
         selectingIndex = Integer.parseInt(v.getTag().toString());
 
         KeyValueModel<Integer, ImageView> item = null;
-        for(KeyValueModel<Integer, ImageView> m: mSelectedImages){
-            if(m.Val == v){
+        for (KeyValueModel<Integer, ImageView> m : mSelectedImages) {
+            if (m.Val == v) {
                 item = m;
                 break;
             }
         }
 
-        if(item != null){
+        if (item != null) {
             ActionSheet.createBuilder(getActivity(), getChildFragmentManager())
                     .setCancelButtonTitle("Cancel")
                     .setOtherButtonTitles("Replace", "Remove")
                     .setCancelableOnTouchOutside(true)
                     .setListener(PersonRelationFragment.this).show();
-        }else {
+        } else {
             CropImage.startPickImageActivity(getActivity(), this);
         }
     }
 
     @OnClick(R.id.btnAddPhoto)
-    void addPhoto(){
+    void addPhoto() {
         mLPlace.setVisibility(View.GONE);
         mLImages.setVisibility(View.VISIBLE);
 
@@ -268,13 +267,12 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             if (CropImage.isReadExternalStoragePermissionsRequired(getActivity(), imageUri)) {
                 // request permissions and handle the result in onRequestPermissionsResult()
                 mCropImageUri = imageUri;
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},   CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
             } else {
                 // no permissions required or already granted, can start crop image activity
                 startCropImageActivity(imageUri);
             }
-        }else
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
@@ -284,7 +282,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
-        } else if(requestCode == 3 && resultCode == Activity.RESULT_OK){
+        } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
             mPerson.setRelationToChild(data.getStringExtra("relation"));
             unCheckAll();
         }
@@ -313,18 +311,18 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
 
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
-        if(index == 0){
+        if (index == 0) {
             CropImage.startPickImageActivity(getActivity(), this);
-        }else {
+        } else {
             KeyValueModel<Integer, ImageView> item = null;
-            for(KeyValueModel<Integer, ImageView> m: mSelectedImages){
-                if(m.Key == selectingIndex){
+            for (KeyValueModel<Integer, ImageView> m : mSelectedImages) {
+                if (m.Key == selectingIndex) {
                     item = m;
                     break;
                 }
             }
 
-            if(item != null){
+            if (item != null) {
                 mSelectedImages.remove(item);
             }
 
@@ -333,18 +331,18 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
     }
 
     @OnClick(R.id.btnNext)
-    void onNext(){
-        KeyboardUtils.hideKeyboard(getActivity(),getView());
+    void onNext() {
+        KeyboardUtils.hideKeyboard(getActivity(), getView());
         mPerson.setAddress(mAddress.getText().toString());
 
-        if(mPerson.getOtherRelationToChild() == null && mPerson.getRelationToChild() == null){
-            DialogsHelper.showAlert(getActivity(),"Select Relation", "Please select a relation to child","Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+        if (mPerson.getOtherRelationToChild() == null && mPerson.getRelationToChild() == null) {
+            DialogsHelper.showAlert(getActivity(), "Select Relation", "Please select a relation to child", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
 
         SpectraDrive.PickedImages.clear();
 
-        for(KeyValueModel<Integer, ImageView> item: mSelectedImages){
+        for (KeyValueModel<Integer, ImageView> item : mSelectedImages) {
             SpectraDrive.PickedImages.add(Tools.getFileDataFromDrawable(getContext(), item.Val.getDrawable()));
         }
 
@@ -360,17 +358,18 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
 
-                Type type = new TypeToken<WebAPIResponseModel<TrustedPersonModel>>(){}.getType();
+                Type type = new TypeToken<WebAPIResponseModel<ArrayList<TrustedPersonModel>>>() {
+                }.getType();
 
-                WebAPIResponseModel<TrustedPersonModel>data = new Gson().fromJson(resultResponse, type);
+                WebAPIResponseModel<ArrayList<TrustedPersonModel>> data = new Gson().fromJson(resultResponse, type);
 
-                if(data == null){
-                    DialogsHelper.showAlert(getContext(), "Server Error","Internal server error, please try again later.","Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                if (data == null) {
+                    DialogsHelper.showAlert(getContext(), "Server Error", "Internal server error, please try again later.", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     return;
                 }
 
-                if(!data.isSuccess()){
-                    DialogsHelper.showAlert(getContext(), "Server Error",data.getMessage(),"Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                if (!data.isSuccess()) {
+                    DialogsHelper.showAlert(getContext(), "Server Error", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     return;
                 }
 
@@ -411,19 +410,19 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                         if (networkResponse.statusCode == 404) {
                             errorMessage = "Resource not found";
                         } else if (networkResponse.statusCode == 401) {
-                            errorMessage = message+" Please login again";
+                            errorMessage = message + " Please login again";
                         } else if (networkResponse.statusCode == 400) {
-                            errorMessage = message+ " Check your inputs";
+                            errorMessage = message + " Check your inputs";
                         } else if (networkResponse.statusCode == 500) {
-                            errorMessage = message+" Something is getting wrong";
+                            errorMessage = message + " Something is getting wrong";
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                if(mBtnNext.isAnimating())mBtnNext.revertAnimation();
+                if (mBtnNext.isAnimating()) mBtnNext.revertAnimation();
 
-                DialogsHelper.showAlert(getContext(), "Error While Saving",errorMessage,"Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(getContext(), "Error While Saving", errorMessage, "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
 
                 Log.i("Error", errorMessage);
                 error.printStackTrace();
@@ -446,17 +445,17 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
-                for(int i = 0; i< SpectraDrive.PickedImages.size(); i++){
-                    params.put("Image" + String.valueOf(i+1), new DataPart("Image" + String.valueOf(i+1) +".jpg", SpectraDrive.PickedImages.get(i), "image/jpeg"));
+                for (int i = 0; i < SpectraDrive.PickedImages.size(); i++) {
+                    params.put("Image" + String.valueOf(i + 1), new DataPart("Image" + String.valueOf(i + 1) + ".jpg", SpectraDrive.PickedImages.get(i), "image/jpeg"));
                 }
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers =  new HashMap<>();
-                headers.put("Authorization","Bearer " + LocalStorage.getStudent().getToken());
-                return  headers;
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + LocalStorage.getStudent().getToken());
+                return headers;
             }
         };
 

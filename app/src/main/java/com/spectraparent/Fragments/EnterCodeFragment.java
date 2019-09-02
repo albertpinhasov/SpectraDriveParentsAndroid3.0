@@ -308,16 +308,20 @@ public class EnterCodeFragment extends Fragment {
                 }.getType();
 
                 mBtnConfirm.revertAnimation();
+                System.out.println("Response " + WebApi.SignInUrl + "======>" + new Gson().toJson(response));
 
                 WebAPIResponseModel<UserModel> student = new Gson().fromJson(response, listType);
 
                 if(student != null){
                     if (student.isSuccess()) {
                         LocalStorage.storeStudent(student.getData());
+                        if (student.getData().getTrustedPersons() != null && student.getData().getTrustedPersons().size() > 0)
+                            LocalStorage.storeTrustedPerson(student.getData().getTrustedPersons().get(0));
+
                         if(student.getData().getFirstName() != null && student.getData().getFirstName().length() >0){
                             Intent intent = new Intent(getActivity(), MainHomeActivity.class);
                             startActivity(intent);
-                            getActivity().finish();
+                            getActivity().finishAffinity();
                         }else {
                             ((RegisterActivity)getActivity()).moveNext();
                         }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.spectraparent.Fragments.RidesFragment.OnListFragmentInteractionListener;
 import com.spectraparent.Helpers.CircleTransform;
+import com.spectraparent.Helpers.Tools;
 import com.spectraparent.Models.RideModel;
 import com.spectraparent.android.R;
 import com.squareup.picasso.Picasso;
@@ -91,8 +92,7 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
 
         public void bindData() {
             mRideId.setText(mItem.getRideName());
-            //mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(),(mItem.getCreatedOn()).getTime()));
-            mCreatedOn.setText((mItem.getCreatedOn()));
+            mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(),(mItem.getCreatedOn()).getTime()));
             try {
                 mAddress.setText(mItem.getChildModel().get(0).getPickup() + "->" + mItem.getChildModel().get(0).getDrop());
             } catch (Exception e) {

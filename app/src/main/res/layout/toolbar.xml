@@ -17,7 +17,6 @@
         android:gravity="center"
         android:lines="1"
         android:maxLines="1"
-        android:text="Toolbar Title"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         android:textStyle="bold" />

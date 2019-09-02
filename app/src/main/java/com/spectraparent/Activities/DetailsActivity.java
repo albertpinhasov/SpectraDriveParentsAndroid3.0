@@ -58,8 +58,7 @@ public class DetailsActivity extends BaseActivity {
         if (mRide.getChildModel().get(0).getDrop() != null && mRide.getChildModel().get(0).getDrop().getName() != null)
             mDrop.setText(mRide.getChildModel().get(0).getDrop().getName());
         if (mRide.getCreatedOn() != null)
-//            mCreatedOn.setText(Tools.getFormattedDate(this, mRide.getCreatedOn().getTime()));
-            mCreatedOn.setText(mRide.getCreatedOn());
+            mCreatedOn.setText(Tools.getFormattedDate(this, mRide.getCreatedOn().getTime()));
     }
 //        mRideName.setText(mRide.getRideName());
 //        if (mRide.getPickupPoint() != null && mRide.getPickupPoint().getName() != null)

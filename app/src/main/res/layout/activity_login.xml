@@ -46,11 +46,12 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/etCountryCode"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.2"
                         android:text="+91"
-android:focusable="false"
+                        android:maxLength="3"
                         android:textSize="20sp" />
 
                     <com.spectraparent.Helpers.CustomMaskedEditText.MaskedEditText

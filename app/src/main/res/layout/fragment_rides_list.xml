@@ -6,26 +6,122 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <info.hoang8f.android.segmented.SegmentedGroup xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/segment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:checkedButton="@+id/b1"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        segmentedgroup:sc_border_width="2dp"
+        segmentedgroup:sc_corner_radius="10dp"
+        segmentedgroup:sc_tint_color="@color/black">
+
+        <RadioButton
+            android:id="@+id/b1"
+            style="@style/RadioButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+
+            android:text="Current" />
+
+        <RadioButton
+            android:id="@+id/b2"
+            style="@style/RadioButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Scheduled" />
+
+        <RadioButton
+            android:id="@+id/b3"
+            style="@style/RadioButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Past" />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
     <TextView
+        android:id="@+id/txtRideType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="Current Rides"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:name="com.spectradrive.Fragments.RidesFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-
-        android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:context="com.spectraparent.Fragments.RidesFragment"
-        tools:listitem="@layout/fragment_rides" />
+        tools:context="com.spectradriver.Fragments.RidesFragment"
+        tools:listitem="@layout/cell_my_rides" />
+
+    <LinearLayout
+        android:id="@+id/lEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/calendar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="No scheduled rides"
+            android:textStyle="bold|italic" />
+
+
+
+
+        <Button
+            android:id="@+id/btnSampleRide"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            android:background="@null"
+            android:text="Import Sample Rides"
+            android:textColor="@color/com_facebook_blue" />
+
+        <Button
+            android:id="@+id/btnSamplePoolToSchoolRide"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginBottom="5dp"
+            android:background="@null"
+            android:visibility="gone"
+            android:text="Try a Sample Pool To School Ride"
+            android:textColor="@color/com_facebook_blue" />
+
+        <Button
+            android:id="@+id/btnSamplePoolFromSchoolRide"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            android:background="@null"
+            android:text="Try a Sample Pool From Ride"
+            android:textColor="@color/com_facebook_blue" />
+
+    </LinearLayout>
 </LinearLayout>

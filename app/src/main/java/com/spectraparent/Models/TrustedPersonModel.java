@@ -7,7 +7,7 @@ public class TrustedPersonModel {
     private String firstName;
     private String lastName;
     private String email;
-    private String dOB;
+    private String dob;
     private String phoneNumber;
     private String address;
     private String relationToChild;
@@ -47,11 +47,11 @@ public class TrustedPersonModel {
     }
 
     public String getdOB() {
-        return dOB;
+        return dob;
     }
 
     public void setdOB(String dOB) {
-        this.dOB = dOB;
+        this.dob = dOB;
     }
 
     public String getPhoneNumber() {
