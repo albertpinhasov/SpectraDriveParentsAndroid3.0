@@ -53,13 +53,23 @@ public class DetailsActivity extends BaseActivity {
 
     private void fillData() {
         mRideName.setText(mRide.getRideName());
-        if (mRide.getPickupPoint() != null && mRide.getPickupPoint().getName() != null)
-            mPickup.setText(mRide.getPickupPoint().getName());
-        if (mRide.getDropPoint()!=null && mRide.getDropPoint().getName() != null)
-            mDrop.setText(mRide.getDropPoint().getName());
+        if (mRide.getChildModel().get(0).getPickup() != null && mRide.getChildModel().get(0).getPickup().getName()!=null)
+            mPickup.setText(mRide.getChildModel().get(0).getPickup().getName());
+        if (mRide.getChildModel().get(0).getDrop() != null && mRide.getChildModel().get(0).getDrop().getName() != null)
+            mDrop.setText(mRide.getChildModel().get(0).getDrop().getName());
         if (mRide.getCreatedOn() != null)
-            mCreatedOn.setText(Tools.getFormattedDate(this, mRide.getCreatedOn().getTime()));
+//            mCreatedOn.setText(Tools.getFormattedDate(this, mRide.getCreatedOn().getTime()));
+            mCreatedOn.setText(mRide.getCreatedOn());
     }
+//        mRideName.setText(mRide.getRideName());
+//        if (mRide.getPickupPoint() != null && mRide.getPickupPoint().getName() != null)
+//            mPickup.setText(mRide.getPickupPoint().getName());
+//        if (mRide.getDropPoint() != null && mRide.getDropPoint().getName() != null)
+//            mDrop.setText(mRide.getDropPoint().getName());
+//        if (mRide.getCreatedOn() != null)
+////            mCreatedOn.setText(Tools.getFormattedDate(this, mRide.getCreatedOn().getTime()));
+//            mCreatedOn.setText(mRide.getCreatedOn());
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

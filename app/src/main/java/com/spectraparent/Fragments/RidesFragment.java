@@ -1,5 +1,6 @@
 package com.spectraparent.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class RidesFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
     private MyRidesRecyclerViewAdapter mAdapter;
-
+    private ProgressDialog progressDialog;
     public RidesFragment() {
     }
 
@@ -97,22 +98,26 @@ public class RidesFragment extends Fragment {
     }
 
 
-    private void getMyRides() {
+    private void   getMyRides() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         VolleyUtils v = VolleyUtils.getInstance(getActivity());
      //   RideRequest rideRequest = new RideRequest(1, 10, LocalStorage.getStudent().getUserId());
         RideRequest rideRequest = new RideRequest(1, 10, "6bf08be9-2e85-4775-b792-a8396c969d87");
         ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.GetMyRidesUrl, rideRequest, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Type listType = new TypeToken<ArrayList<RideResponse>>() {
+                Type listType = new TypeToken<RideResponse>() {
                 }.getType();
 
                 System.out.println("Response " + WebApi.GetMyRidesUrl + "======>" + new Gson().toJson(response));
 
                 RideResponse ridesModel = new Gson().fromJson(response, listType);
-
+                progressDialog.hide();
                 if (ridesModel != null) {
-                    mAdapter.updateItems(ridesModel.getData());
+                    mAdapter.updateItems((ArrayList<RideModel>) ridesModel.getData());
                 } else {
                     DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                 }
@@ -124,6 +129,8 @@ public class RidesFragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.hide();
+
                 System.out.println(error);
                 DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
             }

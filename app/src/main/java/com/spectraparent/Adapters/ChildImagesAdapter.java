@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.android.R;
 
@@ -18,7 +19,7 @@ public class ChildImagesAdapter extends RecyclerView.Adapter<ChildImagesAdapter.
     ArrayList<String> mArrayList;
 
 
-    public ChildImagesAdapter(Context context, ChildModel childModel) {
+    public ChildImagesAdapter(Context context, Child childModel) {
         mContext = context;
         mArrayList = new ArrayList<>();
 mArrayList.add("");

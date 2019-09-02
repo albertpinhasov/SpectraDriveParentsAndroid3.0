@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.spectraparent.Fragments.RidesFragment.OnListFragmentInteractionListener;
 import com.spectraparent.Helpers.CircleTransform;
-import com.spectraparent.Helpers.Tools;
 import com.spectraparent.Models.RideModel;
 import com.spectraparent.android.R;
 import com.squareup.picasso.Picasso;
@@ -66,7 +65,7 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View mView, mSep1, mSep2;
         public LinearLayout mViewPickedUp, mViewOnTheWay, mViewDroppedOff;
-        public  TextView mRideId, mCreatedOn, mAddress;
+        public TextView mRideId, mCreatedOn, mAddress;
         public ImageView mImgChild1;
         public Button mBtnTrack;
         public RideModel mItem;
@@ -92,16 +91,17 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
 
         public void bindData() {
             mRideId.setText(mItem.getRideName());
-            mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), mItem.getCreatedOn().getTime()));
+            //mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(),(mItem.getCreatedOn()).getTime()));
+            mCreatedOn.setText((mItem.getCreatedOn()));
             try {
-                mAddress.setText(mItem.getPickupPoint().getName() + "->" + mItem.getDropPoint().getName());
+                mAddress.setText(mItem.getChildModel().get(0).getPickup() + "->" + mItem.getChildModel().get(0).getDrop());
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            if(mItem.getChild()!=null && mItem.getChild().size()>0 && mItem.getChild().get(0).getImages()!=null &&
-                    mItem.getChild().get(0).getImages().size()>0 && mItem.getChild().get(0).getImages().get(0).getSmallPhotoUrl()!=null){
-                Picasso.get().load(mItem.getChild().get(0).getImages().get(0).getSmallPhotoUrl().replace("https://snappill.app", "https://spectradrivewebapi.azurewebsites.net"))
+            if (mItem.getChildModel() != null && mItem.getChildModel().size() > 0 && mItem.getChildModel().get(0).getChild().getImages() != null &&
+                    mItem.getChildModel().get(0).getChild().getImages().size() > 0 && mItem.getChildModel().get(0).getChild().getImages().get(0).getSmallPhotoUrl() != null) {
+                Picasso.get().load(mItem.getChildModel().get(0).getChild().getImages().get(0).getSmallPhotoUrl().replace("https://snappill.app", "https://spectradrivewebapi.azurewebsites.net"))
                         .transform(new CircleTransform()).fit().centerCrop().into(mImgChild1);
             }
 
@@ -109,23 +109,23 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
         }
 
         void processEvents() {
-            if(mItem.getEvents() == null) return;
+            if (mItem.getChildModel().get(0).getEvents() == null) return;
 
             markNotStarted();
 
-            if(mItem.getEvents().size() == 1){
+            if (mItem.getChildModel().get(0).getEvents().size() == 1) {
                 markPickedUp();
-            } else if(mItem.getEvents().size() == 2){
+            } else if (mItem.getChildModel().get(0).getEvents().size() == 2) {
                 markOnTheWay();
-            } else if (mItem.getEvents().size() == 3){
+            } else if (mItem.getChildModel().get(0).getEvents().size() == 3) {
                 markDroppedOff();
             }
         }
 
         void markNotStarted() {
             mViewOnTheWay.setAlpha((float) 0.6);
-                    mViewPickedUp.setAlpha((float) 0.6);
-                            mViewDroppedOff.setAlpha((float) 0.6);
+            mViewPickedUp.setAlpha((float) 0.6);
+            mViewDroppedOff.setAlpha((float) 0.6);
 
             mSep1.setAlpha((float) 0.6);
             mSep2.setAlpha((float) 0.6);

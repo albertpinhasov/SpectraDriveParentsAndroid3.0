@@ -1,34 +1,31 @@
 package com.spectraparent.Models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RideResponse {
-    boolean success;
-    String message;
 
-    public boolean isSuccess() {
-        return success;
-    }
+    private boolean success;
 
-    public void setSuccess(boolean success) {
+    private String message;
+
+    private List<RideModel> data;
+
+    public void setSuccess(boolean success){
         this.success = success;
     }
-
-    public String getMessage() {
-        return message;
+    public boolean getSuccess(){
+        return this.success;
     }
-
-    public void setMessage(String message) {
+    public void setMessage(String message){
         this.message = message;
     }
-
-    public ArrayList<RideModel> getData() {
-        return data;
+    public String getMessage(){
+        return this.message;
     }
-
-    public void setData(ArrayList<RideModel> data) {
+    public void setData(List<RideModel> data){
         this.data = data;
     }
-
-    ArrayList<RideModel> data=new ArrayList();
+    public List<RideModel> getData(){
+        return this.data;
+    }
 }

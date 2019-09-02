@@ -11,20 +11,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.spectraparent.Helpers.LocalStorage;
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.android.R;
 
 import java.util.ArrayList;
 
 public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapter.Profile_ViewHolder> {
-    Context  mContext;
-    ArrayList<ChildModel> mArrayList;
+    Context mContext;
+    ArrayList<Child> mArrayList;
 
 
     public ProfileChildAdapter(Context context) {
         mContext = context;
         mArrayList = new ArrayList<>();
-        if(LocalStorage.getStudent().getChild()!=null){
+        if (LocalStorage.getStudent().getChild() != null) {
             mArrayList = LocalStorage.getStudent().getChild();
         }
     }
@@ -41,7 +42,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Profile_ViewHolder profile_viewHolder, int i) {
-profile_viewHolder.bindData(mArrayList.get(i));
+        profile_viewHolder.bindData(mArrayList.get(i));
     }
 
     @Override
@@ -49,26 +50,27 @@ profile_viewHolder.bindData(mArrayList.get(i));
         return mArrayList.size();
     }
 
-    class Profile_ViewHolder extends RecyclerView.ViewHolder{
+    class Profile_ViewHolder extends RecyclerView.ViewHolder {
         private final RecyclerView rcImages, rcNeeds;
-        TextView mFirstName,mLastName, mAbout;
-        Button mBtnEditNeeds,mBtnEditAbout;
-ImageView imageView;
+        TextView mFirstName, mLastName, mAbout;
+        Button mBtnEditNeeds, mBtnEditAbout;
+        ImageView imageView;
+
         public Profile_ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView= itemView.findViewById(R.id.rcChild);
-            mFirstName= itemView.findViewById(R.id.txtFirstName);
-            mLastName= itemView.findViewById(R.id.txtLastName);
-            mBtnEditNeeds= itemView.findViewById(R.id.btnEditNeeds);
-            mBtnEditAbout= itemView.findViewById(R.id.btnEditInfo);
+            imageView = itemView.findViewById(R.id.rcChild);
+            mFirstName = itemView.findViewById(R.id.txtFirstName);
+            mLastName = itemView.findViewById(R.id.txtLastName);
+            mBtnEditNeeds = itemView.findViewById(R.id.btnEditNeeds);
+            mBtnEditAbout = itemView.findViewById(R.id.btnEditInfo);
             rcImages = itemView.findViewById(R.id.rcImages);
             rcNeeds = itemView.findViewById(R.id.rcNeeds);
             mAbout = itemView.findViewById(R.id.txtAbout);
         }
 
-        public void bindData(ChildModel childModel) {
-            if(childModel.getImages()!=null && childModel.getImages().size()>0
-                    ){
+        public void bindData(Child childModel) {
+            if (childModel.getImages() != null && childModel.getImages().size() > 0
+            ) {
                 rcImages.setAdapter(new ChildImagesAdapter(itemView.getContext(), childModel));
             }
             mFirstName.setText(childModel.getFirstName());

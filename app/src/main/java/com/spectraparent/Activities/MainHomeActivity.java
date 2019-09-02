@@ -94,6 +94,7 @@ public class MainHomeActivity extends BaseActivity
             onNavigationDrawerItemSelected(new RidesFragment());
         } else if (id == R.id.nav_profile) {
             onNavigationDrawerItemSelected(new ProfileFragment());
+            mTitle.setText("Profile");
         } else if (id == R.id.nav_settings) {
             onNavigationDrawerItemSelected(new SettingsFragment());
             mTitle.setText("Settings");
@@ -143,7 +144,7 @@ public class MainHomeActivity extends BaseActivity
         if ((LocalStorage.getStudent().getChild() == null || LocalStorage.getInt("numChild") > LocalStorage.getStudent().getChild().size())
                 && !LocalStorage.isAddChildSkipped()) {
             startActivity(new Intent(this, AddChildActivity.class));
-        } else if (LocalStorage.getStudent().getTrustedPersons() == null || LocalStorage.getStudent().getTrustedPersons().size() == 0) {
+        } else if (LocalStorage.getStudent().getTrustedPersons() == null) {
             if (!LocalStorage.isTrustedPersonIntroShown()) {
                 LocalStorage.setTrustedPersonIntroShown(true);
                 startActivity(new Intent(this, AddTrustedPersonIntroActivity.class));

@@ -21,6 +21,7 @@ import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Helpers.colordialog.util.DisplayUtil;
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.android.R;
 
@@ -61,7 +62,7 @@ public class ChildNeedsFragment extends Fragment {
 
     ArrayList<CheckBox> mCbs = new ArrayList<>();
 
-    ChildModel mChild = null;
+    Child mChild = null;
 
     public ChildNeedsFragment() {
         // Required empty public constructor

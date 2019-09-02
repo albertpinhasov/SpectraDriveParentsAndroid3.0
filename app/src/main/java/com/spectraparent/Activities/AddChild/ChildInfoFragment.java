@@ -24,6 +24,7 @@ import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Helpers.Tools;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Helpers.cropper.CropImage;
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.Models.KeyValueModel;
 import com.spectraparent.SpectraDrive;
@@ -73,7 +74,7 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
     private Uri mCropImageUri;
 
     ArrayList<KeyValueModel<Integer, ImageView>> mSelectedImages = new ArrayList<>();
-    ChildModel mChild;
+    Child mChild;
 
     public ChildInfoFragment() {
         // Required empty public constructor
@@ -103,7 +104,7 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
         mImages.add(mImage3);
         mImages.add(mImage4);
 
-        mChild = new ChildModel();
+        mChild = new Child();
 
         mFirstName.setText(mChild.getFirstName());
         mLastName.setText(mChild.getLastName());

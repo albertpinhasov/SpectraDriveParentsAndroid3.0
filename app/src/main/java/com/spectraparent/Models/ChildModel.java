@@ -1,71 +1,55 @@
 package com.spectraparent.Models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ChildModel {
-    private String childId;
-    private String firstName;
-    private String lastName;
-    private String about;
-    private ArrayList<PhotoModel> images;
-    private String specialNeeds;
-    private String otherSpecialNeeds;
+    private Child child;
 
-    public String getChildId() {
-        return childId;
+    private Pickup pickup;
+
+    private Drop drop;
+
+    private String contacts;
+
+    private List<String> events;
+
+    private int index;
+
+    public void setChild(Child child){
+        this.child = child;
     }
-
-    public void setChildId(String childId) {
-        this.childId = childId;
+    public Child getChild(){
+        return this.child;
     }
-
-    public String getFirstName() {
-        return firstName;
+    public void setPickup(Pickup pickup){
+        this.pickup = pickup;
     }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public Pickup getPickup(){
+        return this.pickup;
     }
-
-    public String getLastName() {
-        return lastName;
+    public void setDrop(Drop drop){
+        this.drop = drop;
     }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public Drop getDrop(){
+        return this.drop;
     }
-
-    public String getAbout() {
-        return about;
+    public void setContacts(String contacts){
+        this.contacts = contacts;
     }
-
-    public void setAbout(String about) {
-        this.about = about;
+    public String getContacts(){
+        return this.contacts;
     }
-
-    public ArrayList<PhotoModel> getImages() {
-        return images;
+    public void setEvents(List<String> events){
+        this.events = events;
     }
-
-    public void setImages(ArrayList<PhotoModel> images) {
-        this.images = images;
+    public List<String> getEvents(){
+        return this.events;
     }
-
-    public String getSpecialNeeds() {
-        return specialNeeds;
+    public void setIndex(int index){
+        this.index = index;
     }
-
-    public void setSpecialNeeds(String specialNeeds) {
-        this.specialNeeds = specialNeeds;
+    public int getIndex(){
+        return this.index;
     }
-
-    public String getOtherSpecialNeeds() {
-        return otherSpecialNeeds;
-    }
-
-    public void setOtherSpecialNeeds(String otherSpecialNeeds) {
-        this.otherSpecialNeeds = otherSpecialNeeds;
-    }
-
 
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.android.R;
 
@@ -17,20 +18,20 @@ class ChildNeedsAdapter extends RecyclerView.Adapter<ChildNeedsAdapter.Profile_V
     Context  mContext;
     ArrayList<String> mArrayList;
 
-    public ChildNeedsAdapter(Context context, ChildModel childModel) {
+    public ChildNeedsAdapter(Context context, Child childModel) {
         mContext = context;
         mArrayList = new ArrayList<>();
 
-        if(childModel.getSpecialNeeds()!=null && childModel.getSpecialNeeds().trim().length() > 0){
-            String[] needs = childModel.getSpecialNeeds().split(",");
+        if( childModel.getSpecialNeeds()!=null &&  childModel.getSpecialNeeds().trim().length() > 0){
+            String[] needs =  childModel.getSpecialNeeds().split(",");
             for(String need : needs){
                 if(need.trim().length() >0)
                     mArrayList.add(need);
             }
         }
 
-        if(childModel.getOtherSpecialNeeds()!=null && childModel.getOtherSpecialNeeds().trim().length() > 0){
-            String[] needs = childModel.getOtherSpecialNeeds().split(",");
+        if( childModel.getOtherSpecialNeeds()!=null &&  childModel.getOtherSpecialNeeds().trim().length() > 0){
+            String[] needs =  childModel.getOtherSpecialNeeds().split(",");
             for(String need : needs){
                 if(need.trim().length() >0)
                     mArrayList.add(need);

@@ -18,8 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(LocalStorage.getStudent() !=null && LocalStorage.getStudent().getToken() != null){
             startActivity(new Intent(this,MainHomeActivity.class));
+            finish();
         }else {
             startActivity(new Intent(this,LoginActivity.class));
+            finish();
+
         }
     }
 }

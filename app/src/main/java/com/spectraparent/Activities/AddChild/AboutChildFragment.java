@@ -25,6 +25,7 @@ import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressButton;
 import com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton;
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.Models.UserModel;
 import com.spectraparent.Models.WebAPIResponseModel;
@@ -50,7 +51,7 @@ public class AboutChildFragment extends Fragment {
 
     @BindView(R.id.txtAbout)
     EditText mAbout;
-    private ChildModel mChild;
+    private Child mChild;
 
     @BindView(R.id.btnNext)
     CircularProgressImageButton mBtnNext;
@@ -112,9 +113,9 @@ public class AboutChildFragment extends Fragment {
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
 
-                Type type = new TypeToken<WebAPIResponseModel<ArrayList<ChildModel>>>(){}.getType();
+                Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>(){}.getType();
 
-                WebAPIResponseModel<ArrayList<ChildModel>> data = new Gson().fromJson(resultResponse, type);
+                WebAPIResponseModel<ArrayList<Child>> data = new Gson().fromJson(resultResponse, type);
 
                 if(data == null){
                     DialogsHelper.showAlert(getContext(), "Server Error","Internal server error, please try again later.","Ok", null, PromptDialog.DIALOG_TYPE_WRONG);

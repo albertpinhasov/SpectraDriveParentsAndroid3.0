@@ -360,9 +360,9 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
 
-                Type type = new TypeToken<WebAPIResponseModel<ArrayList<TrustedPersonModel>>>(){}.getType();
+                Type type = new TypeToken<WebAPIResponseModel<TrustedPersonModel>>(){}.getType();
 
-                WebAPIResponseModel<ArrayList<TrustedPersonModel>> data = new Gson().fromJson(resultResponse, type);
+                WebAPIResponseModel<TrustedPersonModel>data = new Gson().fromJson(resultResponse, type);
 
                 if(data == null){
                     DialogsHelper.showAlert(getContext(), "Server Error","Internal server error, please try again later.","Ok", null, PromptDialog.DIALOG_TYPE_WRONG);

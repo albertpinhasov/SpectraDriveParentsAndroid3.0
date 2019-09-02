@@ -118,8 +118,8 @@ public class UserModel {
     private String role;
     private int gender;
 
-    private ArrayList<ChildModel> child;
-    private ArrayList<TrustedPersonModel> trustedPersons;
+    private ArrayList<Child> child;
+    private TrustedPersonModel trustedPersons;
 
     public String getFirstName() {
         return firstName;
@@ -161,19 +161,19 @@ public class UserModel {
         this.token = token;
     }
 
-    public ArrayList<ChildModel> getChild() {
+    public ArrayList<Child> getChild() {
         return child;
     }
 
-    public void setChild(ArrayList<ChildModel> child) {
+    public void setChild(ArrayList<Child> child) {
         this.child = child;
     }
 
-    public ArrayList<TrustedPersonModel> getTrustedPersons() {
+    public TrustedPersonModel getTrustedPersons() {
         return trustedPersons;
     }
 
-    public void setTrustedPersons(ArrayList<TrustedPersonModel> trustedPersons) {
+    public void setTrustedPersons(TrustedPersonModel trustedPersons) {
         this.trustedPersons = trustedPersons;
     }
 }

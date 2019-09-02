@@ -4,6 +4,7 @@ package com.spectraparent.Helpers;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.Models.TrustedPersonModel;
 import com.spectraparent.Models.UserModel;
@@ -85,18 +86,18 @@ public class LocalStorage {
         return model;
     }
 
-    public static void storeChild(ChildModel data) {
+    public static void storeChild(Child data) {
         storeObject("child", data);
     }
 
-    public static ChildModel getChild() {
+    public static Child getChild() {
         SharedPreferences sharedPreferences = getSharedPreferences();
 
         String studentStr = sharedPreferences.getString("child", null);
 
-        ChildModel model = new Gson().fromJson(studentStr, ChildModel.class);
+        Child model = new Gson().fromJson(studentStr, Child.class);
 
-        if (model == null) return new ChildModel();
+        if (model == null) return new Child();
 
         return model;
     }

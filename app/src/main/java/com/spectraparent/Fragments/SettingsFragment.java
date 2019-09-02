@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.spectraparent.Activities.AddChild.AddChildActivity;
 import com.spectraparent.Activities.UpdateLocationActivity;
 import com.spectraparent.Helpers.LocalStorage;
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.ChildModel;
 import com.spectraparent.android.R;
 
@@ -59,7 +60,7 @@ public class SettingsFragment extends Fragment {
     @OnClick(R.id.txtAddChild)
     void onAddChildClicked(View view){
         Intent intent = new Intent(getActivity(), AddChildActivity.class);
-        LocalStorage.storeChild(new ChildModel());
+        LocalStorage.storeChild(new Child());
         startActivity(intent);
     }
 }

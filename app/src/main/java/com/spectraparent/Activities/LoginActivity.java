@@ -174,6 +174,7 @@ if(s.toString().length() == 12){
                 if(student != null){
                     if (student.isSuccess()) {
                         LocalStorage.storeStudent(student.getData());
+                        LocalStorage.storeTrustedPerson(student.getData().getTrustedPersons());
 
                         if(student.getData().getFirstName() != null && student.getData().getFirstName().length() >0){
                             Intent intent = new Intent(mSelf, MainHomeActivity.class);

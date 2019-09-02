@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -59,6 +60,8 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
                                   Response.Listener<NetworkResponse> listener,
                                   Response.ErrorListener errorListener) {
         super(method, url, errorListener);
+
+
         this.mListener = listener;
         this.mErrorListener = errorListener;
     }

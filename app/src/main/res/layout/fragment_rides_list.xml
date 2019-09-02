@@ -23,6 +23,8 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+
+        android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:context="com.spectraparent.Fragments.RidesFragment"
         tools:listitem="@layout/fragment_rides" />

@@ -44,6 +44,7 @@
             android:inputType="textPersonName" />
 
         <TextView
+            android:id="@+id/tvDob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -75,7 +76,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/_00_000_000_0000"
             android:inputType="number"
-            app:mask="+1 ### ### ####" />
+            app:mask="+91 ### ### ####" />
 
         <TextView
             android:layout_width="match_parent"
