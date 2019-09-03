@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,9 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.spectraparent.Activities.DetailsActivity;
 import com.spectraparent.Activities.MapsActivity;
 import com.spectraparent.Helpers.DialogsHelper;
+import com.spectraparent.Helpers.EndlessRecyclerViewScrollListener;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Models.RideModel;
 import com.spectraparent.Models.RideRequest;
@@ -52,11 +53,18 @@ public class RidesFragment extends Fragment {
     RecyclerView mRc;
     @BindView(R.id.lEmpty)
     LinearLayout mEmpty;
-
     private OnListFragmentInteractionListener mListener;
     private MyRidesRecyclerViewAdapter mAdapter;
     private MyRidesRecyclerViewAdapter mAdapterEmpty;
     private KProgressHUD mProgress;
+    int checkedId = R.id.b1;
+    int current_Ride_Page = 1;
+    int past_Ride_Page = 1;
+    int scedual_ride_page = 1;
+    ArrayList<RideModel> currentRideList = new ArrayList<>();
+    ArrayList<RideModel> pastRideList = new ArrayList<>();
+    ArrayList<RideModel> scedualRideList = new ArrayList<>();
+    LinearLayoutManager linearLayoutManager = null;
 
     public RidesFragment() {
     }
@@ -69,18 +77,58 @@ public class RidesFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.b1) {
+                    RidesFragment.this.checkedId = R.id.b1;
                     mRideType.setText("Current rides");
-                    getMyRides(1);
+                    if (currentRideList.isEmpty())
+                        getMyRides(1, 1);
+                    else
+                        mAdapter.updateItems(currentRideList,1);
                 } else if (checkedId == R.id.b2) {
+                    RidesFragment.this.checkedId = R.id.b2;
                     mRideType.setText("Scheduled rides");
-                    getMyRides(3);
+                    if (scedualRideList.isEmpty())
+                        getMyRides(3, 1);
+                    else
+                        mAdapter.updateItems(scedualRideList,3);
                 } else if (checkedId == R.id.b3) {
+                    RidesFragment.this.checkedId = R.id.b3;
                     mRideType.setText("Past rides");
-                    getMyRides(2);
+                    if (pastRideList.isEmpty())
+                        getMyRides(2, 1);
+                    else
+                        mAdapter.updateItems(pastRideList,2);
 
                 }
             }
         });
+
+        mAdapter = new MyRidesRecyclerViewAdapter(new ArrayList<RideModel>(), mListener);
+        linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false);
+        mRc.setLayoutManager(linearLayoutManager);
+        mRc.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                if (checkedId == R.id.b1) {
+                    RidesFragment.this.current_Ride_Page++;
+                    mRideType.setText("Current rides");
+                    getMyRides(1, current_Ride_Page);
+                } else if (checkedId == R.id.b2) {
+                    scedual_ride_page++;
+                    mRideType.setText("Scheduled rides");
+                    getMyRides(3, scedual_ride_page);
+
+                } else if (checkedId == R.id.b3) {
+                    past_Ride_Page++;
+                    mRideType.setText("Past rides");
+                    getMyRides(2, past_Ride_Page);
+
+
+                }
+            }
+        });
+        mRc.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -93,19 +141,19 @@ public class RidesFragment extends Fragment {
 
         mListener = new OnListFragmentInteractionListener() {
             @Override
-            public void onListFragmentInteraction(RideModel item) {
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
-                intent.putExtra("json", new Gson().toJson(item));
-                startActivity(intent);
-            }
-        };
+            public void onListFragmentInteraction(RideModel item, int type) {
+                if (type == 1) {
+                    Intent intent = new Intent(getActivity(), MapsActivity.class);
+                    intent.putExtra("json", new Gson().toJson(item));
+                    startActivity(intent);
+                } else {
 
-        mAdapter = new MyRidesRecyclerViewAdapter(new ArrayList<RideModel>(), mListener);
-
-        mRc.setAdapter(mAdapter);
+                }
+        }
+    };
 
         return view;
-    }
+}
 
 
     @Override
@@ -125,9 +173,8 @@ public class RidesFragment extends Fragment {
         mListener = null;
     }
 
-    private void getMyRides(int type) {
+    private void getMyRides(final int type, int page) {
         VolleyUtils v = VolleyUtils.getInstance(getActivity());
-
         mProgress = KProgressHUD.create(getActivity())
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait")
@@ -136,7 +183,7 @@ public class RidesFragment extends Fragment {
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f)
                 .show();
-        RideRequest rideRequest = new RideRequest(1, 10, "6bf08be9-2e85-4775-b792-a8396c969d87", type);
+        RideRequest rideRequest = new RideRequest(page, 10, "6bf08be9-2e85-4775-b792-a8396c969d87", type);
         ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.GetMyRidesUrl, rideRequest, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -156,8 +203,26 @@ public class RidesFragment extends Fragment {
                             return (o1.getCreatedOn().getTime() > o2.getCreatedOn().getTime() ? -1 : 1);
                         }
                     });
+                    switch (type) {
+                        case 1: {
+                            currentRideList.addAll(rides.getData());
+                            mAdapter.updateItems(currentRideList,1);
 
-                    mAdapter.updateItems((ArrayList<RideModel>) rides.getData());
+                            return;
+                        }
+                        case 2: {
+                            pastRideList.addAll(rides.getData());
+                            mAdapter.updateItems(pastRideList,2);
+                            return;
+                        }
+                        case 3: {
+                            scedualRideList.addAll(rides.getData());
+                            mAdapter.updateItems(scedualRideList,3);
+
+                            return;
+                        }
+                    }
+
                 } else {
                     DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                 }
@@ -185,7 +250,7 @@ public class RidesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getMyRides(1);
+        getMyRides(1, current_Ride_Page);
     }
 
     @OnClick({R.id.btnSamplePoolFromSchoolRide, R.id.btnSamplePoolToSchoolRide, R.id.btnSampleRide})
@@ -216,7 +281,7 @@ public class RidesFragment extends Fragment {
                 }.getType();
                 mProgress.dismiss();
 
-                getMyRides(1);
+                getMyRides(1, current_Ride_Page);
 
             }
 
@@ -234,8 +299,8 @@ public class RidesFragment extends Fragment {
         v.addToRequestQueue(req);
     }
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(RideModel item);
-    }
+public interface OnListFragmentInteractionListener {
+    void onListFragmentInteraction(RideModel item, int type);
+}
 
 }

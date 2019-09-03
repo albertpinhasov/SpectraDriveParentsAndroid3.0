@@ -20,6 +20,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.spectraparent.Fragments.ProfileFragment;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
@@ -58,6 +59,7 @@ public class AboutChildFragment extends Fragment {
 
     @BindView(R.id.btnNextChild)
     CircularProgressButton mBtnNextChild;
+    String from = "";
 
     public AboutChildFragment() {
         // Required empty public constructor
@@ -74,15 +76,18 @@ public class AboutChildFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        mChild = (Child) getArguments().getSerializable("child");
+        from = getArguments().getString("from");
+
     }
 
     @OnClick(R.id.btnNextChild)
     public void onNextChildClicked(View view) {
-        if(mChild == null) mChild = LocalStorage.getChild();
+        if (mChild == null) mChild = LocalStorage.getChild();
 
         mChild.setAbout(mAbout.getText().toString().trim());
 
-        if(mChild.getAbout() == null || mChild.getAbout().length() == 0){
+        if (mChild.getAbout() == null || mChild.getAbout().length() == 0) {
             mChild.setAbout("");
         }
 
@@ -93,11 +98,11 @@ public class AboutChildFragment extends Fragment {
 
     @OnClick(R.id.btnNext)
     public void onNextClicked(View view) {
-        if(mChild == null) mChild = LocalStorage.getChild();
+        if (mChild == null) mChild = LocalStorage.getChild();
 
         mChild.setAbout(mAbout.getText().toString().trim());
 
-        if(mChild.getAbout() == null || mChild.getAbout().length() == 0){
+        if (mChild.getAbout() == null || mChild.getAbout().length() == 0) {
             mChild.setAbout("");
         }
 
@@ -113,17 +118,18 @@ public class AboutChildFragment extends Fragment {
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
 
-                Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>(){}.getType();
+                Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>() {
+                }.getType();
 
                 WebAPIResponseModel<ArrayList<Child>> data = new Gson().fromJson(resultResponse, type);
 
-                if(data == null){
-                    DialogsHelper.showAlert(getContext(), "Server Error","Internal server error, please try again later.","Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                if (data == null) {
+                    DialogsHelper.showAlert(getContext(), "Server Error", "Internal server error, please try again later.", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     return;
                 }
 
-                if(!data.isSuccess()){
-                    DialogsHelper.showAlert(getContext(), "Server Error",data.getMessage(),"Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                if (!data.isSuccess()) {
+                    DialogsHelper.showAlert(getContext(), "Server Error", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     return;
                 }
 
@@ -135,7 +141,13 @@ public class AboutChildFragment extends Fragment {
                 DialogsHelper.showAlert(getContext(), "Success", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS, new Runnable() {
                     @Override
                     public void run() {
-                        getActivity().finish();
+                        if (from != null && !from.isEmpty()) {
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.container, new ProfileFragment())
+                                    .commit();
+                        } else {
+                            getActivity().finish();
+                        }
                     }
                 });
 
@@ -164,20 +176,20 @@ public class AboutChildFragment extends Fragment {
                         if (networkResponse.statusCode == 404) {
                             errorMessage = "Resource not found";
                         } else if (networkResponse.statusCode == 401) {
-                            errorMessage = message+" Please login again";
+                            errorMessage = message + " Please login again";
                         } else if (networkResponse.statusCode == 400) {
-                            errorMessage = message+ " Check your inputs";
+                            errorMessage = message + " Check your inputs";
                         } else if (networkResponse.statusCode == 500) {
-                            errorMessage = message+" Something is getting wrong";
+                            errorMessage = message + " Something is getting wrong";
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                if(mBtnNext.isAnimating())mBtnNext.revertAnimation();
-                if(mBtnNextChild.isAnimating())mBtnNextChild.revertAnimation();
+                if (mBtnNext.isAnimating()) mBtnNext.revertAnimation();
+                if (mBtnNextChild.isAnimating()) mBtnNextChild.revertAnimation();
 
-                DialogsHelper.showAlert(getContext(), "Error While Saving",errorMessage,"Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(getContext(), "Error While Saving", errorMessage, "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
 
                 Log.i("Error", errorMessage);
                 error.printStackTrace();
@@ -186,6 +198,8 @@ public class AboutChildFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
+                if (from != null && !from.isEmpty())
+                    params.put("childId", mChild.getChildId());
                 params.put("FirstName", mChild.getFirstName());
                 params.put("LastName", mChild.getLastName());
                 params.put("About", mChild.getAbout());
@@ -197,17 +211,17 @@ public class AboutChildFragment extends Fragment {
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
-                for(int i=0; i< SpectraDrive.PickedImages.size();i++){
-                    params.put("Image" + String.valueOf(i+1), new DataPart("Image" + String.valueOf(i+1) +".jpg", SpectraDrive.PickedImages.get(i), "image/jpeg"));
+                for (int i = 0; i < SpectraDrive.PickedImages.size(); i++) {
+                    params.put("Image" + String.valueOf(i + 1), new DataPart("Image" + String.valueOf(i + 1) + ".jpg", SpectraDrive.PickedImages.get(i), "image/jpeg"));
                 }
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers =  new HashMap<>();
-                headers.put("Authorization","Bearer " + LocalStorage.getStudent().getToken());
-                return  headers;
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + LocalStorage.getStudent().getToken());
+                return headers;
             }
         };
 

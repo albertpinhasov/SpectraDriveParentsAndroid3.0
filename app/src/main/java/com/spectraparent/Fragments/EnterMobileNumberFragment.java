@@ -61,6 +61,8 @@ public class EnterMobileNumberFragment extends Fragment {
     @BindView(R.id.links)
     TextView mLinks;
 
+    @BindView(R.id.etCountryCode)
+    EditText etCountryCode;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     UserModel mUser = new UserModel();
 
@@ -138,7 +140,7 @@ public class EnterMobileNumberFragment extends Fragment {
     @OnClick(R.id.btnLogin)
     void onLogin(){
 
-        mUser.setPhoneNumber("+1" + mPhoneNumber.getText().toString());
+        mUser.setPhoneNumber(etCountryCode.getText().toString() + mPhoneNumber.getText().toString());
 
         if(mUser.getPhoneNumber().trim().isEmpty() || mUser.getPhoneNumber().length() < 5){
             DialogsHelper.showAlert(getActivity(),"Invalid Number","Please enter a valid mobile phone number so that we can send you a verification code in SMS","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
@@ -183,6 +185,8 @@ public class EnterMobileNumberFragment extends Fragment {
                 if(student != null){
                     if (student.isSuccess()) {
                         LocalStorage.storeStudent(student.getData());
+                        if (student.getData().getTrustedPersons() != null && student.getData().getTrustedPersons().size() > 0)
+                            LocalStorage.storeTrustedPerson(student.getData().getTrustedPersons().get(0));
 
                         if(student.getData().getFirstName() != null && student.getData().getFirstName().length() >0){
                             Intent intent = new Intent(getActivity(), MainHomeActivity.class);

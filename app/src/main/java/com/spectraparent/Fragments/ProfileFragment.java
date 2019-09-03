@@ -1,9 +1,9 @@
 package com.spectraparent.Fragments;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,11 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.spectraparent.Activities.AddChild.AboutChildFragment;
+import com.spectraparent.Activities.AddChild.ChildNeedsFragment;
 import com.spectraparent.Activities.AddTrustedPerson.AddAPersonFragment;
 import com.spectraparent.Adapters.ProfileChildAdapter;
-import com.spectraparent.Helpers.ActionSheet;
-import com.spectraparent.Helpers.CircleTransform;
 import com.spectraparent.Helpers.LocalStorage;
+import com.spectraparent.Interface.AdapterClickListerner;
+import com.spectraparent.Models.Child;
 import com.spectraparent.Models.TrustedPersonModel;
 import com.spectraparent.Models.UserModel;
 import com.spectraparent.android.R;
@@ -30,7 +32,8 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+@SuppressLint("ValidFragment")
+public class ProfileFragment extends Fragment implements AdapterClickListerner {
 
     @BindView(R.id.txtFirstName)
     TextView mFirstName;
@@ -73,6 +76,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.rcChild)
     RecyclerView rcChild;
 
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -84,7 +88,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         rcChild.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
-        rcChild.setAdapter(new ProfileChildAdapter(getActivity()));
+        rcChild.setAdapter(new ProfileChildAdapter(getActivity(), this));
         setData();
 
 
@@ -117,6 +121,7 @@ public class ProfileFragment extends Fragment {
         addAPersonFragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, addAPersonFragment)
+                .addToBackStack(addAPersonFragment.getClass().getName())
                 .commit();
     }
 
@@ -128,6 +133,36 @@ public class ProfileFragment extends Fragment {
         addAPersonFragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, addAPersonFragment)
+                .addToBackStack(addAPersonFragment.getClass().getName())
                 .commit();
     }
+
+    @Override
+    public void onClickItem(int type, Child child) {
+        if (type == 1) {
+            ChildNeedsFragment childNeedsFragment = new ChildNeedsFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("child", child);
+            args.putString("from", "edit");
+
+            childNeedsFragment.setArguments(args);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, childNeedsFragment)
+                    .addToBackStack(childNeedsFragment.getClass().getName())
+                    .commit();
+        } else if (type == 2) {
+            AboutChildFragment aboutChildFragment = new AboutChildFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("child", child);
+            args.putString("from", "edit");
+            aboutChildFragment.setArguments(args);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, aboutChildFragment)
+                    .addToBackStack(aboutChildFragment.getClass().getName())
+                    .commit();
+        } else {
+
+        }
+    }
+
 }

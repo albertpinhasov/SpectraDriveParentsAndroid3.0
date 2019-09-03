@@ -1,9 +1,10 @@
 package com.spectraparent.Models;
 
+import java.io.Serializable;
+import java.io.SerializablePermission;
 import java.util.List;
 
-public class Child
-{
+public class Child implements Serializable {
     private String childId;
 
     private String firstName;

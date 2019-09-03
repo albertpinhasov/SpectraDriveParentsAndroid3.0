@@ -58,7 +58,7 @@
                         android:id="@+id/txtPhoneNumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
+                        android:layout_weight="0.8"
                         android:hint="000 000 0000"
                         android:inputType="number"
                         android:paddingLeft="10dp"

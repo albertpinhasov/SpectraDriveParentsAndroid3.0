@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +18,37 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.spectraparent.Fragments.ProfileFragment;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Helpers.colordialog.util.DisplayUtil;
+import com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton;
 import com.spectraparent.Models.Child;
-import com.spectraparent.Models.ChildModel;
+import com.spectraparent.Models.UserModel;
+import com.spectraparent.Models.WebAPIResponseModel;
+import com.spectraparent.SpectraDrive;
+import com.spectraparent.WebAPI.VolleyMultipartRequest;
+import com.spectraparent.WebAPI.VolleyUtils;
+import com.spectraparent.WebAPI.WebApi;
 import com.spectraparent.android.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,10 +82,13 @@ public class ChildNeedsFragment extends Fragment {
 
     @BindView(R.id.checkBox8)
     CheckBox mCb8;
+    @BindView(R.id.btnNext)
+    CircularProgressImageButton btnNext;
 
     ArrayList<CheckBox> mCbs = new ArrayList<>();
 
     Child mChild = null;
+    String from = "";
 
     public ChildNeedsFragment() {
         // Required empty public constructor
@@ -80,7 +106,8 @@ public class ChildNeedsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
+        mChild = (Child) getArguments().getSerializable("child");
+        from = getArguments().getString("from");
         mCbs.add(mCb1);
         mCbs.add(mCb2);
         mCbs.add(mCb3);
@@ -92,15 +119,15 @@ public class ChildNeedsFragment extends Fragment {
         mCb8.setTag("8");
         mCbs.add(mCb8);
 
-        for(CheckBox cb : mCbs){
+        for (CheckBox cb : mCbs) {
             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                    if(mChild == null)
+                    if (mChild == null)
                         mChild = LocalStorage.getChild();
 
-                    if(buttonView.getTag() != null && buttonView.getTag().toString().equals("8") && buttonView.isChecked()){
+                    if (buttonView.getTag() != null && buttonView.getTag().toString().equals("8") && buttonView.isChecked()) {
                         mChild.setOtherSpecialNeeds("");
                         askOtherSpecialNeeds();
                         return;
@@ -108,8 +135,8 @@ public class ChildNeedsFragment extends Fragment {
 
                     String needs = "";
 
-                    for(CheckBox c: mCbs){
-                        if(c.isChecked() && !(c.getTag() != null && c.getTag().toString().equals("8"))){
+                    for (CheckBox c : mCbs) {
+                        if (c.isChecked() && !(c.getTag() != null && c.getTag().toString().equals("8"))) {
                             needs += c.getText() + ",";
                         }
                     }
@@ -127,14 +154,14 @@ public class ChildNeedsFragment extends Fragment {
 
 
         final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
-        final TextView title =  mView.findViewById(R.id.dialogTitle);
-        final TextView subTitle =  mView.findViewById(R.id.dialogSubTitle);
+        final TextView title = mView.findViewById(R.id.dialogTitle);
+        final TextView subTitle = mView.findViewById(R.id.dialogSubTitle);
         title.setText("Other Special Needs");
         subTitle.setText("Enter other special needs here");
 
         userInputDialogEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         userInputDialogEditText.setGravity(Gravity.TOP);
-        userInputDialogEditText.getLayoutParams().height = DisplayUtil.dp2px(getContext(),200);
+        userInputDialogEditText.getLayoutParams().height = DisplayUtil.dp2px(getContext(), 200);
 
         userInputDialogEditText.setHint("Type in here");
         alertDialogBuilderUserInput
@@ -142,8 +169,8 @@ public class ChildNeedsFragment extends Fragment {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
                         String txt = userInputDialogEditText.getText().toString().trim();
-                        if(txt.length() == 0){
-                            DialogsHelper.showAlert(getActivity(),"Invalid Value","Please enter other special needs for your children.", "Ok",null, PromptDialog.DIALOG_TYPE_WARNING);
+                        if (txt.length() == 0) {
+                            DialogsHelper.showAlert(getActivity(), "Invalid Value", "Please enter other special needs for your children.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
                             return;
                         }
                         mChild.setOtherSpecialNeeds(txt);
@@ -165,8 +192,126 @@ public class ChildNeedsFragment extends Fragment {
     }
 
     @OnClick(R.id.btnNext)
-    void onNext(){
-        LocalStorage.storeChild(mChild);
-        ((AddChildActivity)getActivity()).moveNext();
+    void onNext() {
+        if (from != null && !from.isEmpty()) {
+            btnNext.startAnimation();
+            LocalStorage.storeChild(mChild);
+            editChild();
+        } else {
+            LocalStorage.storeChild(mChild);
+            ((AddChildActivity) getActivity()).moveNext();
+        }
+    }
+
+    private void editChild() {
+        String url = WebApi.AddChildUrl;
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, url, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                String resultResponse = new String(response.data);
+
+                Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>() {
+                }.getType();
+
+                WebAPIResponseModel<ArrayList<Child>> data = new Gson().fromJson(resultResponse, type);
+
+                if (data == null) {
+                    DialogsHelper.showAlert(getContext(), "Server Error", "Internal server error, please try again later.", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                    return;
+                }
+
+                if (!data.isSuccess()) {
+                    DialogsHelper.showAlert(getContext(), "Server Error", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                    return;
+                }
+
+                UserModel user = LocalStorage.getStudent();
+                user.setChild(data.getData());
+
+                LocalStorage.storeStudent(user);
+
+                DialogsHelper.showAlert(getContext(), "Success", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS, new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, new ProfileFragment())
+                                .commit();
+                    }
+                });
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (btnNext.isAnimating()) btnNext.revertAnimation();
+                if (btnNext.isAnimating()) btnNext.revertAnimation();
+
+                DialogsHelper.showAlert(getContext(), "Error While Saving", errorMessage, "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+
+                Log.i("Error", errorMessage);
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("childId", mChild.getChildId());
+                params.put("FirstName", mChild.getFirstName());
+                params.put("LastName", mChild.getLastName());
+                params.put("About", mChild.getAbout());
+                params.put("SpecialNeeds", mChild.getSpecialNeeds());
+                params.put("OtherSpecialNeeds", mChild.getOtherSpecialNeeds());
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                for (int i = 0; i < SpectraDrive.PickedImages.size(); i++) {
+                    params.put("Image" + String.valueOf(i + 1), new DataPart("Image" + String.valueOf(i + 1) + ".jpg", SpectraDrive.PickedImages.get(i), "image/jpeg"));
+                }
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + LocalStorage.getStudent().getToken());
+                return headers;
+            }
+        };
+
+        VolleyUtils.getInstance(getActivity()).addToRequestQueue(multipartRequest);
     }
 }

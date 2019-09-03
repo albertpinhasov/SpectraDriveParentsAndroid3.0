@@ -6,7 +6,7 @@ public class PoolData
 
     private DropPoint dropPoint;
 
-    private String pickupPoint;
+    private Pickup pickupPoint;
 
     private String createdOn;
 
@@ -26,10 +26,10 @@ public class PoolData
     public DropPoint getDropPoint(){
         return this.dropPoint;
     }
-    public void setPickupPoint(String pickupPoint){
+    public void setPickupPoint(Pickup pickupPoint){
         this.pickupPoint = pickupPoint;
     }
-    public String getPickupPoint(){
+    public Pickup getPickupPoint(){
         return this.pickupPoint;
     }
     public void setCreatedOn(String createdOn){

@@ -56,13 +56,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
-        android:name="com.spectradrive.Fragments.RidesFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:context="com.spectradriver.Fragments.RidesFragment"
         tools:listitem="@layout/cell_my_rides" />
 
     <LinearLayout

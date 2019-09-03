@@ -2,14 +2,15 @@ package com.spectraparent.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.spectraparent.Activities.AddChild.AddChildActivity;
@@ -30,7 +31,7 @@ public class MainHomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private TextView mTitle;
+    private TextView mTitle,tvNavHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,11 @@ public class MainHomeActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         onNavigationDrawerItemSelected(new RidesFragment());
+        View headerView = navigationView.getHeaderView(0);
+        tvNavHeader = headerView.findViewById(R.id.tvNavHeader);
 
+        tvNavHeader.setText(LocalStorage.getStudent().getFirstName()+" "+LocalStorage.getStudent().getLastName());
 
     }
 
@@ -68,7 +71,9 @@ public class MainHomeActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (getFragmentManager().getBackStackEntryCount() > 0)
+                getFragmentManager().popBackStackImmediate();
+            else super.onBackPressed();
         }
     }
 
@@ -115,8 +120,7 @@ public class MainHomeActivity extends BaseActivity
             LocalStorage.clearAll();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-        }
-        else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_help) {
             onNavigationDrawerItemSelected(new FAQFragment());
             mTitle.setText("Help & FAQs");
         }

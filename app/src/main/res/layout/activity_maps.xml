@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
 
-
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -13,13 +12,13 @@
         android:layout_height="match_parent"
         tools:context="com.spectraparent.Activities.MapsActivity" />
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:clickable="true"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -40,71 +39,56 @@
                 android:paddingBottom="12dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:src="@drawable/ic_check_circle_black_24dp"
-                        android:tint="@color/colorPrimary" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/colorPrimary" />
-
-
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:src="@drawable/ic_on_the_way" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/colorPrimary" />
-
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:src="@drawable/ic_picked_up" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp">
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/llDroppedOff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Dropped off"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:src="@drawable/ic_check_circle_black_24dp"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10sp"
+                            android:text="Dropped off"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
+                    </LinearLayout>
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@color/colorSep" />
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="18dp"
+                        android:background="@color/colorPrimary" />
 
                     <LinearLayout
+                        android:id="@+id/llOnTheWay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:src="@drawable/ic_on_the_way" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10sp"
                             android:layout_weight="1"
                             android:text="On the way"
                             android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
@@ -112,25 +96,34 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:text="Trip time 8 minutes" />
-
                     </LinearLayout>
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@color/colorSep" />
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="18dp"
+
+                        android:background="@color/colorPrimary" />
 
                     <LinearLayout
+                        android:id="@+id/llPickedUp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:src="@drawable/ic_picked_up" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10sp"
                             android:layout_weight="1"
                             android:text="Picked up"
                             android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
@@ -138,25 +131,26 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:text="11:00 AM" />
 
                     </LinearLayout>
-
                 </LinearLayout>
+
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="10dp"
-            map:cardUseCompatPadding="true"
+            map:cardCornerRadius="5dp"
             map:cardPreventCornerOverlap="true"
-            map:cardCornerRadius="5dp">
+            map:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -166,6 +160,7 @@
 
 
                 <ImageView
+                    android:id="@+id/ivDriveImage"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -182,6 +177,7 @@
                     android:paddingBottom="10dp">
 
                     <TextView
+                        android:id="@+id/tvdriverName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Kelly Welliston"
@@ -189,12 +185,14 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/tvDrivingCar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="is driving a Blue Citroen C3 Grand Picasso"
                         android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
 
                     <TextView
+                        android:id="@+id/tvCarNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="EZ-148-PZ"

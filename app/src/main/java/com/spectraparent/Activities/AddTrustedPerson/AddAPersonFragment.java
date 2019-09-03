@@ -273,6 +273,7 @@ public class AddAPersonFragment extends Fragment {
 
                 UserModel user = LocalStorage.getStudent();
                 user.setTrustedPersons(data.getData());
+                LocalStorage.storeTrustedPerson(data.getData().get(0));
 
                 LocalStorage.storeStudent(user);
 
@@ -331,7 +332,7 @@ public class AddAPersonFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("trustedPersonId", mPerson.getTrustedPersonId());
+                params.put("trustedPersonId",  LocalStorage.getTrustedPerson().getTrustedPersonId());
                 params.put("FirstName", mPerson.getFirstName());
                 params.put("LastName", mPerson.getLastName());
                 params.put("Address", mPerson.getAddress());

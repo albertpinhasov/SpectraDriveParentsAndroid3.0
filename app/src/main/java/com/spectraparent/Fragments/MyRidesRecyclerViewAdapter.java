@@ -1,5 +1,6 @@
 package com.spectraparent.Fragments;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.spectraparent.Adapters.ChildImagesAdapter;
+import com.spectraparent.Adapters.RidesChildImagesAdapter;
 import com.spectraparent.Fragments.RidesFragment.OnListFragmentInteractionListener;
 import com.spectraparent.Helpers.CircleTransform;
 import com.spectraparent.Helpers.Tools;
@@ -24,6 +27,7 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
 
     private List<RideModel> mValues;
     private final OnListFragmentInteractionListener mListener;
+    int type = 0;
 
     public MyRidesRecyclerViewAdapter(List<RideModel> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -42,12 +46,20 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
         holder.mItem = mValues.get(position);
 
         holder.bindData();
-
+        if (type == 1) {
+            holder.mBtnTrack.setVisibility(View.VISIBLE);
+            holder.mBtnTrack.setText("Track on the map");
+        } else if (type == 2) {
+            holder.mBtnTrack.setVisibility(View.GONE);
+        } else {
+            holder.mBtnTrack.setVisibility(View.VISIBLE);
+            holder.mBtnTrack.setText("Request cancellation");
+        }
         holder.mBtnTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mItem, type);
                 }
             }
         });
@@ -58,8 +70,9 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
         return mValues.size();
     }
 
-    public void updateItems(ArrayList<RideModel> rides) {
+    public void updateItems(ArrayList<RideModel> rides, int type) {
         mValues = rides;
+        this.type = type;
         notifyDataSetChanged();
     }
 
@@ -67,7 +80,7 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
         public View mView, mSep1, mSep2;
         public LinearLayout mViewPickedUp, mViewOnTheWay, mViewDroppedOff;
         public TextView mRideId, mCreatedOn, mAddress;
-        public ImageView mImgChild1;
+        public RecyclerView rvImages;
         public Button mBtnTrack;
         public RideModel mItem;
 
@@ -85,26 +98,26 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
             mCreatedOn = view.findViewById(R.id.txtCreatedOn);
             mAddress = view.findViewById(R.id.txtAddress);
 
-            mImgChild1 = view.findViewById(R.id.imgChild1);
+            rvImages = view.findViewById(R.id.rvImages);
             mBtnTrack = view.findViewById(R.id.btnTrack);
 
         }
 
         public void bindData() {
             mRideId.setText(mItem.getRideName());
-            mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(),(mItem.getCreatedOn()).getTime()));
+            mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getCreatedOn()).getTime()));
             try {
-                mAddress.setText(mItem.getChildModel().get(0).getPickup() + "->" + mItem.getChildModel().get(0).getDrop());
+                mAddress.setText(mItem.getChildModel().get(0).getPickup().getName() + "->" + mItem.getChildModel().get(0).getDrop().getName());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            if (mItem.getChildModel() != null && mItem.getChildModel().size() > 0 && mItem.getChildModel().get(0).getChild().getImages() != null &&
-                    mItem.getChildModel().get(0).getChild().getImages().size() > 0 && mItem.getChildModel().get(0).getChild().getImages().get(0).getSmallPhotoUrl() != null) {
-                Picasso.get().load(mItem.getChildModel().get(0).getChild().getImages().get(0).getSmallPhotoUrl().replace("https://snappill.app", "https://spectradrivewebapi.azurewebsites.net"))
-                        .transform(new CircleTransform()).fit().centerCrop().into(mImgChild1);
-            }
-
+            rvImages.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayout.HORIZONTAL, false));
+            if (mItem.getChildModel() != null && mItem.getChildModel().size() > 0
+                    && mItem.getChildModel().get(0).getChild().getImages().size() > 0
+                    && mItem.getChildModel().get(0).getChild().getImages().get(0).getSmallPhotoUrl() != null)
+                rvImages.setAdapter(new RidesChildImagesAdapter(itemView.getContext(), mItem.getChildModel()));
+            else
+                rvImages.setVisibility(View.GONE);
             processEvents();
         }
 

@@ -6,7 +6,7 @@ public class DropPoint
 
     private double lat;
 
-    private int lon;
+    private double lon;
 
     private String name;
 
@@ -30,10 +30,10 @@ public class DropPoint
     public double getLat(){
         return this.lat;
     }
-    public void setLon(int lon){
+    public void setLon(double lon){
         this.lon = lon;
     }
-    public int getLon(){
+    public double getLon(){
         return this.lon;
     }
     public void setName(String name){
