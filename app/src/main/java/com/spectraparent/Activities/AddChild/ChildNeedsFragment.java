@@ -106,18 +106,50 @@ public class ChildNeedsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mChild = (Child) getArguments().getSerializable("child");
-        from = getArguments().getString("from");
         mCbs.add(mCb1);
+        mCb1.setTag("Visually impaired");
+
         mCbs.add(mCb2);
+        mCb2.setTag("Hearing impaired");
+
         mCbs.add(mCb3);
+        mCb3.setTag("Development delay");
+
         mCbs.add(mCb4);
+        mCb4.setTag("Autism spectrum");
+
         mCbs.add(mCb5);
+        mCb5.setTag("Intellectual Disability");
+
         mCbs.add(mCb6);
+        mCb6.setTag("Emotional Disturbance");
+
         mCbs.add(mCb7);
+        mCb7.setTag("Multiple Disabilities");
 
         mCb8.setTag("8");
         mCbs.add(mCb8);
+        if (getArguments() != null) {
+            mChild = (Child) getArguments().getSerializable("child");
+            from = getArguments().getString("from");
+            if (mChild.getSpecialNeeds() != null && !mChild.getSpecialNeeds().isEmpty()) {
+                String checkedItem[] = mChild.getSpecialNeeds().split(",");
+
+                for (int i = 0; i < checkedItem.length; i++) {
+                    for (int j = 0; j < mCbs.size(); j++) {
+                        if (checkedItem[i].equals(mCbs.get(j).getTag().toString().trim())) {
+                            mCbs.get(j).setChecked(true);
+                        }
+                    }
+                }
+                if (mChild.getOtherSpecialNeeds() != null && !mChild.getOtherSpecialNeeds().isEmpty()) {
+                    mCb8.setChecked(true);
+                } else {
+                    mCb8.setChecked(false);
+                }
+            }
+        }
+
 
         for (CheckBox cb : mCbs) {
             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -131,6 +163,8 @@ public class ChildNeedsFragment extends Fragment {
                         mChild.setOtherSpecialNeeds("");
                         askOtherSpecialNeeds();
                         return;
+                    } else if (buttonView.getTag().toString().equals("8") && !buttonView.isChecked()) {
+                        mChild.setOtherSpecialNeeds("");
                     }
 
                     String needs = "";
@@ -224,6 +258,7 @@ public class ChildNeedsFragment extends Fragment {
                     DialogsHelper.showAlert(getContext(), "Server Error", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     return;
                 }
+                System.out.println("Response " + WebApi.AddChildUrl + "======>" + response.toString());
 
                 UserModel user = LocalStorage.getStudent();
                 user.setChild(data.getData());
@@ -292,6 +327,7 @@ public class ChildNeedsFragment extends Fragment {
                 params.put("About", mChild.getAbout());
                 params.put("SpecialNeeds", mChild.getSpecialNeeds());
                 params.put("OtherSpecialNeeds", mChild.getOtherSpecialNeeds());
+                System.out.println("Request " + WebApi.AddChildUrl + "======>" + new Gson().toJson(params.toString()));
                 return params;
             }
 

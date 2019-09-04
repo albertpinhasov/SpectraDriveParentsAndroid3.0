@@ -79,7 +79,7 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View mView, mSep1, mSep2;
         public LinearLayout mViewPickedUp, mViewOnTheWay, mViewDroppedOff;
-        public TextView mRideId, mCreatedOn, mAddress;
+        public TextView mRideId, mCreatedOn, txtPickup, txtDrop;
         public RecyclerView rvImages;
         public Button mBtnTrack;
         public RideModel mItem;
@@ -96,7 +96,8 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
 
             mRideId = view.findViewById(R.id.txtRideId);
             mCreatedOn = view.findViewById(R.id.txtCreatedOn);
-            mAddress = view.findViewById(R.id.txtAddress);
+            txtPickup = view.findViewById(R.id.txtPickup);
+            txtDrop = view.findViewById(R.id.txtDrop);
 
             rvImages = view.findViewById(R.id.rvImages);
             mBtnTrack = view.findViewById(R.id.btnTrack);
@@ -107,7 +108,8 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
             mRideId.setText(mItem.getRideName());
             mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getCreatedOn()).getTime()));
             try {
-                mAddress.setText(mItem.getChildModel().get(0).getPickup().getName() + "->" + mItem.getChildModel().get(0).getDrop().getName());
+                txtPickup.setText(mItem.getChildModel().get(0).getPickup().getName());
+                txtDrop.setText(mItem.getChildModel().get(0).getDrop().getName());
             } catch (Exception e) {
                 e.printStackTrace();
             }

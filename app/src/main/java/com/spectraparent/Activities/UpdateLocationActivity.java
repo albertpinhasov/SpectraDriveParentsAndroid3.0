@@ -344,7 +344,7 @@ public class UpdateLocationActivity extends BaseActivity implements OnMapReadyCa
                         LocalStorage.storeStudent(mUser);
 
                         DialogsHelper.showAlert(mSelf, "Success", "Location updated", "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS);
-
+                        finish();
                     } else {
                         DialogsHelper.showAlert(mSelf, "Server error", student.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     }

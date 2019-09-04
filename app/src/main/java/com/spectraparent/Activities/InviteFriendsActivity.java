@@ -69,11 +69,20 @@ public class InviteFriendsActivity extends AppCompatActivity {
     @OnClick(R.id.lInsta)
     void onInsta() {
         Intent i = getPackageManager().getLaunchIntentForPackage("com.instagram.android");
-        i.setAction(Intent.ACTION_SEND);
-        i.setType("text/plain");
-        i.putExtra(Intent.EXTRA_SUBJECT, "Invitation to download Spectra Drive");
-        i.putExtra(Intent.EXTRA_TEXT, "Hi, check out Spectra Drive app");
-        startActivity(i);
+        if (i != null) {
+            i=new Intent();
+                i.setAction(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "Invitation to download Spectra Drive");
+            i.putExtra(Intent.EXTRA_TEXT, "Hi, check out Spectra Drive app");
+            i .setPackage("com.instagram.android");
+            startActivity(i);
+        } else {
+            i = new Intent(Intent.ACTION_VIEW);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.setData(Uri.parse("market://details?id=" + "com.instagram.android"));
+            startActivity(i);
+        }
     }
 
     @OnClick(R.id.lEmail)
@@ -119,9 +128,10 @@ public class InviteFriendsActivity extends AppCompatActivity {
 
     @OnClick(R.id.lContact)
     void onContact() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 5);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS}, 5);
 
             return;
         }

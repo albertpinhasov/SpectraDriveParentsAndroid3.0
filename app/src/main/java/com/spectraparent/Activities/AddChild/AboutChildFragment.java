@@ -76,8 +76,10 @@ public class AboutChildFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mChild = (Child) getArguments().getSerializable("child");
-        from = getArguments().getString("from");
+        if (getArguments() != null) {
+            mChild = (Child) getArguments().getSerializable("child");
+            from = getArguments().getString("from");
+        }
 
     }
 

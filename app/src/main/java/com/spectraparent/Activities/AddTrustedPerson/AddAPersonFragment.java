@@ -122,6 +122,8 @@ public class AddAPersonFragment extends Fragment {
             }
         });
         if (from.equals("edit_profile")) {
+            mPhoneNo.setEnabled(false);
+            mEmail.setEnabled(false);
             tvDob.setVisibility(View.GONE);
             mDob.setVisibility(View.GONE);
             UserModel userModel = LocalStorage.getStudent();
@@ -202,6 +204,7 @@ public class AddAPersonFragment extends Fragment {
                     }.getType();
 
                     WebAPIResponseModel<UserModel> student = new Gson().fromJson(response, listType);
+                    System.out.println("Response " + WebApi.UpdateProfileUrl + "======>" + response);
 
                     mBtnNext.revertAnimation();
 
