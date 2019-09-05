@@ -23,6 +23,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.spectraparent.Activities.AddChild.AboutChildFragment;
 import com.spectraparent.Activities.RegisterActivity;
 import com.spectraparent.Fragments.ProfileFragment;
 import com.spectraparent.Helpers.CustomMaskedEditText.MaskedEditText;
@@ -239,13 +240,21 @@ public class AddAPersonFragment extends Fragment {
             v.addToRequestQueue(req);
 
         } else {
-
             if (getActivity() instanceof AddTrustedPersonActivity) {
                 LocalStorage.storeTrustedPerson(mPerson);
                 ((AddTrustedPersonActivity) getActivity()).moveNext();
             } else {
-                mBtnNext.startAnimation();
-                savePerson();
+//                mBtnNext.startAnimation();
+                LocalStorage.storeTrustedPerson(mPerson);
+                PersonRelationFragment aboutChildFragment = new PersonRelationFragment();
+                Bundle args = new Bundle();
+                args.putString("from", "edit");
+                aboutChildFragment.setArguments(args);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container,aboutChildFragment)
+                        .addToBackStack(aboutChildFragment.getClass().getName())
+                        .commit();
+                //savePerson();
             }
 
         }
@@ -257,7 +266,7 @@ public class AddAPersonFragment extends Fragment {
             @Override
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
-                System.out.println("Response " + WebApi.SignInUrl + "======>" + new Gson().toJson(resultResponse));
+                System.out.println("Response " + WebApi.AddTrustedPersonUrl + "======>" + new Gson().toJson(resultResponse));
 
                 Type type = new TypeToken<WebAPIResponseModel<ArrayList<TrustedPersonModel>>>() {
                 }.getType();

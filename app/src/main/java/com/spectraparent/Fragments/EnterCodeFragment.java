@@ -141,8 +141,8 @@ public class EnterCodeFragment extends Fragment {
                     } else if (index < 5) {
                         mDigitBoxes.get(index + 1).requestFocus();
                     } else if (index == 5) {
-                        Log.d("done","finish");
-                       // KeyboardUtils.hideKeyboard(getActivity(), getView());
+                        Log.d("done", "finish");
+                        // KeyboardUtils.hideKeyboard(getActivity(), getView());
 
 //                        String code = mDigitBoxes.get(0).getText().toString() + mDigitBoxes.get(1).getText().toString() +
 //                                mDigitBoxes.get(2).getText().toString() + mDigitBoxes.get(3).getText().toString() +
@@ -169,7 +169,7 @@ public class EnterCodeFragment extends Fragment {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                DialogsHelper.showAlert(getActivity(),"Could not send","Verification code could not be sent as following error occurred: " + e.getLocalizedMessage(),"Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(getActivity(), "Could not send", "Verification code could not be sent as following error occurred: " + e.getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
             }
 
             @Override
@@ -177,7 +177,7 @@ public class EnterCodeFragment extends Fragment {
                 super.onCodeSent(verificationId, forceResendingToken);
                 mResendToken = forceResendingToken;
                 LocalStorage.storeString("verificationId", verificationId);
-                Toast.makeText(getActivity(),"Verification code sent again..!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Verification code sent again..!!", Toast.LENGTH_LONG).show();
             }
         };
 
@@ -190,6 +190,7 @@ public class EnterCodeFragment extends Fragment {
     }
 
     int sec = 60;
+
     public void scheduleResendTimer(final Activity activity) {
         allowToResend = false;
         mTimer = new Timer();
@@ -199,37 +200,37 @@ public class EnterCodeFragment extends Fragment {
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-               activity.runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       if(sec > 0){
-                           sec --;
-                           mLblResend.setText("Resend in " + String.valueOf(sec));
-                       }else {
-                           allowToResend = true;
-                           mLblResend.setText("Resend");
-                           mTimer.cancel();
-                       }
-                   }
-               });
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (sec > 0) {
+                            sec--;
+                            mLblResend.setText("Resend in " + String.valueOf(sec));
+                        } else {
+                            allowToResend = true;
+                            mLblResend.setText("Resend");
+                            mTimer.cancel();
+                        }
+                    }
+                });
             }
-        },Calendar.getInstance().getTime(),1000);
+        }, Calendar.getInstance().getTime(), 1000);
 
     }
 
     @OnClick(R.id.lblResend)
     void onResend() {
-        if(!allowToResend){
-            Toast.makeText(getActivity(),"Please wait sometime to resend verification code", Toast.LENGTH_LONG).show();
+        if (!allowToResend) {
+            Toast.makeText(getActivity(), "Please wait sometime to resend verification code", Toast.LENGTH_LONG).show();
             return;
         }
 
         scheduleResendTimer(getActivity());
-        Toast.makeText(getActivity(),"Resending verification code..", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Resending verification code..", Toast.LENGTH_LONG).show();
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 LocalStorage.getStudent().getPhoneNumber(),        // Phone number to verify
-                1  ,
+                1,
                 TimeUnit.MINUTES,   // Unit of timeout
                 getActivity(),               // Activity (for callback binding)
                 mCallbacks,
@@ -258,12 +259,12 @@ public class EnterCodeFragment extends Fragment {
 
 
     @OnClick(R.id.btnConfirm)
-    void validateCode(){
+    void validateCode() {
         String code = mDigitBoxes.get(0).getText().toString() + mDigitBoxes.get(1).getText().toString() +
                 mDigitBoxes.get(2).getText().toString() + mDigitBoxes.get(3).getText().toString() +
                 mDigitBoxes.get(4).getText().toString() + mDigitBoxes.get(5).getText().toString();
 
-        if(code.length() < 6){
+        if (code.length() < 6) {
             DialogsHelper.showAlert(getActivity(), "Invalid Code", "Please enter a valid verification code received in SMS", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
@@ -288,10 +289,10 @@ public class EnterCodeFragment extends Fragment {
 
                             mBtnConfirm.revertAnimation();
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                DialogsHelper.showAlert(getActivity(),"Invalid Code","Verification code entered is wrong, please try again with correct code","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                                DialogsHelper.showAlert(getActivity(), "Invalid Code", "Verification code entered is wrong, please try again with correct code", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
 
-                            }else {
-                                DialogsHelper.showAlert(getActivity(),"Verification failed",task.getException().getLocalizedMessage(),"Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                            } else {
+                                DialogsHelper.showAlert(getActivity(), "Verification failed", task.getException().getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                             }
                         }
                     }
@@ -300,8 +301,10 @@ public class EnterCodeFragment extends Fragment {
 
     private void signInWithAPI() {
         VolleyUtils v = VolleyUtils.getInstance(getActivity());
-
-        ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.SignInUrl, LocalStorage.getStudent(), new Response.Listener<String>() {
+        UserModel userModel = LocalStorage.getStudent();
+        userModel.setDeviceToken(LocalStorage.getString("firebase_token"));
+        userModel.setDeviceType("android");
+        ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.SignInUrl, userModel, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Type listType = new TypeToken<WebAPIResponseModel<UserModel>>() {
@@ -312,25 +315,25 @@ public class EnterCodeFragment extends Fragment {
 
                 WebAPIResponseModel<UserModel> student = new Gson().fromJson(response, listType);
 
-                if(student != null){
+                if (student != null) {
                     if (student.isSuccess()) {
                         LocalStorage.storeStudent(student.getData());
                         if (student.getData().getTrustedPersons() != null && student.getData().getTrustedPersons().size() > 0)
                             LocalStorage.storeTrustedPerson(student.getData().getTrustedPersons().get(0));
 
-                        if(student.getData().getFirstName() != null && student.getData().getFirstName().length() >0){
+                        if (student.getData().getFirstName() != null && student.getData().getFirstName().length() > 0) {
                             Intent intent = new Intent(getActivity(), MainHomeActivity.class);
                             startActivity(intent);
                             getActivity().finishAffinity();
-                        }else {
-                            ((RegisterActivity)getActivity()).moveNext();
+                        } else {
+                            ((RegisterActivity) getActivity()).moveNext();
                         }
 
-                    }else {
-                        DialogsHelper.showAlert(getActivity(),"Server error",student.getMessage(),"Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                    } else {
+                        DialogsHelper.showAlert(getActivity(), "Server error", student.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     }
-                }else {
-                    DialogsHelper.showAlert(getActivity(),"Server error","Internal server error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                } else {
+                    DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                 }
 
             }
@@ -343,7 +346,7 @@ public class EnterCodeFragment extends Fragment {
 
                 mBtnConfirm.revertAnimation();
                 System.out.println(error);
-                DialogsHelper.showAlert(getActivity(),"Network error","Network error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
             }
         }, new HashMap<String, String>());
 

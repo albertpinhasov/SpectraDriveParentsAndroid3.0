@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.spectraparent.Activities.Cancel_Ride_Page_Activity;
 import com.spectraparent.Activities.MapsActivity;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.EndlessRecyclerViewScrollListener;
@@ -82,21 +83,21 @@ public class RidesFragment extends Fragment {
                     if (currentRideList.isEmpty())
                         getMyRides(1, 1);
                     else
-                        mAdapter.updateItems(currentRideList,1);
+                        mAdapter.updateItems(currentRideList, 1);
                 } else if (checkedId == R.id.b2) {
                     RidesFragment.this.checkedId = R.id.b2;
                     mRideType.setText("Scheduled rides");
                     if (scedualRideList.isEmpty())
                         getMyRides(3, 1);
                     else
-                        mAdapter.updateItems(scedualRideList,3);
+                        mAdapter.updateItems(scedualRideList, 3);
                 } else if (checkedId == R.id.b3) {
                     RidesFragment.this.checkedId = R.id.b3;
                     mRideType.setText("Past rides");
                     if (pastRideList.isEmpty())
                         getMyRides(2, 1);
                     else
-                        mAdapter.updateItems(pastRideList,2);
+                        mAdapter.updateItems(pastRideList, 2);
 
                 }
             }
@@ -147,13 +148,15 @@ public class RidesFragment extends Fragment {
                     intent.putExtra("json", new Gson().toJson(item));
                     startActivity(intent);
                 } else {
-
+                    Intent intent = new Intent(getActivity(), Cancel_Ride_Page_Activity.class);
+                    intent.putExtra("json", new Gson().toJson(item));
+                    startActivity(intent);
                 }
-        }
-    };
+            }
+        };
 
         return view;
-}
+    }
 
 
     @Override
@@ -203,21 +206,22 @@ public class RidesFragment extends Fragment {
                             return (o1.getCreatedOn().getTime() > o2.getCreatedOn().getTime() ? -1 : 1);
                         }
                     });
+                    currentRideList.clear();
                     switch (type) {
                         case 1: {
                             currentRideList.addAll(rides.getData());
-                            mAdapter.updateItems(currentRideList,1);
+                            mAdapter.updateItems(currentRideList, 1);
 
                             return;
                         }
                         case 2: {
                             pastRideList.addAll(rides.getData());
-                            mAdapter.updateItems(pastRideList,2);
+                            mAdapter.updateItems(pastRideList, 2);
                             return;
                         }
                         case 3: {
                             scedualRideList.addAll(rides.getData());
-                            mAdapter.updateItems(scedualRideList,3);
+                            mAdapter.updateItems(scedualRideList, 3);
 
                             return;
                         }
@@ -299,8 +303,8 @@ public class RidesFragment extends Fragment {
         v.addToRequestQueue(req);
     }
 
-public interface OnListFragmentInteractionListener {
-    void onListFragmentInteraction(RideModel item, int type);
-}
+    public interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(RideModel item, int type);
+    }
 
 }

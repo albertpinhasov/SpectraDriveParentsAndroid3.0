@@ -14,7 +14,7 @@ public class RideModel {
 
     private String driverId;
 
-    private List<String> locationData;
+    private List<LocationModel> locationData;
 
     private PoolData poolData;
 
@@ -73,10 +73,10 @@ public class RideModel {
     public String getDriverId(){
         return this.driverId;
     }
-    public void setLocationData(List<String> locationData){
+    public void setLocationData(List<LocationModel> locationData){
         this.locationData = locationData;
     }
-    public List<String> getLocationData(){
+    public List<LocationModel> getLocationData(){
         return this.locationData;
     }
     public void setPoolData(PoolData poolData){

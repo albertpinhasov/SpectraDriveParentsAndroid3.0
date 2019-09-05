@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -18,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.spectraparent.Helpers.DialogsHelper;
@@ -57,7 +60,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        getFirebaseToken();
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
@@ -211,5 +214,21 @@ public class LoginActivity extends BaseActivity {
         }, new HashMap<String, String>());
 
         v.addToRequestQueue(req);
+    }
+    void getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.v("getInstanceId failed", task.getException().toString());
+                            return;
+                        }
+                        String token = task.getResult().getToken();
+                        LocalStorage.storeString("firebase_token", token);
+                        Log.v("getInstanceId success", token);
+
+                    }
+                });
     }
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Interface.AdapterClickListerner;
 import com.spectraparent.Models.Child;
+import com.spectraparent.Models.Images;
 import com.spectraparent.android.R;
 
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
 
         public void bindData(Child childModel) {
             if (childModel.getImages() != null && childModel.getImages().size() > 0) {
-                rcImages.setAdapter(new ChildImagesAdapter(itemView.getContext(), childModel));
+                rcImages.setAdapter(new ChildImagesAdapter(itemView.getContext(), (ArrayList<Images>) childModel.getImages()));
             }
             mFirstName.setText(childModel.getFirstName());
             mLastName.setText(childModel.getLastName());

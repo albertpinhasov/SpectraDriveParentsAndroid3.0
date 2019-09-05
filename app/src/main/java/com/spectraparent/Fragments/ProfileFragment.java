@@ -17,6 +17,7 @@ import com.spectraparent.Activities.AddChild.AboutChildFragment;
 import com.spectraparent.Activities.AddChild.ChildNeedsFragment;
 import com.spectraparent.Activities.AddTrustedPerson.AddAPersonFragment;
 import com.spectraparent.Adapters.ProfileChildAdapter;
+import com.spectraparent.Helpers.CircleTransform;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Interface.AdapterClickListerner;
 import com.spectraparent.Models.Child;
@@ -110,7 +111,9 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
         mTpRelation.setText(trustedPerson.getRelationToChild());
         mTpAddress.setText(trustedPerson.getAddress());
         if (trustedPerson.getImages() != null && trustedPerson.getImages().size() > 0)
-            Picasso.get().load(trustedPerson.getImages().get(0).getSmallPhotoUrl()).into(ivImage);
+            Picasso.get().load(trustedPerson.getImages().get(0).getSmallPhotoUrl()).
+                    placeholder(R.drawable.no_profile)
+                    .transform(new CircleTransform()).fit().centerCrop().into(ivImage);
     }
 
     @OnClick(R.id.btnEditProfile)

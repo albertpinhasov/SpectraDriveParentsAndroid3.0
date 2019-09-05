@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.spectraparent.Activities.AddChild.OtherPersonRelationActivity;
+import com.spectraparent.Fragments.ProfileFragment;
 import com.spectraparent.Helpers.ActionSheet;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.KeyboardUtils;
@@ -120,7 +122,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
 
     @BindView(R.id.btnNext)
     CircularProgressImageButton mBtnNext;
-
+    String from = "";
     int selectingIndex = 0;
     private Uri mCropImageUri;
 
@@ -143,6 +145,16 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        if (mPerson == null)
+            mPerson = LocalStorage.getStudent().getTrustedPersons().get(0);
+        if (getArguments() != null) {
+            from = getArguments().getString("from");
+            mAddress.setText(mPerson.getAddress() != null ? mPerson.getAddress() : "");
+            if (mPerson.getImages() != null && mPerson.getImages().size() > 0) {
+                mLPlace.setVisibility(View.GONE);
+                mLImages.setVisibility(View.VISIBLE);
+            }
+        }
 
         mBtns.add(mBtn1);
         mBtns.add(mBtn2);
@@ -357,6 +369,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             @Override
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
+                System.out.println("Response " + WebApi.AddTrustedPersonUrl + "======>" +resultResponse);
 
                 Type type = new TypeToken<WebAPIResponseModel<ArrayList<TrustedPersonModel>>>() {
                 }.getType();
@@ -377,11 +390,19 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                 user.setTrustedPersons(data.getData());
 
                 LocalStorage.storeStudent(user);
+                LocalStorage.storeTrustedPerson(data.getData().get(0));
 
                 DialogsHelper.showAlert(getContext(), "Success", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS, new Runnable() {
                     @Override
                     public void run() {
-                        getActivity().finish();
+                        if (from != null && !from.isEmpty()) {
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.container, new ProfileFragment())
+                                    .commit();
+                        } else {
+                            getActivity().finish();
+
+                        }
                     }
                 });
 
@@ -431,6 +452,8 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
+                if (LocalStorage.getTrustedPerson().getTrustedPersonId() != null)
+                    params.put("trustedPersonId", LocalStorage.getTrustedPerson().getTrustedPersonId());
                 params.put("FirstName", mPerson.getFirstName());
                 params.put("LastName", mPerson.getLastName());
                 params.put("Address", mPerson.getAddress());
@@ -439,6 +462,8 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                 params.put("OtherRelationToChild", mPerson.getOtherRelationToChild());
                 params.put("PhoneNumber", mPerson.getPhoneNumber());
                 params.put("RelationToChild", mPerson.getRelationToChild());
+                System.out.println("Request " + WebApi.AddTrustedPersonUrl + "======>" + new Gson().toJson(params.toString()));
+
                 return params;
             }
 
@@ -458,7 +483,10 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                 return headers;
             }
         };
-
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyUtils.getInstance(getActivity()).addToRequestQueue(multipartRequest);
     }
 }

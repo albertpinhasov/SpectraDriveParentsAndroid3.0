@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
     implementation 'info.hoang8f:android-segmented:1.0.6'
+    implementation 'com.archit.calendar:awesome-calendar:1.1.5'
 
 }
 repositories {

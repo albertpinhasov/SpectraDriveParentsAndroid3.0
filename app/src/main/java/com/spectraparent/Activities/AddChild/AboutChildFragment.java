@@ -79,6 +79,7 @@ public class AboutChildFragment extends Fragment {
         if (getArguments() != null) {
             mChild = (Child) getArguments().getSerializable("child");
             from = getArguments().getString("from");
+            mAbout.setText(mChild.getAbout() != null ? mChild.getAbout() : "");
         }
 
     }

@@ -11,7 +11,7 @@ public class ChildModel {
 
     private String contacts;
 
-    private List<String> events;
+    private List<RideEventModel> events;
 
     private int index;
 
@@ -39,10 +39,10 @@ public class ChildModel {
     public String getContacts(){
         return this.contacts;
     }
-    public void setEvents(List<String> events){
+    public void setEvents(List<RideEventModel> events){
         this.events = events;
     }
-    public List<String> getEvents(){
+    public List<RideEventModel> getEvents(){
         return this.events;
     }
     public void setIndex(int index){

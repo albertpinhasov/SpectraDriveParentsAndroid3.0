@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.spectraparent.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,7 +21,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -53,6 +55,11 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
+        <service android:name="com.spectraparent.Service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -62,6 +69,9 @@
             android:label="@string/title_activity_maps" />
         <activity android:name="com.spectraparent.Activities.DetailsActivity" />
         <activity android:name="com.spectraparent.Activities.ProfileActivity" />
+        <activity android:name="com.spectraparent.Activities.Cancel_Ride_Page_Activity"
+         />
+        <activity android:name="com.spectraparent.Activities.Cancelellation_Form_Activity" />
         <activity android:name="com.spectraparent.Activities.SettingsActivity" />
         <activity android:name="com.spectraparent.Activities.InviteFriendsActivity" />
         <activity android:name="com.spectraparent.Activities.HelpFAQ.FAQActivity" />

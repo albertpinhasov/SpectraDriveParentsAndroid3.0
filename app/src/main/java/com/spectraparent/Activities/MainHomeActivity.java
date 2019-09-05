@@ -8,11 +8,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.spectraparent.Activities.AddChild.AddChildActivity;
 import com.spectraparent.Activities.AddTrustedPerson.AddTrustedPersonActivity;
 import com.spectraparent.Activities.AddTrustedPerson.AddTrustedPersonIntroActivity;
@@ -31,7 +37,7 @@ public class MainHomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private TextView mTitle,tvNavHeader;
+    private TextView mTitle, tvNavHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,6 @@ public class MainHomeActivity extends BaseActivity
         getSupportActionBar().setTitle("");
 
         drawer = findViewById(R.id.drawer_layout);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -61,7 +66,7 @@ public class MainHomeActivity extends BaseActivity
         View headerView = navigationView.getHeaderView(0);
         tvNavHeader = headerView.findViewById(R.id.tvNavHeader);
 
-        tvNavHeader.setText(LocalStorage.getStudent().getFirstName()+" "+LocalStorage.getStudent().getLastName());
+        tvNavHeader.setText(LocalStorage.getStudent().getFirstName() + " " + LocalStorage.getStudent().getLastName());
 
     }
 
@@ -160,5 +165,22 @@ public class MainHomeActivity extends BaseActivity
         }
 
         //startActivity(new Intent(this, MapsActivity.class));
+    }
+
+    void getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.v("getInstanceId failed", task.getException().toString());
+                            return;
+                        }
+                        String token = task.getResult().getToken();
+                        LocalStorage.storeString("firebase_token", token);
+                        Log.v("getInstanceId success", token);
+
+                    }
+                });
     }
 }

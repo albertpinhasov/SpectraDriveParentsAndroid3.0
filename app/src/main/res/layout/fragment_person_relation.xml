@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context="com.spectraparent.Activities.AddTrustedPerson.PersonRelationFragment">
 
     <LinearLayout
@@ -52,7 +53,7 @@
             <Button
                 android:id="@+id/btn1"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
@@ -62,7 +63,7 @@
             <Button
                 android:id="@+id/btn2"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
@@ -72,7 +73,7 @@
             <Button
                 android:id="@+id/btn3"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
@@ -82,7 +83,7 @@
             <Button
                 android:id="@+id/btn4"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
                 android:text="brother"
@@ -102,7 +103,7 @@
             <Button
                 android:id="@+id/btn5"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
@@ -112,7 +113,7 @@
             <Button
                 android:id="@+id/btn6"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
@@ -122,7 +123,7 @@
             <Button
                 android:id="@+id/btn7"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
@@ -132,7 +133,7 @@
             <Button
                 android:id="@+id/btn8"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
                 android:text="uncle"
@@ -150,7 +151,7 @@
             <Button
                 android:id="@+id/btn9"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"

@@ -51,7 +51,7 @@ public class PromptDialog extends AlertDialog {
     private CharSequence mTitle, mContent, mBtnText;
 
     public PromptDialog(Context context) {
-        this(context, 0);
+            this(context, 0);
     }
 
     public PromptDialog(Context context, int theme) {

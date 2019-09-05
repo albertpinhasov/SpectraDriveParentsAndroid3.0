@@ -12,6 +12,25 @@ public class UserModel {
     private String profile;
     private String userIdStr;
     private String schoolLocation;
+    private String DeviceType ;
+
+    public String getDeviceType() {
+        return DeviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        DeviceType = deviceType;
+    }
+
+    public String getDeviceToken() {
+        return DeviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        DeviceToken = deviceToken;
+    }
+
+    private String DeviceToken ;
 
     public String getBirthday() {
         return birthday;

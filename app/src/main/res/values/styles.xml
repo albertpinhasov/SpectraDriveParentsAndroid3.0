@@ -14,7 +14,7 @@
         <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
-
+    <style name="AppT" parent="android:Theme.Holo.Light.DarkActionBar"/>
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
