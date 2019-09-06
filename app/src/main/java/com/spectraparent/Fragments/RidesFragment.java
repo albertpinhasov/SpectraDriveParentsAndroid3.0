@@ -25,6 +25,7 @@ import com.spectraparent.Activities.Cancel_Ride_Page_Activity;
 import com.spectraparent.Activities.MapsActivity;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.EndlessRecyclerViewScrollListener;
+import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Models.RideModel;
 import com.spectraparent.Models.RideRequest;
@@ -77,27 +78,33 @@ public class RidesFragment extends Fragment {
         mSegment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.b1) {
+                    if (checkedId == R.id.b1) {
                     RidesFragment.this.checkedId = R.id.b1;
                     mRideType.setText("Current rides");
                     if (currentRideList.isEmpty())
                         getMyRides(1, 1);
-                    else
+                    else {
+                        mEmpty.setVisibility(View.GONE);
                         mAdapter.updateItems(currentRideList, 1);
+                    }
                 } else if (checkedId == R.id.b2) {
                     RidesFragment.this.checkedId = R.id.b2;
                     mRideType.setText("Scheduled rides");
                     if (scedualRideList.isEmpty())
                         getMyRides(3, 1);
-                    else
+                    else {
+                        mEmpty.setVisibility(View.GONE);
                         mAdapter.updateItems(scedualRideList, 3);
+                    }
                 } else if (checkedId == R.id.b3) {
                     RidesFragment.this.checkedId = R.id.b3;
                     mRideType.setText("Past rides");
                     if (pastRideList.isEmpty())
                         getMyRides(2, 1);
-                    else
+                    else {
+                        mEmpty.setVisibility(View.GONE);
                         mAdapter.updateItems(pastRideList, 2);
+                    }
 
                 }
             }
@@ -123,8 +130,6 @@ public class RidesFragment extends Fragment {
                     past_Ride_Page++;
                     mRideType.setText("Past rides");
                     getMyRides(2, past_Ride_Page);
-
-
                 }
             }
         });
@@ -186,7 +191,7 @@ public class RidesFragment extends Fragment {
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f)
                 .show();
-        RideRequest rideRequest = new RideRequest(page, 10, "6bf08be9-2e85-4775-b792-a8396c969d87", type);
+        RideRequest rideRequest = new RideRequest(page, 10, LocalStorage.getStudent().getUserId(), type);
         ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.GetMyRidesUrl, rideRequest, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -206,21 +211,39 @@ public class RidesFragment extends Fragment {
                             return (o1.getCreatedOn().getTime() > o2.getCreatedOn().getTime() ? -1 : 1);
                         }
                     });
-                    currentRideList.clear();
+
                     switch (type) {
                         case 1: {
                             currentRideList.addAll(rides.getData());
+                            if (currentRideList.size() > 0) {
+                                mEmpty.setVisibility(View.GONE);
+                            } else {
+                                mEmpty.setVisibility(View.VISIBLE);
+
+                            }
                             mAdapter.updateItems(currentRideList, 1);
 
                             return;
                         }
                         case 2: {
                             pastRideList.addAll(rides.getData());
+                            if (pastRideList.size() > 0) {
+                                mEmpty.setVisibility(View.GONE);
+                            } else {
+                                mEmpty.setVisibility(View.VISIBLE);
+
+                            }
                             mAdapter.updateItems(pastRideList, 2);
                             return;
                         }
                         case 3: {
                             scedualRideList.addAll(rides.getData());
+                            if (scedualRideList.size() > 0) {
+                                mEmpty.setVisibility(View.GONE);
+                            } else {
+                                mEmpty.setVisibility(View.VISIBLE);
+
+                            }
                             mAdapter.updateItems(scedualRideList, 3);
 
                             return;
@@ -228,12 +251,10 @@ public class RidesFragment extends Fragment {
                     }
 
                 } else {
+                    mEmpty.setVisibility(View.VISIBLE);
                     DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                 }
 
-                int visibility = mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE;
-
-                mEmpty.setVisibility(visibility);
 
             }
 
@@ -242,6 +263,7 @@ public class RidesFragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                mEmpty.setVisibility(View.VISIBLE);
                 mProgress.dismiss();
                 System.out.println(error);
                 DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
@@ -254,7 +276,20 @@ public class RidesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getMyRides(1, current_Ride_Page);
+        currentRideList.clear();
+        scedualRideList.clear();
+        pastRideList.clear();
+        if (checkedId == R.id.b2) {
+            mRideType.setText("Scheduled rides");
+            getMyRides(3, scedual_ride_page);
+
+        } else if (checkedId == R.id.b3) {
+            mRideType.setText("Past rides");
+            getMyRides(2, past_Ride_Page);
+        } else {
+            mRideType.setText("Current rides");
+            getMyRides(1, current_Ride_Page);
+        }
     }
 
     @OnClick({R.id.btnSamplePoolFromSchoolRide, R.id.btnSamplePoolToSchoolRide, R.id.btnSampleRide})

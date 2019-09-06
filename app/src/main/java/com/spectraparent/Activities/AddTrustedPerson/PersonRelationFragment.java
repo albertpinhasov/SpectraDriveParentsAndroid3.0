@@ -369,7 +369,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             @Override
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
-                System.out.println("Response " + WebApi.AddTrustedPersonUrl + "======>" +resultResponse);
+                System.out.println("Response " + WebApi.AddTrustedPersonUrl + "======>" + resultResponse);
 
                 Type type = new TypeToken<WebAPIResponseModel<ArrayList<TrustedPersonModel>>>() {
                 }.getType();
@@ -452,8 +452,9 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                if (LocalStorage.getTrustedPerson().getTrustedPersonId() != null)
-                    params.put("trustedPersonId", LocalStorage.getTrustedPerson().getTrustedPersonId());
+                if (LocalStorage.getStudent().getTrustedPersons().get(0) != null &&
+                        LocalStorage.getStudent().getTrustedPersons().get(0).getTrustedPersonId() != null)
+                    params.put("trustedPersonId",  LocalStorage.getStudent().getTrustedPersons().get(0).getTrustedPersonId());
                 params.put("FirstName", mPerson.getFirstName());
                 params.put("LastName", mPerson.getLastName());
                 params.put("Address", mPerson.getAddress());

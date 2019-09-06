@@ -40,7 +40,7 @@ public class ApiRequest extends JsonRequest {
         }
         headers.put("Content-Type", "application/json; charset=utf-8");
         configureRequest();
-        setRetryPolicy(new DefaultRetryPolicy(10000, 2, 1));
+        setRetryPolicy(new DefaultRetryPolicy(60000, 4, 1));
     }
 
     private void configureRequest() {

@@ -1,9 +1,11 @@
 package com.spectraparent.Activities.AddChild;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.spectraparent.Activities.MainHomeActivity;
@@ -17,6 +19,7 @@ public class AddChildActivity extends AppCompatActivity implements INavigation {
     private WormDotsIndicator dotsIndicator;
     private ViewPager mViewpager;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,12 @@ public class AddChildActivity extends AppCompatActivity implements INavigation {
 
 
         mViewpager = (ViewPager) findViewById(R.id.vpPages);
+        mViewpager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         mViewpager.setAdapter(new AddChildViewPagerAdapter(getSupportFragmentManager()));
 
         dotsIndicator.setViewPager(mViewpager);

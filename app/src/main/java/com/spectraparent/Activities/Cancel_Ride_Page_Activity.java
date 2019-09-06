@@ -98,6 +98,7 @@ public class Cancel_Ride_Page_Activity extends AppCompatActivity {
         Intent intent = new Intent(this, Cancelellation_Form_Activity.class);
         intent.putExtra("json", new Gson().toJson(mRide));
         startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.btnEditRide)

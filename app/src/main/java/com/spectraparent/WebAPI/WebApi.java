@@ -12,6 +12,7 @@ public class WebApi {
     public static final String SaveQueryUrl = "https://etapi.softprodigy.in/Users/SaveQuery";
     public static final String GetAllFaqsUrl = "https://spectradriveapp.com/api/FAQs/GetAllFaqs";
     public static final String CreateDummyRideUrl = "https://etapi.softprodigy.in/Users/CreateDummyRide";
+    public static final String CancelRide = "https://etapi.softprodigy.in/Users/CancellationRide";
 
     public static final String SignInUrl = "https://etapi.softprodigy.in/Users/LoginOrRegister";
     public static final String GetMyRidesUrl = "https://etapi.softprodigy.in/Users/GetUserRides";

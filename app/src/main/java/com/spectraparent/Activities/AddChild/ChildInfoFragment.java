@@ -109,11 +109,11 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
         mFirstName.setText(mChild.getFirstName());
         mLastName.setText(mChild.getLastName());
 
-        for(ImageView img: mImages){
+        for (ImageView img : mImages) {
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onImageClicked((ImageView)v);
+                    onImageClicked((ImageView) v);
                 }
             });
         }
@@ -123,26 +123,26 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
         selectingIndex = Integer.parseInt(v.getTag().toString());
 
         KeyValueModel<Integer, ImageView> item = null;
-        for(KeyValueModel<Integer, ImageView> m: mSelectedImages){
-            if(m.Val == v){
+        for (KeyValueModel<Integer, ImageView> m : mSelectedImages) {
+            if (m.Val == v) {
                 item = m;
                 break;
             }
         }
 
-        if(item != null){
+        if (item != null) {
             ActionSheet.createBuilder(getActivity(), getChildFragmentManager())
                     .setCancelButtonTitle("Cancel")
                     .setOtherButtonTitles("Replace", "Remove")
                     .setCancelableOnTouchOutside(true)
                     .setListener(ChildInfoFragment.this).show();
-        }else {
+        } else {
             CropImage.startPickImageActivity(getActivity(), this);
         }
     }
 
     @OnClick(R.id.btnAddPhoto)
-    void addPhoto(){
+    void addPhoto() {
         mLPlace.setVisibility(View.GONE);
         mLImages.setVisibility(View.VISIBLE);
 
@@ -161,7 +161,7 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
             if (CropImage.isReadExternalStoragePermissionsRequired(getActivity(), imageUri)) {
                 // request permissions and handle the result in onRequestPermissionsResult()
                 mCropImageUri = imageUri;
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},   CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
             } else {
                 // no permissions required or already granted, can start crop image activity
                 startCropImageActivity(imageUri);
@@ -197,24 +197,24 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
     }
 
     @OnClick(R.id.fab)
-    void onNext(){
+    void onNext() {
 
         String firstName = mFirstName.getText().toString().trim();
         String lastName = mLastName.getText().toString();
 
-        if(firstName.length() == 0){
-            DialogsHelper.showAlert(getContext(), "Incomplete information","Please enter first name of your child.", "Ok", null, PromptDialog.DIALOG_TYPE_INFO);
+        if (firstName.length() == 0) {
+            DialogsHelper.showAlert(getContext(), "Incomplete information", "Please enter first name of your child.", "Ok", null, PromptDialog.DIALOG_TYPE_INFO);
             return;
         }
 
-        if(lastName.length() == 0){
-            DialogsHelper.showAlert(getContext(), "Incomplete information","Please enter last name of your child.", "Ok", null, PromptDialog.DIALOG_TYPE_INFO);
+        if (lastName.length() == 0) {
+            DialogsHelper.showAlert(getContext(), "Incomplete information", "Please enter last name of your child.", "Ok", null, PromptDialog.DIALOG_TYPE_INFO);
             return;
         }
 
         SpectraDrive.PickedImages.clear();
 
-        for(KeyValueModel<Integer, ImageView> item: mSelectedImages){
+        for (KeyValueModel<Integer, ImageView> item : mSelectedImages) {
             SpectraDrive.PickedImages.add(Tools.getFileDataFromDrawable(getContext(), item.Val.getDrawable()));
         }
 
@@ -223,7 +223,7 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
 
         LocalStorage.storeChild(mChild);
 
-        ((AddChildActivity)getActivity()).moveNext();
+        ((AddChildActivity) getActivity()).moveNext();
     }
 
     @Override
@@ -233,22 +233,22 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
 
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
-if(index == 0){
-    CropImage.startPickImageActivity(getActivity(), this);
-}else {
-    KeyValueModel<Integer, ImageView> item = null;
-    for(KeyValueModel<Integer, ImageView> m: mSelectedImages){
-        if(m.Key == selectingIndex){
-            item = m;
-            break;
+        if (index == 0) {
+            CropImage.startPickImageActivity(getActivity(), this);
+        } else {
+            KeyValueModel<Integer, ImageView> item = null;
+            for (KeyValueModel<Integer, ImageView> m : mSelectedImages) {
+                if (m.Key == selectingIndex) {
+                    item = m;
+                    break;
+                }
+            }
+
+            if (item != null) {
+                mSelectedImages.remove(item);
+            }
+
+            mImages.get(selectingIndex).setImageDrawable(getActivity().getResources().getDrawable(R.drawable.add_photo));
         }
-    }
-
-    if(item != null){
-        mSelectedImages.remove(item);
-    }
-
-    mImages.get(selectingIndex).setImageDrawable(getActivity().getResources().getDrawable(R.drawable.add_photo));
-}
     }
 }

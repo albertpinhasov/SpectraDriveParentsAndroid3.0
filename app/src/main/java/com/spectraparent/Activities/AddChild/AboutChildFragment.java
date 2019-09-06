@@ -80,6 +80,7 @@ public class AboutChildFragment extends Fragment {
             mChild = (Child) getArguments().getSerializable("child");
             from = getArguments().getString("from");
             mAbout.setText(mChild.getAbout() != null ? mChild.getAbout() : "");
+            mBtnNextChild.setVisibility(View.GONE);
         }
 
     }
@@ -123,16 +124,21 @@ public class AboutChildFragment extends Fragment {
 
                 Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>() {
                 }.getType();
+                System.out.println("Response " + WebApi.AddChildUrl + "======>" + new Gson().toJson(response));
 
                 WebAPIResponseModel<ArrayList<Child>> data = new Gson().fromJson(resultResponse, type);
 
                 if (data == null) {
                     DialogsHelper.showAlert(getContext(), "Server Error", "Internal server error, please try again later.", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                    if (mBtnNext.isAnimating()) mBtnNext.revertAnimation();
+                    if (mBtnNextChild.isAnimating()) mBtnNextChild.revertAnimation();
                     return;
                 }
 
                 if (!data.isSuccess()) {
                     DialogsHelper.showAlert(getContext(), "Server Error", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                    if (mBtnNext.isAnimating()) mBtnNext.revertAnimation();
+                    if (mBtnNextChild.isAnimating()) mBtnNextChild.revertAnimation();
                     return;
                 }
 
@@ -208,6 +214,8 @@ public class AboutChildFragment extends Fragment {
                 params.put("About", mChild.getAbout());
                 params.put("SpecialNeeds", mChild.getSpecialNeeds());
                 params.put("OtherSpecialNeeds", mChild.getOtherSpecialNeeds());
+                System.out.println("Response " + WebApi.AddChildUrl + "======>" + params.toString());
+
                 return params;
             }
 

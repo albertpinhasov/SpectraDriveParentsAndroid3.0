@@ -101,6 +101,7 @@ public class MainHomeActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_rides) {
+            mTitle.setText("Rides");
             onNavigationDrawerItemSelected(new RidesFragment());
         } else if (id == R.id.nav_profile) {
             onNavigationDrawerItemSelected(new ProfileFragment());
