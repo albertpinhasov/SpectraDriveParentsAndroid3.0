@@ -51,8 +51,9 @@
         android:layout_marginBottom="10dp"
         android:text="Current Rides"
         android:textSize="16sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"

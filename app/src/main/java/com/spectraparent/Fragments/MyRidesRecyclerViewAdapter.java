@@ -135,6 +135,14 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
             } else if (mItem.getChildModel().get(0).getEvents().size() == 3) {
                 markDroppedOff();
             }
+            if (type == 1) {
+                markOnTheWay();
+            } else if (type == 2) {
+                markNotStarted();
+            } else {
+                markNotStarted();
+            }
+
         }
 
         void markNotStarted() {

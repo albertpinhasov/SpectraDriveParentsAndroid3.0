@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Ride 123456"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -43,6 +44,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/dark_grey"
                     android:text="Today, 11:00 AM"
                     android:textAlignment="textEnd" />
 
@@ -63,8 +65,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
-
-                    android:text="Montgomery Street" />
+                    android:text="Montgomery Street"
+                    android:textColor="@color/dark_grey" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -77,6 +79,7 @@
                 <TextView
                     android:id="@+id/txtDrop"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/dark_grey"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text=" 242 ---> Brighton Ave, 10" />

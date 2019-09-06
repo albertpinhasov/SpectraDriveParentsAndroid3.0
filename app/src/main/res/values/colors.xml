@@ -10,6 +10,7 @@
     <color name="colorNavPrimaryDark">#26c6da</color>
 
     <color name="colorWhite">#FFFFFF</color>
+    <color name="dark_grey">#414242</color>
     <color name="colorBackground">#f9fafc</color>
     <color name="colorBlack">#000000</color>
 
