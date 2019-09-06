@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -148,6 +149,8 @@ public class ChildNeedsFragment extends Fragment {
                     mCb8.setChecked(false);
                 }
             }
+        } else {
+            mChild = LocalStorage.getChild();
         }
 
 
@@ -232,7 +235,7 @@ public class ChildNeedsFragment extends Fragment {
             LocalStorage.storeChild(mChild);
             editChild();
         } else {
-            LocalStorage.storeChild(mChild);
+                LocalStorage.storeChild(mChild);
             ((AddChildActivity) getActivity()).moveNext();
         }
     }
@@ -347,7 +350,10 @@ public class ChildNeedsFragment extends Fragment {
                 return headers;
             }
         };
-
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyUtils.getInstance(getActivity()).addToRequestQueue(multipartRequest);
     }
 }

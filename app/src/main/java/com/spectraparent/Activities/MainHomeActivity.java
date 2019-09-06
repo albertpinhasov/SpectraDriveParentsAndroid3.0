@@ -154,17 +154,17 @@ public class MainHomeActivity extends BaseActivity
         if ((LocalStorage.getStudent().getChild() == null || LocalStorage.getInt("numChild") > LocalStorage.getStudent().getChild().size())
                 && !LocalStorage.isAddChildSkipped()) {
             startActivity(new Intent(this, AddChildActivity.class));
-        } else if (LocalStorage.getStudent().getTrustedPersons() == null) {
-            if (!LocalStorage.isTrustedPersonIntroShown()) {
-                LocalStorage.setTrustedPersonIntroShown(true);
-                startActivity(new Intent(this, AddTrustedPersonIntroActivity.class));
-            } else {
-                if (!LocalStorage.isTrustedPersonIntroSkipped()) {
-                    startActivity(new Intent(this, AddTrustedPersonActivity.class));
+        } else if (LocalStorage.getStudent().getTrustedPersons() == null || LocalStorage.getStudent().getTrustedPersons().isEmpty()) {
+                if (!LocalStorage.isTrustedPersonIntroShown()) {
+                    LocalStorage.setTrustedPersonIntroShown(true);
+                    startActivity(new Intent(this, AddTrustedPersonIntroActivity.class));
+                } else {
+                    if (!LocalStorage.isTrustedPersonIntroSkipped()) {
+                        startActivity(new Intent(this, AddTrustedPersonActivity.class));
+                    }
                 }
-            }
-        }
 
+            }
         //startActivity(new Intent(this, MapsActivity.class));
     }
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -81,6 +82,8 @@ public class AboutChildFragment extends Fragment {
             from = getArguments().getString("from");
             mAbout.setText(mChild.getAbout() != null ? mChild.getAbout() : "");
             mBtnNextChild.setVisibility(View.GONE);
+        } else {
+            mChild = LocalStorage.getChild();
         }
 
     }
@@ -124,7 +127,7 @@ public class AboutChildFragment extends Fragment {
 
                 Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>() {
                 }.getType();
-                System.out.println("Response " + WebApi.AddChildUrl + "======>" + new Gson().toJson(response));
+                System.out.println("Response " + WebApi.AddChildUrl + "======>" + new Gson().toJson(response.data));
 
                 WebAPIResponseModel<ArrayList<Child>> data = new Gson().fromJson(resultResponse, type);
 
@@ -142,7 +145,7 @@ public class AboutChildFragment extends Fragment {
                     return;
                 }
 
-                UserModel user = LocalStorage.getStudent();
+                 UserModel user = LocalStorage.getStudent();
                 user.setChild(data.getData());
 
                 LocalStorage.storeStudent(user);
@@ -235,7 +238,10 @@ public class AboutChildFragment extends Fragment {
                 return headers;
             }
         };
-
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyUtils.getInstance(getActivity()).addToRequestQueue(multipartRequest);
     }
 }

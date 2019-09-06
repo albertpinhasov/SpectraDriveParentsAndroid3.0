@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -114,6 +115,7 @@ public class AddAPersonFragment extends Fragment {
                 Tools.datePicker(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        view.setMaxDate(System.currentTimeMillis());
                         SimpleDateFormat df = new SimpleDateFormat("MM.dd.yyyy", Locale.getDefault());
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(year, month, dayOfMonth);
@@ -170,16 +172,20 @@ public class AddAPersonFragment extends Fragment {
                 return;
             }
         }
-
-        if (phoneNumber.length() < 2) {
-            DialogsHelper.showAlert(getActivity(), "Invalid Last Name", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+        if (phoneNumber.length() < 8) {
+            DialogsHelper.showAlert(getActivity(), "Invalid Phone Number", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
-
         if (email.length() < 2) {
-            DialogsHelper.showAlert(getActivity(), "Invalid Last Name", "Please enter Email to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+            DialogsHelper.showAlert(getActivity(), "Invalid Email ", "Please enter Email to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
+
+        if (!(email.contains("@") && email.contains("."))) {
+            DialogsHelper.showAlert(getActivity(), "Invalid Email", "Please enter a valid email address to proceed with registration.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+            return;
+        }
+
 
         mPerson.setFirstName(firstName);
         mPerson.setLastName(lastName);
@@ -251,7 +257,7 @@ public class AddAPersonFragment extends Fragment {
                 args.putString("from", "edit");
                 aboutChildFragment.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container,aboutChildFragment)
+                        .add(R.id.container, aboutChildFragment)
                         .addToBackStack(aboutChildFragment.getClass().getName())
                         .commit();
                 //savePerson();
@@ -344,7 +350,7 @@ public class AddAPersonFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("trustedPersonId",  LocalStorage.getTrustedPerson().getTrustedPersonId());
+                params.put("trustedPersonId", LocalStorage.getTrustedPerson().getTrustedPersonId());
                 params.put("FirstName", mPerson.getFirstName());
                 params.put("LastName", mPerson.getLastName());
                 params.put("Address", mPerson.getAddress());
@@ -353,7 +359,7 @@ public class AddAPersonFragment extends Fragment {
                 params.put("OtherRelationToChild", mPerson.getOtherRelationToChild());
                 params.put("PhoneNumber", mPerson.getPhoneNumber());
                 params.put("RelationToChild", mPerson.getRelationToChild());
-                System.out.println("Request "+WebApi.AddTrustedPersonUrl+"======>" + new Gson().toJson(params.toString()));
+                System.out.println("Request " + WebApi.AddTrustedPersonUrl + "======>" + new Gson().toJson(params.toString()));
                 return params;
             }
 
@@ -373,7 +379,10 @@ public class AddAPersonFragment extends Fragment {
                 return headers;
             }
         };
-
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyUtils.getInstance(getActivity()).addToRequestQueue(multipartRequest);
     }
 

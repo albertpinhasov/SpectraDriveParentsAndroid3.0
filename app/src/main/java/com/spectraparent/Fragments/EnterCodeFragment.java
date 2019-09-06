@@ -260,18 +260,19 @@ public class EnterCodeFragment extends Fragment {
 
     @OnClick(R.id.btnConfirm)
     void validateCode() {
-        String code = mDigitBoxes.get(0).getText().toString() + mDigitBoxes.get(1).getText().toString() +
-                mDigitBoxes.get(2).getText().toString() + mDigitBoxes.get(3).getText().toString() +
-                mDigitBoxes.get(4).getText().toString() + mDigitBoxes.get(5).getText().toString();
-
-        if (code.length() < 6) {
-            DialogsHelper.showAlert(getActivity(), "Invalid Code", "Please enter a valid verification code received in SMS", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
-            return;
-        }
-
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(LocalStorage.getString("verificationId"), code);
-
-        signInWithPhoneAuthCredential(credential);
+        signInWithAPI();
+//        String code = mDigitBoxes.get(0).getText().toString() + mDigitBoxes.get(1).getText().toString() +
+//                mDigitBoxes.get(2).getText().toString() + mDigitBoxes.get(3).getText().toString() +
+//                mDigitBoxes.get(4).getText().toString() + mDigitBoxes.get(5).getText().toString();
+//
+//        if (code.length() < 6) {
+//            DialogsHelper.showAlert(getActivity(), "Invalid Code", "Please enter a valid verification code received in SMS", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+//            return;
+//        }
+//
+//        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(LocalStorage.getString("verificationId"), code);
+//
+//        signInWithPhoneAuthCredential(credential);
     }
 
 

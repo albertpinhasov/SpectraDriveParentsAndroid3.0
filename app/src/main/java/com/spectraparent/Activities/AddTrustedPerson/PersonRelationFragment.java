@@ -145,14 +145,16 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (mPerson == null)
-            mPerson = LocalStorage.getStudent().getTrustedPersons().get(0);
         if (getArguments() != null) {
-            from = getArguments().getString("from");
-            mAddress.setText(mPerson.getAddress() != null ? mPerson.getAddress() : "");
-            if (mPerson.getImages() != null && mPerson.getImages().size() > 0) {
-                mLPlace.setVisibility(View.GONE);
-                mLImages.setVisibility(View.VISIBLE);
+            if (mPerson == null && LocalStorage.getStudent().getTrustedPersons() != null &&
+                    LocalStorage.getStudent().getTrustedPersons().size() > 0) {
+                mPerson = LocalStorage.getStudent().getTrustedPersons().get(0);
+                from = getArguments().getString("from");
+                mAddress.setText(mPerson.getAddress() != null ? mPerson.getAddress() : "");
+                if (mPerson.getImages() != null && mPerson.getImages().size() > 0) {
+                    mLPlace.setVisibility(View.GONE);
+                    mLImages.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -452,9 +454,11 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                if (LocalStorage.getStudent().getTrustedPersons().get(0) != null &&
+                if (LocalStorage.getStudent().getTrustedPersons() != null &&
+                        LocalStorage.getStudent().getTrustedPersons().size() > 0 &&
+                        LocalStorage.getStudent().getTrustedPersons().get(0) != null &&
                         LocalStorage.getStudent().getTrustedPersons().get(0).getTrustedPersonId() != null)
-                    params.put("trustedPersonId",  LocalStorage.getStudent().getTrustedPersons().get(0).getTrustedPersonId());
+                    params.put("trustedPersonId", LocalStorage.getStudent().getTrustedPersons().get(0).getTrustedPersonId());
                 params.put("FirstName", mPerson.getFirstName());
                 params.put("LastName", mPerson.getLastName());
                 params.put("Address", mPerson.getAddress());
