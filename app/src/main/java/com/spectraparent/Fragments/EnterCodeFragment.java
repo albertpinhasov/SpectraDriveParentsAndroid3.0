@@ -1,6 +1,7 @@
 package com.spectraparent.Fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -90,6 +91,7 @@ public class EnterCodeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_enter_code, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -278,28 +280,28 @@ public class EnterCodeFragment extends Fragment {
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
 
         mBtnConfirm.startAnimation();
-        signInWithAPI();
+      //  signInWithAPI();
 //
-//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//
-//                        if (task.isSuccessful()) {
-//                            signInWithAPI();
-//                        } else {
-//
-//                            mBtnConfirm.revertAnimation();
-//                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-//                                DialogsHelper.showAlert(getActivity(), "Invalid Code", "Verification code entered is wrong, please try again with correct code", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
-//
-//                            } else {
-//                                DialogsHelper.showAlert(getActivity(), "Verification failed", task.getException().getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
-//                            }
-//                        }
-//                    }
-//                });
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()) {
+                            signInWithAPI();
+                        } else {
+
+                            mBtnConfirm.revertAnimation();
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                DialogsHelper.showAlert(getActivity(), "Invalid Code", "Verification code entered is wrong, please try again with correct code", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+
+                            } else {
+                                DialogsHelper.showAlert(getActivity(), "Verification failed", task.getException().getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                            }
+                        }
+                    }
+                });
     }
 
     private void signInWithAPI() {

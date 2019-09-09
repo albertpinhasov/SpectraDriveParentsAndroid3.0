@@ -180,7 +180,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                     onButtonClicked(btn);
                     isRelationFound = true;
                 }
-                if (mBtns.size()-1 == mBtns.indexOf(btn)) {
+                if (mBtns.size() - 1 == mBtns.indexOf(btn)) {
                     if (!isRelationFound) {
                         btn.setBackground(getActivity().getResources().getDrawable(R.drawable.relation_button_border_selected));
                         btn.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
@@ -298,7 +298,8 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
             if (CropImage.isReadExternalStoragePermissionsRequired(getActivity(), imageUri)) {
                 // request permissions and handle the result in onRequestPermissionsResult()
                 mCropImageUri = imageUri;
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
             } else {
                 // no permissions required or already granted, can start crop image activity
                 startCropImageActivity(imageUri);
@@ -365,14 +366,20 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
 
     @OnClick(R.id.btnNext)
     void onNext() {
-        KeyboardUtils.hideKeyboard(getActivity(), getView());
-        mPerson.setAddress(mAddress.getText().toString());
+        if (mPerson == null)
+            mPerson = LocalStorage.getTrustedPerson();
+        if (mAddress.getText().toString().isEmpty()) {
+            DialogsHelper.showAlert(getActivity(), "No Address Found", "Please Enter Address", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+            return;
+        }
+
 
         if (mPerson.getOtherRelationToChild() == null && mPerson.getRelationToChild() == null) {
             DialogsHelper.showAlert(getActivity(), "Select Relation", "Please select a relation to child", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
-
+        KeyboardUtils.hideKeyboard(getActivity(), getView());
+        mPerson.setAddress(mAddress.getText().toString());
         SpectraDrive.PickedImages.clear();
 
         for (KeyValueModel<Integer, ImageView> item : mSelectedImages) {

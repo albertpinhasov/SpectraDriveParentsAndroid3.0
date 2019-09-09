@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:visibility="gone"
             android:text="Sent to (000) 000 0000"
             android:textAlignment="center" />
 
