@@ -24,10 +24,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.spectraparent.Activities.AddChild.AboutChildFragment;
-import com.spectraparent.Activities.RegisterActivity;
 import com.spectraparent.Fragments.ProfileFragment;
-import com.spectraparent.Helpers.CustomMaskedEditText.MaskedEditText;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.KeyboardUtils;
 import com.spectraparent.Helpers.LocalStorage;
@@ -112,7 +109,7 @@ public class AddAPersonFragment extends Fragment {
         mDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.datePicker(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = Tools.datePicker(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         view.setMaxDate(System.currentTimeMillis());
@@ -121,7 +118,11 @@ public class AddAPersonFragment extends Fragment {
                         calendar.set(year, month, dayOfMonth);
                         mDob.setText(df.format(calendar.getTime()));
                     }
-                }).show();
+                });
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.YEAR, -18);
+                datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                datePickerDialog.show();
             }
         });
         if (from.equals("edit_profile")) {
@@ -173,6 +174,10 @@ public class AddAPersonFragment extends Fragment {
             }
         }
         if (phoneNumber.length() < 8) {
+            DialogsHelper.showAlert(getActivity(), "Invalid Phone Number", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+            return;
+        }
+        if (phoneNumber.trim().length() > 13) {
             DialogsHelper.showAlert(getActivity(), "Invalid Phone Number", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }

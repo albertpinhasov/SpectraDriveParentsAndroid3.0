@@ -54,30 +54,30 @@
                 android:id="@+id/btn1"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="mother"
+                android:text="Mother"
                 android:textColor="#000000" />
 
             <Button
                 android:id="@+id/btn2"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="father"
+                android:text="Father"
                 android:textColor="#000000" />
 
             <Button
                 android:id="@+id/btn3"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="sister"
+                android:text="Sister"
                 android:textColor="#000000" />
 
             <Button
@@ -86,7 +86,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="brother"
+                android:text="Brother"
                 android:textColor="#000000" />
 
 
@@ -104,30 +104,30 @@
                 android:id="@+id/btn5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="grandfather"
+                android:text="Grandfather"
                 android:textColor="#000000" />
 
             <Button
                 android:id="@+id/btn6"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="grandmother"
+                android:text="Grandmother"
                 android:textColor="#000000" />
 
             <Button
                 android:id="@+id/btn7"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="aunt"
+                android:text="Aunt"
                 android:textColor="#000000" />
 
             <Button
@@ -136,7 +136,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="uncle"
+                android:text="Uncle"
                 android:textColor="#000000" />
 
 
@@ -152,28 +152,28 @@
                 android:id="@+id/btn9"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/relation_button_border"
-                android:text="other"
+                android:text="Other"
                 android:textColor="#000000" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -292,7 +292,7 @@
         </LinearLayout>
 
         <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton
-            android:id="@+id/btnNext"
+                android:id="@+id/btnNext"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"

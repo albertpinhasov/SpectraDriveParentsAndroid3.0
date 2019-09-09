@@ -276,6 +276,9 @@ public class RidesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+         current_Ride_Page = 1;
+         past_Ride_Page = 1;
+        scedual_ride_page = 1;
         currentRideList.clear();
         scedualRideList.clear();
         pastRideList.clear();

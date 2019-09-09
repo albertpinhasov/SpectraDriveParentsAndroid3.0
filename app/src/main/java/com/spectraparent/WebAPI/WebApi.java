@@ -28,7 +28,7 @@ public class WebApi {
     public static final String GetInstagramMediaUrl = "https://spectradriveapp.com/Profile/GetInstagramMedia";
     public static final String UpdateProfileUrl = "https://etapi.softprodigy.in/Users/UpdateProfile";
     public static final String AddChildUrl = "https://etapi.softprodigy.in/Users/AddChild";
-    public static final String AddTrustedPersonUrl = "https://etapi.softprodigy.in/Users/AddTrustedPerson";
+        public static final String AddTrustedPersonUrl = "https://etapi.softprodigy.in/Users/AddTrustedPerson";
     public static final String LinkInstagramUrl = "https://spectradriveapp.com/Login/LinkInstagram";
     public static final String GetSchoolmatesUrl = "https://spectradriveapp.com/Common/GetSchoolmates";
     public static final String GetFriendListUrl = "https://spectradriveapp.com/Profile/GetFriends";

@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 import com.spectraparent.android.R;
 
-public class MaskedEditText extends AppCompatEditText {
+public class MaskedEditText extends android.support.v7.widget.AppCompatEditText {
 
     // ===========================================================
     // Fields

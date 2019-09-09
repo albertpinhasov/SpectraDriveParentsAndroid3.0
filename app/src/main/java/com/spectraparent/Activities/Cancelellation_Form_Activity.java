@@ -81,7 +81,7 @@ public class Cancelellation_Form_Activity extends AppCompatActivity {
             @Override
             public void onFirstDateSelected(Calendar startDate) {
                 stardate = convert(startDate.getTime().toString());
-                enddate ="";
+                enddate =convert(startDate.getTime().toString());
             }
 
             @Override

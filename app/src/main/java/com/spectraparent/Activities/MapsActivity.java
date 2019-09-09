@@ -89,7 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Picasso.get().load(mRide.getDriver().getPhoto().getSmallPhotoUrl()).
                 placeholder(R.drawable.no_profile)
-                .transform(new CircleTransform()).fit().centerCrop().into(ivDriveImage);
+               .fit().centerCrop().into(ivDriveImage);
         String carColor = mRide.getDriver().getAssignedCar().getCar().getColor() != null ? mRide.getDriver().getAssignedCar().getCar().getColor() : "" + " ";
         String carBrand = mRide.getDriver().getAssignedCar().getCar().getBrand() != null ? mRide.getDriver().getAssignedCar().getCar().getBrand() : "" + " ";
         String carModel = mRide.getDriver().getAssignedCar().getCar().getModel() != null ? mRide.getDriver().getAssignedCar().getCar().getModel() : "" + " ";

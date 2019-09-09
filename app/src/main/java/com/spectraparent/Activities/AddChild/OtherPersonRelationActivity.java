@@ -1,5 +1,6 @@
 package com.spectraparent.Activities.AddChild;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class OtherPersonRelationActivity extends AppCompatActivity {
 
             Intent intent = new Intent();
             intent.putExtra("relation",relation);
-            setResult(3, intent);
+            setResult(Activity.RESULT_OK, intent);
             finish();
         }else {
             finish();

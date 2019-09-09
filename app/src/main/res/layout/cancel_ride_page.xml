@@ -217,6 +217,7 @@
                         android:layout_gravity="right"
                         android:gravity="center_vertical"
                         android:padding="5dp"
+                        android:singleLine="true"
                         android:text="Huston Street, 10" />
                 </LinearLayout>
 
@@ -253,6 +254,7 @@
                         android:layout_gravity="right"
                         android:gravity="center_vertical"
                         android:padding="5dp"
+                        android:singleLine="true"
                         android:text="Montgomery Street, 242" />
                 </LinearLayout>
 

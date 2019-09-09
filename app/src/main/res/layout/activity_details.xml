@@ -108,7 +108,6 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:ellipsize="marquee"
-                    android:singleLine="true"
                     android:text="PICK UP LOCATION"
                     android:textSize="13sp" />
 
@@ -126,6 +125,7 @@
                     android:layout_gravity="right"
                     android:gravity="center_vertical"
                     android:padding="5dp"
+                    android:singleLine="true"
                     android:text="Huston Street, 10" />
             </LinearLayout>
 
@@ -161,6 +161,7 @@
                     android:layout_gravity="right"
                     android:gravity="center_vertical"
                     android:padding="5dp"
+                    android:singleLine="true"
                     android:text="Montgomery Street, 242" />
             </LinearLayout>
 

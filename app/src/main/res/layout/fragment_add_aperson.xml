@@ -1,9 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#fff"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
     tools:context="com.spectraparent.Activities.AddTrustedPerson.AddAPersonFragment">
 
     <LinearLayout
@@ -75,11 +75,12 @@
             android:id="@+id/mPhoneNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="10"
-            android:inputType="number"
             android:hint="000 000 0000"
-
-            />
+            android:digits="+1234567890"
+            android:maxLength="15"
+            android:inputType="phone"
+            android:paddingLeft="10dp"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"

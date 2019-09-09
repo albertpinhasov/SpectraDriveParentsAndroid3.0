@@ -276,27 +276,30 @@ public class EnterCodeFragment extends Fragment {
 
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+
         mBtnConfirm.startAnimation();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (task.isSuccessful()) {
-                            signInWithAPI();
-                        } else {
-
-                            mBtnConfirm.revertAnimation();
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                DialogsHelper.showAlert(getActivity(), "Invalid Code", "Verification code entered is wrong, please try again with correct code", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
-
-                            } else {
-                                DialogsHelper.showAlert(getActivity(), "Verification failed", task.getException().getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
-                            }
-                        }
-                    }
-                });
+        signInWithAPI();
+//
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        mAuth.signInWithCredential(credential)
+//                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//
+//                        if (task.isSuccessful()) {
+//                            signInWithAPI();
+//                        } else {
+//
+//                            mBtnConfirm.revertAnimation();
+//                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+//                                DialogsHelper.showAlert(getActivity(), "Invalid Code", "Verification code entered is wrong, please try again with correct code", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+//
+//                            } else {
+//                                DialogsHelper.showAlert(getActivity(), "Verification failed", task.getException().getLocalizedMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+//                            }
+//                        }
+//                    }
+//                });
     }
 
     private void signInWithAPI() {

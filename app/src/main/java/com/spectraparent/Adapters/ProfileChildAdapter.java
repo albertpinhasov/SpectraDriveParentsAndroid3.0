@@ -69,7 +69,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
 
     class Profile_ViewHolder extends RecyclerView.ViewHolder {
         private final RecyclerView rcImages, rcNeeds;
-        TextView mFirstName, mLastName, mAbout;
+        TextView mFirstName, mLastName, mAbout,txtChildName;
         Button mBtnEditNeeds, mBtnEditAbout;
         ImageView imageView;
 
@@ -82,6 +82,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
             mBtnEditAbout = itemView.findViewById(R.id.btnEditInfo);
             rcImages = itemView.findViewById(R.id.rcImages);
             rcNeeds = itemView.findViewById(R.id.rcNeeds);
+            txtChildName = itemView.findViewById(R.id.txtChildName);
 
             mAbout = itemView.findViewById(R.id.txtAbout);
         }
@@ -91,6 +92,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
                 rcImages.setAdapter(new ChildImagesAdapter(itemView.getContext(), (ArrayList<Images>) childModel.getImages()));
             }
             mFirstName.setText(childModel.getFirstName());
+            txtChildName.setText(childModel.getFirstName() + "'s" + " " + "information");
             mLastName.setText(childModel.getLastName());
             mAbout.setText(childModel.getAbout());
             rcNeeds.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayout.VERTICAL, false));

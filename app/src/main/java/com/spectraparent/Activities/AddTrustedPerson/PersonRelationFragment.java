@@ -3,6 +3,7 @@ package com.spectraparent.Activities.AddTrustedPerson;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Person;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -125,9 +126,10 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
     String from = "";
     int selectingIndex = 0;
     private Uri mCropImageUri;
-
+    boolean isEdit = false;
     ArrayList<KeyValueModel<Integer, ImageView>> mSelectedImages = new ArrayList<>();
     TrustedPersonModel mPerson;
+    boolean isRelationFound = false;
 
     public PersonRelationFragment() {
         // Required empty public constructor
@@ -146,6 +148,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         if (getArguments() != null) {
+            isEdit = true;
             if (mPerson == null && LocalStorage.getStudent().getTrustedPersons() != null &&
                     LocalStorage.getStudent().getTrustedPersons().size() > 0) {
                 mPerson = LocalStorage.getStudent().getTrustedPersons().get(0);
@@ -155,6 +158,7 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                     mLPlace.setVisibility(View.GONE);
                     mLImages.setVisibility(View.VISIBLE);
                 }
+
             }
         }
 
@@ -171,9 +175,22 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
         mBtn9.setTag("9");
 
         for (Button btn : mBtns) {
+            if (getArguments() != null) {
+                if (btn.getText().toString().trim().equals(mPerson.getRelationToChild())) {
+                    onButtonClicked(btn);
+                    isRelationFound = true;
+                }
+                if (mBtns.size()-1 == mBtns.indexOf(btn)) {
+                    if (!isRelationFound) {
+                        btn.setBackground(getActivity().getResources().getDrawable(R.drawable.relation_button_border_selected));
+                        btn.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    }
+                }
+            }
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     onButtonClicked((Button) v);
                 }
             });
@@ -297,8 +314,10 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                 Exception error = result.getError();
             }
         } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
-            mPerson.setRelationToChild(data.getStringExtra("relation"));
             unCheckAll();
+            mPerson.setRelationToChild(data.getStringExtra("relation"));
+            mBtn9.setBackground(getActivity().getResources().getDrawable(R.drawable.relation_button_border_selected));
+            mBtn9.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
         }
     }
 
@@ -459,13 +478,24 @@ public class PersonRelationFragment extends Fragment implements ActionSheet.Acti
                         LocalStorage.getStudent().getTrustedPersons().get(0) != null &&
                         LocalStorage.getStudent().getTrustedPersons().get(0).getTrustedPersonId() != null)
                     params.put("trustedPersonId", LocalStorage.getStudent().getTrustedPersons().get(0).getTrustedPersonId());
-                params.put("FirstName", mPerson.getFirstName());
-                params.put("LastName", mPerson.getLastName());
+                if (isEdit) {
+                    TrustedPersonModel person = LocalStorage.getTrustedPerson();
+                    params.put("FirstName", person.getFirstName());
+                    params.put("LastName", person.getLastName());
+                    params.put("DOB", person.getdOB());
+                    params.put("Email", person.getEmail());
+                    params.put("PhoneNumber", person.getPhoneNumber());
+
+                } else {
+                    params.put("FirstName", mPerson.getFirstName());
+                    params.put("LastName", mPerson.getLastName());
+                    params.put("DOB", mPerson.getdOB());
+                    params.put("Email", mPerson.getEmail());
+                    params.put("PhoneNumber", mPerson.getPhoneNumber());
+
+                }
                 params.put("Address", mPerson.getAddress());
-                params.put("DOB", mPerson.getdOB());
-                params.put("Email", mPerson.getEmail());
                 params.put("OtherRelationToChild", mPerson.getOtherRelationToChild());
-                params.put("PhoneNumber", mPerson.getPhoneNumber());
                 params.put("RelationToChild", mPerson.getRelationToChild());
                 System.out.println("Request " + WebApi.AddTrustedPersonUrl + "======>" + new Gson().toJson(params.toString()));
 

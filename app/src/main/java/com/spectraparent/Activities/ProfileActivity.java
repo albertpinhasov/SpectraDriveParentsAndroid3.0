@@ -12,6 +12,7 @@ import com.spectraparent.android.R;
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView mTitle;
+    private TextView tvChildName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mTitle = toolbar.findViewById(R.id.toolbar_title);
+        tvChildName = toolbar.findViewById(R.id.tvChildName);
 
         mTitle.setText("Profile");
 
