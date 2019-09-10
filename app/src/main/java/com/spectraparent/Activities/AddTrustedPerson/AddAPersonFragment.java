@@ -24,6 +24,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.spectraparent.Activities.MainHomeActivity;
 import com.spectraparent.Fragments.ProfileFragment;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.KeyboardUtils;
@@ -177,7 +178,7 @@ public class AddAPersonFragment extends Fragment {
             DialogsHelper.showAlert(getActivity(), "Invalid Phone Number", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
-        if (phoneNumber.trim().length() > 13) {
+        if (phoneNumber.replace(" ", "").trim().length() > 13) {
             DialogsHelper.showAlert(getActivity(), "Invalid Phone Number", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
@@ -223,7 +224,7 @@ public class AddAPersonFragment extends Fragment {
                     if (student != null) {
                         if (student.isSuccess()) {
                             LocalStorage.storeStudent(student.getData());
-
+                            ((MainHomeActivity)getActivity()).updateHeaderName();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.container, new ProfileFragment())
                                     .commit();

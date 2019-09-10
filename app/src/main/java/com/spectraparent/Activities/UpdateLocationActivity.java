@@ -316,7 +316,7 @@ public class UpdateLocationActivity extends BaseActivity implements OnMapReadyCa
     }
 
     @OnClick(R.id.btnSave)
-    void signInWithAPI() {
+    void saveLocation() {
         VolleyUtils v = VolleyUtils.getInstance(this);
 
         mBtnSave.startAnimation();
@@ -343,8 +343,7 @@ public class UpdateLocationActivity extends BaseActivity implements OnMapReadyCa
 //                        }
                         LocalStorage.storeStudent(mUser);
 
-                        DialogsHelper.showAlert(mSelf, "Success", "Location updated", "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS);
-                        finish();
+                        DialogsHelper.showAlertWithCloseActivity(mSelf, "Success", "Location updated", "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS);
                     } else {
                         DialogsHelper.showAlert(mSelf, "Server error", student.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     }

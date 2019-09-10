@@ -1,9 +1,20 @@
 package com.spectraparent.Activities;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,6 +41,8 @@ import com.spectraparent.Fragments.RidesFragment;
 import com.spectraparent.Fragments.SettingsFragment;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.android.R;
+
+import java.util.Map;
 
 import butterknife.ButterKnife;
 
@@ -59,14 +72,11 @@ public class MainHomeActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         onNavigationDrawerItemSelected(new RidesFragment());
-        View headerView = navigationView.getHeaderView(0);
-        tvNavHeader = headerView.findViewById(R.id.tvNavHeader);
+        updateHeaderName();
 
-        tvNavHeader.setText(LocalStorage.getStudent().getFirstName() + " " + LocalStorage.getStudent().getLastName());
 
     }
 
@@ -155,16 +165,16 @@ public class MainHomeActivity extends BaseActivity
                 && !LocalStorage.isAddChildSkipped()) {
             startActivity(new Intent(this, AddChildActivity.class));
         } else if (LocalStorage.getStudent().getTrustedPersons() == null || LocalStorage.getStudent().getTrustedPersons().isEmpty()) {
-                if (!LocalStorage.isTrustedPersonIntroShown()) {
-                    LocalStorage.setTrustedPersonIntroShown(true);
-                    startActivity(new Intent(this, AddTrustedPersonIntroActivity.class));
-                } else {
-                    if (!LocalStorage.isTrustedPersonIntroSkipped()) {
-                        startActivity(new Intent(this, AddTrustedPersonActivity.class));
-                    }
+            if (!LocalStorage.isTrustedPersonIntroShown()) {
+                LocalStorage.setTrustedPersonIntroShown(true);
+                startActivity(new Intent(this, AddTrustedPersonIntroActivity.class));
+            } else {
+                if (!LocalStorage.isTrustedPersonIntroSkipped()) {
+                    startActivity(new Intent(this, AddTrustedPersonActivity.class));
                 }
-
             }
+
+        }
         //startActivity(new Intent(this, MapsActivity.class));
     }
 
@@ -184,4 +194,15 @@ public class MainHomeActivity extends BaseActivity
                     }
                 });
     }
+
+    public void updateHeaderName() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        tvNavHeader = headerView.findViewById(R.id.tvNavHeader);
+
+        tvNavHeader.setText(LocalStorage.getStudent().getFirstName() + " " + LocalStorage.getStudent().getLastName());
+    }
+
 }

@@ -194,6 +194,9 @@ public class EnterCodeFragment extends Fragment {
     int sec = 60;
 
     public void scheduleResendTimer(final Activity activity) {
+        if(mPhoneNumber==null) return;
+        mPhoneNumber.setText("Sent to " + LocalStorage.getStudent().getPhoneNumber());
+
         allowToResend = false;
         mTimer = new Timer();
         sec = 60;
