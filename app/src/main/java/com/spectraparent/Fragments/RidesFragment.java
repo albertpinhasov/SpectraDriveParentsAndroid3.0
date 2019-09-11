@@ -182,7 +182,7 @@ public class RidesFragment extends Fragment {
     }
 
     private void getMyRides(final int type, int page) {
-        VolleyUtils v = VolleyUtils.getInstance(getActivity());
+            VolleyUtils v = VolleyUtils.getInstance(getActivity());
         mProgress = KProgressHUD.create(getActivity())
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait")

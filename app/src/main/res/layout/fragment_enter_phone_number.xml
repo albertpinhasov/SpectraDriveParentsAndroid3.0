@@ -62,7 +62,8 @@
                 android:hint="000 000 0000"
                 android:inputType="number"
                 android:textSize="20sp"
-                app:mask="### ### ####" />
+
+                app:mask="(###) ### ####" />
 
         </LinearLayout>
 

@@ -7,6 +7,7 @@ public class UserModel {
     private String lastName;
     private String email;
     private String phoneNumber;
+    private String countryCode;
     private String token;
     private String birthday;
     private String profile;
@@ -166,6 +167,14 @@ public class UserModel {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public void setPhoneNumber(String phoneNumber) {

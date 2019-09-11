@@ -141,6 +141,7 @@ public class EnterMobileNumberFragment extends Fragment {
     void onLogin(){
 
         mUser.setPhoneNumber(etCountryCode.getText().toString() + mPhoneNumber.getText().toString());
+        LocalStorage.storeString("country_code", etCountryCode.getText().toString());
 
         if(mUser.getPhoneNumber().trim().isEmpty() || mUser.getPhoneNumber().length() < 5){
             DialogsHelper.showAlert(getActivity(),"Invalid Number","Please enter a valid mobile phone number so that we can send you a verification code in SMS","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);

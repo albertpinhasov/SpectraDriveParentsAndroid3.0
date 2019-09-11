@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.spectraparent.Activities.MainHomeActivity;
 import com.spectraparent.Fragments.ProfileFragment;
+import com.spectraparent.Helpers.CustomMaskedEditText.MaskedEditText;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.KeyboardUtils;
 import com.spectraparent.Helpers.LocalStorage;
@@ -75,7 +76,7 @@ public class AddAPersonFragment extends Fragment {
     TextView tvDob;
 
     @BindView(R.id.mPhoneNo)
-    EditText mPhoneNo;
+    MaskedEditText mPhoneNo;
 
     @BindView(R.id.txtEmail)
     EditText mEmail;
@@ -134,6 +135,12 @@ public class AddAPersonFragment extends Fragment {
             UserModel userModel = LocalStorage.getStudent();
             mFirstName.setText(userModel.getFirstName());
             mLastName.setText(userModel.getLastName());
+            String country_code = LocalStorage.getString("country_code").trim();
+            if (country_code.length() == 3) {
+                mPhoneNo.setMask("+##(###) ### ####");
+            } else if (country_code.length() == 2) {
+                mPhoneNo.setMask("+#(###) ### ####");
+            }
             mPhoneNo.setText(userModel.getPhoneNumber());
             mEmail.setText(userModel.getEmail());
         } else if (from.equals("add_Trusted")) {
@@ -224,7 +231,7 @@ public class AddAPersonFragment extends Fragment {
                     if (student != null) {
                         if (student.isSuccess()) {
                             LocalStorage.storeStudent(student.getData());
-                            ((MainHomeActivity)getActivity()).updateHeaderName();
+                            ((MainHomeActivity) getActivity()).updateHeaderName();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.container, new ProfileFragment())
                                     .commit();

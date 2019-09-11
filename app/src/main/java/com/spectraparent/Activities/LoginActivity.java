@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
@@ -97,7 +98,6 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity {
     void onLogin() {
 
         mUser.setPhoneNumber(etCountryCode.getText().toString() + mPhoneNumber.getText().toString());
-
+        LocalStorage.storeString("country_code", etCountryCode.getText().toString());
         if (mUser.getPhoneNumber().trim().isEmpty() || mUser.getPhoneNumber().length() < 5) {
             DialogsHelper.showAlert(this, "Invalid Number", "Please enter a valid mobile phone number so that we can send you a verification code in SMS", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
         } else {
@@ -215,6 +215,7 @@ public class LoginActivity extends BaseActivity {
 
         v.addToRequestQueue(req);
     }
+
     void getFirebaseToken() {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
