@@ -143,11 +143,11 @@ public class ChildNeedsFragment extends Fragment {
                         }
                     }
                 }
-                if (mChild.getOtherSpecialNeeds() != null && !mChild.getOtherSpecialNeeds().isEmpty()) {
-                    mCb8.setChecked(true);
-                } else {
-                    mCb8.setChecked(false);
-                }
+            }
+            if (mChild.getOtherSpecialNeeds() != null && !mChild.getOtherSpecialNeeds().isEmpty()) {
+                mCb8.setChecked(true);
+            } else {
+                mCb8.setChecked(false);
             }
         } else {
             mChild = LocalStorage.getChild();
@@ -235,7 +235,9 @@ public class ChildNeedsFragment extends Fragment {
             LocalStorage.storeChild(mChild);
             editChild();
         } else {
-                LocalStorage.storeChild(mChild);
+            mChild.setFirstName(LocalStorage.getChild().getFirstName());
+            mChild.setLastName(LocalStorage.getChild().getLastName());
+            LocalStorage.storeChild(mChild);
             ((AddChildActivity) getActivity()).moveNext();
         }
     }

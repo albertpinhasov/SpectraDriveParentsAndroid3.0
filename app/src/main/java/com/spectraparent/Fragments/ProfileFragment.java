@@ -2,6 +2,7 @@ package com.spectraparent.Fragments;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.spectraparent.Activities.AddChild.AboutChildFragment;
+import com.spectraparent.Activities.AddChild.AddChildActivity;
 import com.spectraparent.Activities.AddChild.ChildNeedsFragment;
 import com.spectraparent.Activities.AddTrustedPerson.AddAPersonFragment;
 import com.spectraparent.Adapters.ProfileChildAdapter;
@@ -55,6 +57,9 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
     @BindView(R.id.txtTPFullName)
     TextView mTPFullName;
 
+    @BindView(R.id.btnAddChild)
+    TextView btnAddChild;
+
     @BindView(R.id.txtTPDOB)
     TextView mDateOfBirth;
 
@@ -88,8 +93,7 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
-        rcChild.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
-        rcChild.setAdapter(new ProfileChildAdapter(getActivity(), this));
+        setChildAdapter();
         setData();
 
 
@@ -114,6 +118,13 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
             Picasso.get().load(trustedPerson.getImages().get(0).getSmallPhotoUrl()).
                     placeholder(R.drawable.no_profile)
                     .transform(new CircleTransform()).fit().centerCrop().into(ivImage);
+    }
+
+    @OnClick(R.id.btnAddChild)
+    void addChild() {
+        Intent i = new Intent(getActivity(), AddChildActivity.class);
+        i.putExtra("from", "add");
+        startActivityForResult(i, 1);
     }
 
     @OnClick(R.id.btnEditProfile)
@@ -168,4 +179,20 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
         }
     }
 
+    public void setChildAdapter() {
+        rcChild.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
+        rcChild.setAdapter(new ProfileChildAdapter(getActivity(), this));
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == getActivity().RESULT_OK) {
+                setData();
+                setChildAdapter();
+            }
+        }
+    }
 }

@@ -84,12 +84,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void setData() {
-        markOntheWay();
+        markOntheWay(mRide.getRideStatus());
         tvdriverName.setText(mRide.getDriver().getFirstName());
 
         Picasso.get().load(mRide.getDriver().getPhoto().getSmallPhotoUrl()).
                 placeholder(R.drawable.no_profile)
-               .fit().centerCrop().into(ivDriveImage);
+                .fit().centerCrop().into(ivDriveImage);
         String carColor = mRide.getDriver().getAssignedCar().getCar().getColor() != null ? mRide.getDriver().getAssignedCar().getCar().getColor() : "" + " ";
         String carBrand = mRide.getDriver().getAssignedCar().getCar().getBrand() != null ? mRide.getDriver().getAssignedCar().getCar().getBrand() : "" + " ";
         String carModel = mRide.getDriver().getAssignedCar().getCar().getModel() != null ? mRide.getDriver().getAssignedCar().getCar().getModel() : "" + " ";
@@ -181,7 +181,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    void markOntheWay() {
-        llDroppedOff.setAlpha((float) 0.6);
+    void markOntheWay(int rideStatus) {
+        if (rideStatus == 0 || rideStatus==1) {
+            llDroppedOff.setAlpha((float) 0.6);
+            llOnTheWay.setAlpha((float) 0.6);
+            llPickedUp.setAlpha((float) 0.6);
+        } else if (rideStatus == 2 && rideStatus == 3) {
+            llDroppedOff.setAlpha((float) 0.6);
+            llOnTheWay.setAlpha((float) 1.0);
+            llPickedUp.setAlpha((float) 1.0);
+        } else if (rideStatus == 4) {
+            llDroppedOff.setAlpha((float) 1.0);
+            llOnTheWay.setAlpha((float) 1.0);
+            llPickedUp.setAlpha((float) 1.0);
+        }
+
     }
 }

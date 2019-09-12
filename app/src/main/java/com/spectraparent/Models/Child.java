@@ -77,4 +77,19 @@ public class Child implements Serializable {
     public String getParent(){
         return this.parent;
     }
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "childId='" + childId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", about='" + about + '\'' +
+                ", images=" + images +
+                ", specialNeeds='" + specialNeeds + '\'' +
+                ", otherSpecialNeeds='" + otherSpecialNeeds + '\'' +
+                ", parent='" + parent + '\'' +
+                '}';
+    }
 }

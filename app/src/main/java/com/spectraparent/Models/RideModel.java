@@ -14,6 +14,24 @@ public class RideModel {
 
     private String driverId;
 
+    public List<ChildModel> getChild() {
+        return child;
+    }
+
+    public void setChild(List<ChildModel> child) {
+        this.child = child;
+    }
+
+    public int getRideStatus() {
+        return rideStatus;
+    }
+
+    public void setRideStatus(int rideStatus) {
+        this.rideStatus = rideStatus;
+    }
+
+    private int rideStatus;
+
     private List<LocationModel> locationData;
 
     private PoolData poolData;

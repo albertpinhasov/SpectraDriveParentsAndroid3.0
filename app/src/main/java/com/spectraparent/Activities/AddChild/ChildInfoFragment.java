@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spectraparent.Helpers.ActionSheet;
@@ -53,6 +54,8 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
 
     @BindView(R.id.img3)
     ImageView mImage3;
+    @BindView(R.id.lblChildIndex)
+    TextView lblChildIndex;
 
     @BindView(R.id.img4)
     ImageView mImage4;
@@ -93,7 +96,10 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
+        if (((AddChildActivity) getActivity()).from != null &&
+                !((AddChildActivity) getActivity()).from.isEmpty()) {
+            lblChildIndex.setText("Child Information");
+        }
         mImage1.setTag("0");
         mImage2.setTag("1");
         mImage3.setTag("2");

@@ -103,9 +103,14 @@ public class AboutChildFragment extends Fragment {
         saveChild();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     @OnClick(R.id.btnNext)
     public void onNextClicked(View view) {
-        if (mChild == null) mChild = LocalStorage.getChild();
+        if (from.isEmpty()) mChild = LocalStorage.getChild();
 
         mChild.setAbout(mAbout.getText().toString().trim());
 
@@ -127,7 +132,7 @@ public class AboutChildFragment extends Fragment {
 
                 Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>() {
                 }.getType();
-                System.out.println("Response " + WebApi.AddChildUrl + "======>" + new Gson().toJson(response.data));
+                System.out.println("Response " + WebApi.AddChildUrl + "======>" + new Gson().toJson(resultResponse));
 
                 WebAPIResponseModel<ArrayList<Child>> data = new Gson().fromJson(resultResponse, type);
 
@@ -145,7 +150,7 @@ public class AboutChildFragment extends Fragment {
                     return;
                 }
 
-                 UserModel user = LocalStorage.getStudent();
+                UserModel user = LocalStorage.getStudent();
                 user.setChild(data.getData());
 
                 LocalStorage.storeStudent(user);
@@ -153,10 +158,14 @@ public class AboutChildFragment extends Fragment {
                 DialogsHelper.showAlert(getContext(), "Success", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS, new Runnable() {
                     @Override
                     public void run() {
-                        if (from != null && !from.isEmpty()) {
+                        if ((from != null && !from.isEmpty())) {
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.container, new ProfileFragment())
                                     .commit();
+                        } else if (((AddChildActivity) getActivity()).from != null &&
+                                !((AddChildActivity) getActivity()).from.isEmpty()) {
+                            getActivity().setResult(getActivity().RESULT_OK);
+                            getActivity().finish();
                         } else {
                             getActivity().finish();
                         }
@@ -217,7 +226,7 @@ public class AboutChildFragment extends Fragment {
                 params.put("About", mChild.getAbout());
                 params.put("SpecialNeeds", mChild.getSpecialNeeds());
                 params.put("OtherSpecialNeeds", mChild.getOtherSpecialNeeds());
-                System.out.println("Response " + WebApi.AddChildUrl + "======>" + params.toString());
+                System.out.println("Response " + WebApi.AddChildUrl + "======>" + mChild.toString());
 
                 return params;
             }

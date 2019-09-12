@@ -24,20 +24,20 @@
         android:gravity="top"
         android:hint="Start typing here" />
 
-    <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton
-        android:id="@+id/btnNext"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@color/colorPrimary"
-        android:src="@drawable/ic_arrow_forward_black_24dp"
-        android:tint="@android:color/white"
-        app:initialCornerAngle="30dp"
-        app:spinning_bar_color="#FFF"
-        app:spinning_bar_padding="6dp"
-        app:spinning_bar_width="4dp" />
+        <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="60dp"
+            android:layout_height="57dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_arrow_forward_black_24dp"
+            android:tint="@android:color/white"
+            app:initialCornerAngle="30dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
 
     <com.spectraparent.Helpers.loading_button_lib.customViews.CircularProgressButton
         android:id="@+id/btnNextChild"

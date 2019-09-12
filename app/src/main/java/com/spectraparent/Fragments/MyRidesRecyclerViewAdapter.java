@@ -49,6 +49,13 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
         if (type == 1) {
             holder.mBtnTrack.setVisibility(View.VISIBLE);
             holder.mBtnTrack.setText("Track on the map");
+//            if (holder.mItem.getRideStatus() != 0) {
+//                holder.mBtnTrack.setVisibility(View.VISIBLE);
+//                holder.mBtnTrack.setText("Track on the map");
+//            } else {
+//                holder.mBtnTrack.setVisibility(View.GONE);
+//            }
+
         } else if (type == 2) {
             holder.mBtnTrack.setVisibility(View.GONE);
         } else {

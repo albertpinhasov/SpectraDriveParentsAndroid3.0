@@ -18,13 +18,16 @@ public class AddChildActivity extends AppCompatActivity implements INavigation {
 
     private WormDotsIndicator dotsIndicator;
     private ViewPager mViewpager;
+    public String from = "";
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
-
+        if (getIntent() != null) {
+            from = getIntent().getStringExtra("from");
+        }
         dotsIndicator = findViewById(R.id.spring_dots_indicator);
 
 
@@ -46,9 +49,9 @@ public class AddChildActivity extends AppCompatActivity implements INavigation {
 
     @Override
     public void moveNext() {
-        if(mViewpager.getCurrentItem() < mViewpager.getChildCount()){
+        if (mViewpager.getCurrentItem() < mViewpager.getChildCount()) {
             mViewpager.setCurrentItem(mViewpager.getCurrentItem() + 1);
-        }else {
+        } else {
             Intent intent = new Intent(this, MainHomeActivity.class);
             startActivity(intent);
         }
@@ -56,9 +59,9 @@ public class AddChildActivity extends AppCompatActivity implements INavigation {
 
     @Override
     public void moveBack() {
-        if(mViewpager.getCurrentItem() > 0){
+        if (mViewpager.getCurrentItem() > 0) {
             mViewpager.setCurrentItem(mViewpager.getCurrentItem() - 1);
-        }else {
+        } else {
             LocalStorage.setAddChildSkipped(true);
             finish();
         }

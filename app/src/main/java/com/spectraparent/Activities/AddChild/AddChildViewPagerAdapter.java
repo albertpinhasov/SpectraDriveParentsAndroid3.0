@@ -14,6 +14,8 @@ class AddChildViewPagerAdapter extends FragmentStatePagerAdapter {
         mItems.add(new ChildInfoFragment());
         mItems.add(new ChildNeedsFragment());
         mItems.add(new AboutChildFragment());
+
+
     }
 
     @Override
