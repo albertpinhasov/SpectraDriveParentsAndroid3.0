@@ -35,6 +35,8 @@
         <EditText
             android:id="@+id/txtFirstName"
             android:layout_width="match_parent"
+            android:singleLine="true"
+
             android:layout_height="wrap_content"
             android:hint="Type in here" />
 
@@ -49,6 +51,8 @@
         <EditText
             android:id="@+id/txtLastName"
             android:layout_width="match_parent"
+            android:singleLine="true"
+
             android:layout_height="wrap_content"
             android:hint="Type in here" />
 

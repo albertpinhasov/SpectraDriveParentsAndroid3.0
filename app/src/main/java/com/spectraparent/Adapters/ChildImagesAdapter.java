@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ChildImagesAdapter extends RecyclerView.Adapter<ChildImagesAdapter.Profile_ViewHolder> {
+public class ChildImagesAdapter extends RecyclerView.Adapter<   ChildImagesAdapter.Profile_ViewHolder> {
     Context mContext;
     ArrayList<Images> imageList;
 

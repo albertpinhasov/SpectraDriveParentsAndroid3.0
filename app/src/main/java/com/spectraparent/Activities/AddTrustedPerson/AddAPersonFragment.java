@@ -185,7 +185,7 @@ public class AddAPersonFragment extends Fragment {
             DialogsHelper.showAlert(getActivity(), "Invalid Phone Number", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
-        if (phoneNumber.replace(" ", "").trim().length() > 13) {
+        if (phoneNumber.replace(" ", "").trim().length() > 15) {
             DialogsHelper.showAlert(getActivity(), "Invalid Phone Number", "Please enter Phone Number to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }

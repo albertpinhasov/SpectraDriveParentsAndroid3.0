@@ -68,7 +68,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
     }
 
     class Profile_ViewHolder extends RecyclerView.ViewHolder {
-        private final RecyclerView rcImages, rcNeeds;
+            private final RecyclerView rcImages, rcNeeds;
         TextView mFirstName, mLastName, mAbout,txtChildName;
         Button mBtnEditNeeds, mBtnEditAbout;
         ImageView imageView;

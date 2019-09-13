@@ -25,6 +25,8 @@
             android:id="@+id/txtFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+
             android:hint="@string/type_in_here"
             android:inputType="textPersonName" />
 
@@ -40,6 +42,8 @@
         <EditText
             android:id="@+id/txtLastName"
             android:layout_width="match_parent"
+            android:singleLine="true"
+
             android:layout_height="wrap_content"
             android:hint="@string/type_in_here"
             android:inputType="textPersonName" />
@@ -76,6 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="000 000 0000"
+            android:singleLine="true"
+
             app:mask="(###) ### ####"
             android:digits="+1234567890"
             android:inputType="phone"
@@ -95,6 +101,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/example_gmail_com"
+            android:singleLine="true"
+
             android:inputType="textEmailAddress" />
 
 
