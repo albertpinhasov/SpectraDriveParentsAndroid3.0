@@ -48,7 +48,7 @@ public class DirectionHelper {
 
     public void drawPath(String o, String destination, int lineColor, int o_icon, int d_icon) {
         // String url = getUrl(origin, dest);
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + o + "&destination=" + destination + "&mode=driving&key=AIzaSyB7f3knafT2UsHH1nWywlo_3l7mO6es5Gs";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + o + "&dropLatLng=" + destination + "&mode=driving&key=AIzaSyB7f3knafT2UsHH1nWywlo_3l7mO6es5Gs";
         Log.d("onMapClick", url.toString());
         FetchUrl FetchUrl = new FetchUrl(lineColor, o_icon, d_icon);
 

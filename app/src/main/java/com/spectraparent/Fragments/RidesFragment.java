@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,8 @@ public class RidesFragment extends Fragment {
     RecyclerView mRc;
     @BindView(R.id.lEmpty)
     LinearLayout mEmpty;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     private OnListFragmentInteractionListener mListener;
     private MyRidesRecyclerViewAdapter mAdapter;
     private MyRidesRecyclerViewAdapter mAdapterEmpty;
@@ -78,7 +81,7 @@ public class RidesFragment extends Fragment {
         mSegment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (checkedId == R.id.b1) {
+                if (checkedId == R.id.b1) {
                     RidesFragment.this.checkedId = R.id.b1;
                     mRideType.setText("Current rides");
                     if (currentRideList.isEmpty())
@@ -134,7 +137,26 @@ public class RidesFragment extends Fragment {
             }
         });
         mRc.setAdapter(mAdapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkedId == R.id.b1) {
+                    currentRideList.clear();
+                    current_Ride_Page = 1;
+                    getMyRides(1, current_Ride_Page);
+                } else if (checkedId == R.id.b2) {
+                    scedualRideList.clear();
+                    scedual_ride_page = 1;
+                    getMyRides(3, scedual_ride_page);
+                } else if (checkedId == R.id.b3) {
+                    pastRideList.clear();
+                    past_Ride_Page = 1;
+                    getMyRides(2, past_Ride_Page);
+                }
+                swipeRefreshLayout.setRefreshing(false);
 
+            }
+        });
     }
 
     @Override
@@ -182,7 +204,7 @@ public class RidesFragment extends Fragment {
     }
 
     private void getMyRides(final int type, int page) {
-            VolleyUtils v = VolleyUtils.getInstance(getActivity());
+        VolleyUtils v = VolleyUtils.getInstance(getActivity());
         mProgress = KProgressHUD.create(getActivity())
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait")
@@ -276,8 +298,8 @@ public class RidesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-         current_Ride_Page = 1;
-         past_Ride_Page = 1;
+        current_Ride_Page = 1;
+        past_Ride_Page = 1;
         scedual_ride_page = 1;
         currentRideList.clear();
         scedualRideList.clear();

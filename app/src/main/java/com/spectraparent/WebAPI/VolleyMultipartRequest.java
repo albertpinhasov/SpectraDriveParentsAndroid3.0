@@ -34,7 +34,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
     /**
      * Default constructor with predefined header and post method.
      *
-     * @param url           request destination
+     * @param url           request dropLatLng
      * @param headers       predefined custom header
      * @param listener      on success achieved 200 code from request
      * @param errorListener on error http or library timeout
@@ -52,7 +52,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
      * Constructor with option method and default header configuration.
      *
      * @param method        method for now accept POST and GET only
-     * @param url           request destination
+     * @param url           request dropLatLng
      * @param listener      on success event handler
      * @param errorListener on error event handler
      */

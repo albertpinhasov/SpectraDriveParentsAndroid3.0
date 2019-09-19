@@ -50,20 +50,26 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="Current Rides"
-        android:textSize="16sp"
         android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:visibility="visible" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
-            android:id="@+id/lEmpty"
+        android:id="@+id/lEmpty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
@@ -87,18 +93,16 @@
             android:textStyle="bold|italic" />
 
 
-
-
         <Button
             android:id="@+id/btnSampleRide"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="80dp"
             android:layout_marginBottom="5dp"
-            android:visibility="gone"
             android:background="@null"
             android:text="Import Sample Rides"
-            android:textColor="@color/com_facebook_blue" />
+            android:textColor="@color/com_facebook_blue"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnSamplePoolToSchoolRide"
@@ -106,19 +110,19 @@
             android:layout_height="35dp"
             android:layout_marginBottom="5dp"
             android:background="@null"
-            android:visibility="gone"
             android:text="Try a Sample Pool To School Ride"
-            android:textColor="@color/com_facebook_blue" />
+            android:textColor="@color/com_facebook_blue"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnSamplePoolFromSchoolRide"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginBottom="10dp"
-            android:visibility="gone"
             android:background="@null"
             android:text="Try a Sample Pool From Ride"
-            android:textColor="@color/com_facebook_blue" />
+            android:textColor="@color/com_facebook_blue"
+            android:visibility="gone" />
 
     </LinearLayout>
 </LinearLayout>

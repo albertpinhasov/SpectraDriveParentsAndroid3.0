@@ -4,6 +4,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="google_map_api_key">AIzaSyDWGG7aJX2eNg1v6QhzXR2STixx7bBzjig</string>
 
 
     <string name="register_notice">By signing up you are agree to our <font color="#757b86"><b><a href="">Terms &amp; Conditions</a></b></font>, <a href="">Privacy Policy</a> and <a href="">Waiver of Class Action Claims</a></string>

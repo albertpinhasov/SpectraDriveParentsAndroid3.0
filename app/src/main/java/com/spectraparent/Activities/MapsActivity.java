@@ -13,14 +13,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -29,12 +30,19 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.spectraparent.Helpers.CircleTransform;
 import com.spectraparent.Helpers.DirectionHelper;
+import com.spectraparent.Helpers.*;
 import com.spectraparent.Models.RideModel;
 import com.spectraparent.android.R;
 import com.squareup.picasso.Picasso;
+
+import java.util.LinkedHashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,8 +59,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView tvdriverName;
     @BindView(R.id.tvDrivingCar)
     TextView tvDrivingCar;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     @BindView(R.id.tvCarNo)
     TextView tvCarNo;
+    @BindView(R.id.tvTimeRequired)
+    TextView tvTimeRequired;
     @BindView(R.id.ivDriveImage)
     ImageView ivDriveImage;
     @BindView(R.id.llDroppedOff)
@@ -61,11 +73,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     LinearLayout llOnTheWay;
     @BindView(R.id.llPickedUp)
     LinearLayout llPickedUp;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    LinkedHashMap locationHashMap = new LinkedHashMap<String, String>();
+    LatLng oldCordinates;
+    boolean isTrackingStarted = false;
+    LiveTrackingUtils liveTrackingUtils;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        database = FirebaseDatabase.getInstance();
+        liveTrackingUtils = new LiveTrackingUtils(MapsActivity.this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -74,6 +95,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mRide = new Gson().fromJson(getIntent().getStringExtra("json"), RideModel.class);
+        myRef = database.getReference(mRide.getDriverId());
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String locationString = dataSnapshot.getValue(String.class);
+                if (locationString != null && !locationString.isEmpty()) {
+                    String driverLatLng[] = locationString.split(",");
+                    Log.e("currentLocationLatLng", locationString);
+                    if (!isTrackingStarted) {
+                        locationHashMap.put("drop_lat", mRide.getChildModel().get(0).getDrop().getLat());
+                        locationHashMap.put("drop_long", mRide.getChildModel().get(0).getDrop().getLon());
+                        locationHashMap.put("driver_lat", driverLatLng[0]);
+                        locationHashMap.put("driver_lon", driverLatLng[1]);
+                        liveTrackingUtils.mapPathDraw(mMap, locationHashMap, MapsActivity.this, progressBar, isTrackingStarted, directionHelper);
+                        isTrackingStarted = true;
+                    } else {
+                        oldCordinates = new LatLng(Double.parseDouble(locationHashMap.get("driver_lat").toString()),
+                                Double.parseDouble(locationHashMap.get("driver_lon").toString()));
+                        locationHashMap.put("driver_lat", driverLatLng[0]);
+                        locationHashMap.put("driver_lon", driverLatLng[1]);
+                        if (checkDistance(oldCordinates)) {
+                            if (count == 3) {
+                                count = 0;
+                                liveTrackingUtils.mapPathDrawWithoutmarker(locationHashMap, MapsActivity.this, progressBar);
+                                //   liveTrackingUtils.updateUI(locationHashMap, MapsActivity.this);
+                            } else {
+                                count++;
+                                liveTrackingUtils.updateUI(locationHashMap, MapsActivity.this);
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
         setData();
         mTitle = toolbar.findViewById(R.id.toolbar_title);
 
@@ -113,9 +176,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         directionHelper = new DirectionHelper(mMap, this);
 
-        setupSinglePax();
+        //  setupSinglePax();
 
-        drawDriver();
+        //   drawDriver();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 4);
@@ -182,7 +245,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     void markOntheWay(int rideStatus) {
-        if (rideStatus == 0 || rideStatus==1) {
+        if (rideStatus == 0 || rideStatus == 1) {
             llDroppedOff.setAlpha((float) 0.6);
             llOnTheWay.setAlpha((float) 0.6);
             llPickedUp.setAlpha((float) 0.6);
@@ -196,5 +259,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             llPickedUp.setAlpha((float) 1.0);
         }
 
+    }
+
+    public void startStopProgressBar(int start) {
+        if (start == 1) {
+            //  mProgressBarHandler.showProgress()
+        } else if (start == 0) {
+            //  mProgressBarHandler.hideProgress()
+        } else if (start == 2) {
+            Toast.makeText(this, "No Path Found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void setDistanceAndTime(String distan, String duration) {
+        tvTimeRequired.setText("Trip Time " + duration);
+    }
+
+    boolean checkDistance(LatLng source) {
+        android.location.Location locationA = new android.location.Location("destination");
+        locationA.setLatitude(source.latitude);
+        locationA.setLongitude(source.longitude);
+        android.location.Location locationB = new android.location.Location("Source");
+        locationB.setLatitude(Double.parseDouble(locationHashMap.get("driver_lat").toString()));
+        locationB.setLongitude(Double.parseDouble(locationHashMap.get("driver_lon").toString()));
+        int distance = (int) locationA.distanceTo(locationB);
+        if (distance <= 20) {
+            return false;
+        }
+        return true;
     }
 }
