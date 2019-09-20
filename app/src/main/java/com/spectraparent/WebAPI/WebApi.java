@@ -8,14 +8,14 @@ public class WebApi {
     public static final String BaseUrl = "https://spectradriveapp.com/";
 
 
-    public static final String UpdateLocationUrl = "https://etapi.softprodigy.in/Users/UpdateLocation";
-    public static final String SaveQueryUrl = "https://etapi.softprodigy.in/Users/SaveQuery";
+    public static final String UpdateLocationUrl = BaseUrl+"Users/UpdateLocation";
+    public static final String SaveQueryUrl = BaseUrl+"Users/SaveQuery";
     public static final String GetAllFaqsUrl = "https://spectradriveapp.com/api/FAQs/GetAllFaqs";
-    public static final String CreateDummyRideUrl = "https://etapi.softprodigy.in/Users/CreateDummyRide";
-    public static final String CancelRide = "https://etapi.softprodigy.in/Users/CancellationRide";
+    public static final String CreateDummyRideUrl = BaseUrl+"Users/CreateDummyRide";
+    public static final String CancelRide = BaseUrl+"Users/CancellationRide";
 
-    public static final String SignInUrl = "https://etapi.softprodigy.in/Users/LoginOrRegister";
-    public static final String GetMyRidesUrl = "https://etapi.softprodigy.in/Users/GetUserRides";
+    public static final String SignInUrl = BaseUrl+"Users/LoginOrRegister";
+    public static final String GetMyRidesUrl = BaseUrl+"Users/GetUserRides";
     public static final String ReSignInUrl = "https://spectradriveapp.com/Login/ReSignIn?isDormWith=true";
     public static final String ForgotPasswordUrl = "https://spectradriveapp.com/Login/DormWithForgetPassword";
     public static final String OAuthSignInUrl = "https://spectradriveapp.com/Login/OAuthLogin?isDormWith=true";
@@ -26,9 +26,9 @@ public class WebApi {
     public static final String UpdateAccountEducationUrl = "https://spectradriveapp.com/ProfessionalProfile/UpdateAccountEducation";
     public static final String AddSchoolDormUrl = "https://spectradriveapp.com/common/AddSchoolDorm";
     public static final String GetInstagramMediaUrl = "https://spectradriveapp.com/Profile/GetInstagramMedia";
-    public static final String UpdateProfileUrl = "https://etapi.softprodigy.in/Users/UpdateProfile";
-    public static final String AddChildUrl = "https://etapi.softprodigy.in/Users/AddChild";
-        public static final String AddTrustedPersonUrl = "https://etapi.softprodigy.in/Users/AddTrustedPerson";
+    public static final String UpdateProfileUrl = BaseUrl+"Users/UpdateProfile";
+    public static final String AddChildUrl = BaseUrl+"Users/AddChild";
+        public static final String AddTrustedPersonUrl = BaseUrl+"Users/AddTrustedPerson";
     public static final String LinkInstagramUrl = "https://spectradriveapp.com/Login/LinkInstagram";
     public static final String GetSchoolmatesUrl = "https://spectradriveapp.com/Common/GetSchoolmates";
     public static final String GetFriendListUrl = "https://spectradriveapp.com/Profile/GetFriends";

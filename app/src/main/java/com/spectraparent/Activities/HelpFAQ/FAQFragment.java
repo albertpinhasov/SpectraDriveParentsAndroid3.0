@@ -1,17 +1,24 @@
 package com.spectraparent.Activities.HelpFAQ;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -46,6 +53,8 @@ public class FAQFragment extends Fragment {
 
     private KProgressHUD mProgress;
 
+    @BindView(R.id.call)
+    TextView call;
     @BindView(R.id.rcFaqs)
     RecyclerView mRcFaq;
     private FAQsAdapter mAdapter;
@@ -73,10 +82,48 @@ public class FAQFragment extends Fragment {
         getAllFaqs();
     }
 
+    @OnClick(R.id.call)
+    public void setCall() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.CALL_PHONE},
+                    1);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "8779386161"));
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "8779386161"));
+                    startActivity(intent);
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getActivity(), "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
     private void getAllFaqs() {
         VolleyUtils v = VolleyUtils.getInstance(getActivity());
 
-        mProgress =  KProgressHUD.create(getActivity())
+        mProgress = KProgressHUD.create(getActivity())
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait")
                 .setDetailsLabel("Getting FAQs")
@@ -95,13 +142,13 @@ public class FAQFragment extends Fragment {
                 mProgress.dismiss();
                 ArrayList<FAQModel> rides = new Gson().fromJson(response, listType);
 
-                if(rides != null){
+                if (rides != null) {
 
                     mAdapter.updateItems(rides);
 
                     mRcFaq.getLayoutParams().height = (int) (Tools.dpToPx(50) * rides.size());
-                }else {
-                    DialogsHelper.showAlert(getActivity(),"Server error","Internal server error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                } else {
+                    DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                 }
 
             }
@@ -113,7 +160,7 @@ public class FAQFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 mProgress.dismiss();
                 System.out.println(error);
-                DialogsHelper.showAlert(getActivity(),"Network error","Network error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
             }
         }, new HashMap<String, String>());
 
@@ -121,8 +168,7 @@ public class FAQFragment extends Fragment {
     }
 
     @OnClick(R.id.btnContact)
-    void openContactUs()
-    {
+    void openContactUs() {
         startActivity(new Intent(getActivity(), ContactUsActivity.class));
     }
 

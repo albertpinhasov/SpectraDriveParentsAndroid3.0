@@ -12,7 +12,7 @@
     <string name="date_of_birth">DATE OF BIRTH</string>
     <string name="_00_00_0000">00.00.0000</string>
     <string name="_00_000_000_0000">+00 000 000 0000</string>
-    <string name="example_gmail_com">example@gmail.com</string>
+    <string name="example_gmail_com">spectradriveapp@gmail.com</string>
 
     <string name="crop_image_activity_title"></string>
     <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>

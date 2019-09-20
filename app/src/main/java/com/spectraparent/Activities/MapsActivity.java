@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -263,9 +264,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void startStopProgressBar(int start) {
         if (start == 1) {
-            //  mProgressBarHandler.showProgress()
+              progressBar.setVisibility(View.VISIBLE);
         } else if (start == 0) {
-            //  mProgressBarHandler.hideProgress()
+            progressBar.setVisibility(View.GONE);
+
         } else if (start == 2) {
             Toast.makeText(this, "No Path Found", Toast.LENGTH_LONG).show();
         }

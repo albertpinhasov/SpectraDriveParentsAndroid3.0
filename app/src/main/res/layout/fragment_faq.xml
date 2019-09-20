@@ -49,15 +49,16 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Need Support" />
+            android:text="Need Support? Call (877) - 938 - 6161" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Can't find the answer you are looking for?Don't worry, we are here to help!" />
+            android:text="Can't find the answer you are looking for?Don't worry, we are here to help!\n877-938-6161" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
