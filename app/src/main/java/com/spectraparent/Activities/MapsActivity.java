@@ -246,11 +246,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     void markOntheWay(int rideStatus) {
-        if (rideStatus == 0 || rideStatus == 1) {
+        if (rideStatus == 0 || rideStatus == 1 || rideStatus == 2 ) {
             llDroppedOff.setAlpha((float) 0.6);
             llOnTheWay.setAlpha((float) 0.6);
             llPickedUp.setAlpha((float) 0.6);
-        } else if (rideStatus == 2 && rideStatus == 3) {
+        } else if (rideStatus == 3) {
             llDroppedOff.setAlpha((float) 0.6);
             llOnTheWay.setAlpha((float) 1.0);
             llPickedUp.setAlpha((float) 1.0);

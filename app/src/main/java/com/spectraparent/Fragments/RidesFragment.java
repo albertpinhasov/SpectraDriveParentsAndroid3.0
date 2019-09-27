@@ -70,311 +70,7 @@ public class RidesFragment extends Fragment {
     ArrayList<RideModel> pastRideList = new ArrayList<>();
     ArrayList<RideModel> scedualRideList = new ArrayList<>();
     LinearLayoutManager linearLayoutManager = null;
-    String result = "{\n" +
-            "    \"success\": true,\n" +
-            "    \"message\": \"Get Driver rides\",\n" +
-            "    \"data\": [\n" +
-            "        {\n" +
-            "            \"child\": [\n" +
-            "                {\n" +
-            "                    \"child\": {\n" +
-            "                        \"childId\": \"c282bb79-09e8-4001-9d18-4982632c1505\",\n" +
-            "                        \"firstName\": \"testPa123\",\n" +
-            "                        \"lastName\": \"user\",\n" +
-            "                        \"fullName\": \"testPa123 user\",\n" +
-            "                        \"about\": \"test childs\",\n" +
-            "                        \"images\": [\n" +
-            "                            {\n" +
-            "                                \"photoId\": \"82b575f2-981d-4853-97b0-d832c9c22631\",\n" +
-            "                                \"smallPhotoUrl\": \"https://etapi.softprodigy.in//ChildImages/USER_2/8f8e14849adc4bd0999f922a55df1cca.jpg\",\n" +
-            "                                \"standardPhotoUrl\": \"https://etapi.softprodigy.in//ChildImages/USER_2/8f8e14849adc4bd0999f922a55df1cca.jpg\",\n" +
-            "                                \"name\": null,\n" +
-            "                                \"createdOn\": \"2019-09-18T16:19:07.4903696Z\"\n" +
-            "                            }\n" +
-            "                        ],\n" +
-            "                        \"specialNeeds\": \"Visually impaired\",\n" +
-            "                        \"otherSpecialNeeds\": null,\n" +
-            "                        \"parent\": null,\n" +
-            "                        \"createdOn\": null,\n" +
-            "                        \"parentPhoneNumber\": \"+1 (485) 783-9475\",\n" +
-            "                        \"trustedPersonPhoneNumber\": \"+1 (424) 234-2342\"\n" +
-            "                    },\n" +
-            "                    \"pickup\": {\n" +
-            "                        \"locationId\": null,\n" +
-            "                        \"lat\": 30.7410517,\n" +
-            "                        \"lon\": 76.779015000000072,\n" +
-            "                        \"name\": \"Sector 17\",\n" +
-            "                        \"googleJson\": null,\n" +
-            "                        \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"drop\": {\n" +
-            "                        \"locationId\": null,\n" +
-            "                        \"lat\": 30.679282399999991,\n" +
-            "                        \"lon\": 76.729323300000033,\n" +
-            "                        \"name\": \"Sector 67\",\n" +
-            "                        \"googleJson\": null,\n" +
-            "                        \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"contacts\": null,\n" +
-            "                    \"events\": [],\n" +
-            "                    \"index\": 0\n" +
-            "                }\n" +
-            "            ],\n" +
-            "            \"scheduledOn\": \"2019-09-19T03:30:00Z\",\n" +
-            "            \"rideId\": \"47086597-8125-4b3c-bd41-93bc7fd50079\",\n" +
-            "            \"driver\": {\n" +
-            "                \"assignedCar\": {\n" +
-            "                    \"assignedCarId\": null,\n" +
-            "                    \"car\": {\n" +
-            "                        \"carId\": \"9739850f-74aa-4089-9b19-e4bbd5436ad8\",\n" +
-            "                        \"make\": \"2010-09-19\",\n" +
-            "                        \"mfgDate\": null,\n" +
-            "                        \"number\": \"1234567890\",\n" +
-            "                        \"brand\": null,\n" +
-            "                        \"model\": \"Swift\",\n" +
-            "                        \"color\": \"White\",\n" +
-            "                        \"registrationNumber\": null,\n" +
-            "                        \"vin\": null,\n" +
-            "                        \"insuranceExpiry\": null,\n" +
-            "                        \"licenseExpiry\": null,\n" +
-            "                        \"insuranceExpiryDate\": null,\n" +
-            "                        \"licenseExpiryDate\": null,\n" +
-            "                        \"expiryInsuranceDate\": null,\n" +
-            "                        \"expiryLicenseDate\": null,\n" +
-            "                        \"manufatureDate\": null,\n" +
-            "                        \"createdOn\": \"2019-09-19T06:56:30.3559739Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                    \"updatedOn\": null,\n" +
-            "                    \"isActive\": false\n" +
-            "                },\n" +
-            "                \"drivingLicenseFront\": null,\n" +
-            "                \"vehicleInsurance\": null,\n" +
-            "                \"vehicleRegistrationDocument\": null,\n" +
-            "                \"currentLocation\": null,\n" +
-            "                \"vehicleImageUploadDocument\": null,\n" +
-            "                \"phoneNumber\": null,\n" +
-            "                \"deviceToken\": null,\n" +
-            "                \"deviceType\": null,\n" +
-            "                \"birthday\": null,\n" +
-            "                \"profile\": null,\n" +
-            "                \"token\": null,\n" +
-            "                \"userIdStr\": null,\n" +
-            "                \"child\": null,\n" +
-            "                \"trustedPersons\": null,\n" +
-            "                \"schoolLocation\": null,\n" +
-            "                \"learningCenterLocation\": null,\n" +
-            "                \"homeLocation\": null,\n" +
-            "                \"userId\": \"f7d50f43-cc3b-4125-8c4e-649e5b0db766\",\n" +
-            "                \"title\": null,\n" +
-            "                \"firstName\": \"Rahul\",\n" +
-            "                \"lastName\": \"Singh\",\n" +
-            "                \"gender\": -1,\n" +
-            "                \"photo\": {\n" +
-            "                    \"photoId\": \"6f663fb9-a438-42d3-976b-61a9568ff3de\",\n" +
-            "                    \"smallPhotoUrl\": \"https://etapi.softprodigy.in//UserDocuments/DRIVER_7/7f0f03d3a1724896a7510ba76c383889.jpg\",\n" +
-            "                    \"standardPhotoUrl\": \"https://etapi.softprodigy.in//UserDocuments/DRIVER_7/7f0f03d3a1724896a7510ba76c383889.jpg\",\n" +
-            "                    \"name\": null,\n" +
-            "                    \"createdOn\": \"2019-09-19T06:59:29.8357217Z\"\n" +
-            "                },\n" +
-            "                \"isFirstLogin\": false,\n" +
-            "                \"role\": null,\n" +
-            "                \"email\": null\n" +
-            "            },\n" +
-            "            \"driverId\": \"f7d50f43-cc3b-4125-8c4e-649e5b0db766\",\n" +
-            "            \"locationData\": [],\n" +
-            "            \"poolData\": null,\n" +
-            "            \"userId\": null,\n" +
-            "            \"rideName\": \"Ride 34\",\n" +
 
-            "            \"comments\": null,\n" +
-            "            \"scheduledRideOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "            \"rideStatus\": 0,\n" +
-            "            \"createdOn\": \"2019-09-19T07:01:34.2158526Z\",\n" +
-            "            \"updatedOn\": null,\n" +
-            "            \"isActive\": false\n" +
-            "        },\n" +
-            "        {\n" +
-            "            \"child\": [\n" +
-            "                {\n" +
-            "                    \"child\": {\n" +
-            "                        \"childId\": \"126ee70f-7fb5-4947-81ce-26d2bdd8bc9c\",\n" +
-            "                        \"firstName\": \"Albert\",\n" +
-            "                        \"lastName\": \"Raw\",\n" +
-            "                        \"fullName\": \"Albert Raw\",\n" +
-            "                        \"about\": \"bxbx\",\n" +
-            "                        \"images\": [],\n" +
-            "                        \"specialNeeds\": \"Multiple Disabilities,\",\n" +
-            "                        \"otherSpecialNeeds\": \"null\",\n" +
-            "                        \"parent\": null,\n" +
-            "                        \"createdOn\": null,\n" +
-            "                        \"parentPhoneNumber\": \"+91988 883 4530\",\n" +
-            "                        \"trustedPersonPhoneNumber\": \"(997) 798 8888\"\n" +
-            "                    },\n" +
-            "                    \"pickup\": {\n" +
-            "                        \"locationId\": null,\n" +
-            "                        \"lat\": 30.7320385,\n" +
-            "                        \"lon\": 76.772633400000018,\n" +
-            "                        \"name\": \"Sector 22\",\n" +
-            "                        \"googleJson\": null,\n" +
-            "                        \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"drop\": {\n" +
-            "                        \"locationId\": null,\n" +
-            "                        \"lat\": 30.6961314,\n" +
-            "                        \"lon\": 76.71584919999998,\n" +
-            "                        \"name\": \"Sector 70\",\n" +
-            "                        \"googleJson\": null,\n" +
-            "                        \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"contacts\": null,\n" +
-            "                    \"events\": [],\n" +
-            "                    \"index\": 1\n" +
-            "                },\n" +
-            "                {\n" +
-            "                    \"child\": {\n" +
-            "                        \"childId\": \"89193a96-33ee-4794-a116-1c0643d1e685\",\n" +
-            "                        \"firstName\": \"Raw\",\n" +
-            "                        \"lastName\": \"Albert\",\n" +
-            "                        \"fullName\": \"Raw Albert\",\n" +
-            "                        \"about\": \"bffb\",\n" +
-            "                        \"images\": [],\n" +
-            "                        \"specialNeeds\": \"Development delay,\",\n" +
-            "                        \"otherSpecialNeeds\": \"null\",\n" +
-            "                        \"parent\": null,\n" +
-            "                        \"createdOn\": null,\n" +
-            "                        \"parentPhoneNumber\": \"+91988 883 4530\",\n" +
-            "                        \"trustedPersonPhoneNumber\": \"(997) 798 8888\"\n" +
-            "                    },\n" +
-            "                    \"pickup\": {\n" +
-            "                        \"locationId\": null,\n" +
-            "                        \"lat\": 30.7410517,\n" +
-            "                        \"lon\": 76.779015000000072,\n" +
-            "                        \"name\": \"Sector 17\",\n" +
-            "                        \"googleJson\": null,\n" +
-            "                        \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"drop\": {\n" +
-            "                        \"locationId\": null,\n" +
-            "                        \"lat\": 30.6961314,\n" +
-            "                        \"lon\": 76.71584919999998,\n" +
-            "                        \"name\": \"Sector 70\",\n" +
-            "                        \"googleJson\": null,\n" +
-            "                        \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"contacts\": null,\n" +
-            "                    \"events\": [],\n" +
-            "                    \"index\": 0\n" +
-            "                }\n" +
-            "            ],\n" +
-            "            \"scheduledOn\": \"2019-09-19T03:30:55.068Z\",\n" +
-            "            \"rideId\": \"5bca9e6e-faa5-4edd-9ca2-47a8ea666198\",\n" +
-            "            \"driver\": {\n" +
-            "                \"assignedCar\": {\n" +
-            "                    \"assignedCarId\": null,\n" +
-            "                    \"car\": {\n" +
-            "                        \"carId\": \"9739850f-74aa-4089-9b19-e4bbd5436ad8\",\n" +
-            "                        \"make\": \"2010-09-19\",\n" +
-            "                        \"mfgDate\": null,\n" +
-            "                        \"number\": \"1234567890\",\n" +
-            "                        \"brand\": null,\n" +
-            "                        \"model\": \"Swift\",\n" +
-            "                        \"color\": \"White\",\n" +
-            "                        \"registrationNumber\": null,\n" +
-            "                        \"vin\": null,\n" +
-            "                        \"insuranceExpiry\": null,\n" +
-            "                        \"licenseExpiry\": null,\n" +
-            "                        \"insuranceExpiryDate\": null,\n" +
-            "                        \"licenseExpiryDate\": null,\n" +
-            "                        \"expiryInsuranceDate\": null,\n" +
-            "                        \"expiryLicenseDate\": null,\n" +
-            "                        \"manufatureDate\": null,\n" +
-            "                        \"createdOn\": \"2019-09-19T06:56:30.3559739Z\",\n" +
-            "                        \"updatedOn\": null,\n" +
-            "                        \"isActive\": false\n" +
-            "                    },\n" +
-            "                    \"createdOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "                    \"updatedOn\": null,\n" +
-            "                    \"isActive\": false\n" +
-            "                },\n" +
-            "                \"drivingLicenseFront\": null,\n" +
-            "                \"vehicleInsurance\": null,\n" +
-            "                \"vehicleRegistrationDocument\": null,\n" +
-            "                \"currentLocation\": null,\n" +
-            "                \"vehicleImageUploadDocument\": null,\n" +
-            "                \"phoneNumber\": null,\n" +
-            "                \"deviceToken\": null,\n" +
-            "                \"deviceType\": null,\n" +
-            "                \"birthday\": null,\n" +
-            "                \"profile\": null,\n" +
-            "                \"token\": null,\n" +
-            "                \"userIdStr\": null,\n" +
-            "                \"child\": null,\n" +
-            "                \"trustedPersons\": null,\n" +
-            "                \"schoolLocation\": null,\n" +
-            "                \"learningCenterLocation\": null,\n" +
-            "                \"homeLocation\": null,\n" +
-            "                \"userId\": \"f7d50f43-cc3b-4125-8c4e-649e5b0db766\",\n" +
-            "                \"title\": null,\n" +
-            "                \"firstName\": \"Rahul\",\n" +
-            "                \"lastName\": \"Singh\",\n" +
-            "                \"gender\": -1,\n" +
-            "                \"photo\": {\n" +
-            "                    \"photoId\": \"6f663fb9-a438-42d3-976b-61a9568ff3de\",\n" +
-            "                    \"smallPhotoUrl\": \"https://etapi.softprodigy.in//UserDocuments/DRIVER_7/7f0f03d3a1724896a7510ba76c383889.jpg\",\n" +
-            "                    \"standardPhotoUrl\": \"https://etapi.softprodigy.in//UserDocuments/DRIVER_7/7f0f03d3a1724896a7510ba76c383889.jpg\",\n" +
-            "                    \"name\": null,\n" +
-            "                    \"createdOn\": \"2019-09-19T06:59:29.8357217Z\"\n" +
-            "                },\n" +
-            "                \"isFirstLogin\": false,\n" +
-            "                \"role\": null,\n" +
-            "                \"email\": null\n" +
-            "            },\n" +
-            "            \"driverId\": \"f7d50f43-cc3b-4125-8c4e-649e5b0db766\",\n" +
-            "            \"locationData\": [],\n" +
-            "            \"poolData\": {\n" +
-            "                \"poolDataId\": \"3afa0213-3dce-4543-b37a-e477680ae675\",\n" +
-            "                \"dropPoint\": {\n" +
-            "                    \"locationId\": \"232fafaf-82fa-4152-b61e-0950cc335542\",\n" +
-            "                    \"lat\": 30.6961314,\n" +
-            "                    \"lon\": 76.71584919999998,\n" +
-            "                    \"name\": \"Sector 70\",\n" +
-            "                    \"googleJson\": null,\n" +
-            "                    \"createdOn\": \"2019-09-19T07:08:17.3955579Z\",\n" +
-            "                    \"updatedOn\": null,\n" +
-            "                    \"isActive\": false\n" +
-            "                },\n" +
-            "                \"pickupPoint\": null,\n" +
-            "                \"createdOn\": \"2019-09-19T07:08:17.3955579Z\",\n" +
-            "                \"updatedOn\": null,\n" +
-            "                \"isActive\": false\n" +
-            "            },\n" +
-            "            \"userId\": null,\n" +
-            "            \"rideName\": \"Ride 35\",\n" +
-
-            "            \"comments\": null,\n" +
-            "            \"scheduledRideOn\": \"0001-01-01T00:00:00Z\",\n" +
-            "            \"rideStatus\": 0,\n" +
-            "            \"createdOn\": \"2019-09-19T07:08:17.3955488Z\",\n" +
-            "            \"updatedOn\": null,\n" +
-            "            \"isActive\": false\n" +
-            "        }\n" +
-            "    ]\n" +
-            "}";
 
     public RidesFragment() {
     }
@@ -590,11 +286,10 @@ public class RidesFragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                getData();
-//                mEmpty.setVisibility(View.VISIBLE);
-//                mProgress.dismiss();
-//                System.out.println(error);
-//                DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                mEmpty.setVisibility(View.VISIBLE);
+                mProgress.dismiss();
+                System.out.println(error);
+                DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
             }
         }, new HashMap<String, String>());
 
@@ -673,67 +368,67 @@ public class RidesFragment extends Fragment {
         void onListFragmentInteraction(RideModel item, int type);
     }
 
-    void getData() {
-        currentRideList.clear();
-        Type listType = new TypeToken<RideResponse>() {
-        }.getType();
-        mProgress.dismiss();
-
-        RideResponse rides = new Gson().fromJson(result, listType);
-
-        if (rides != null) {
-
-            Collections.sort(rides.getData(), new Comparator<RideModel>() {
-                @Override
-                public int compare(RideModel o1, RideModel o2) {
-                    if (o1.getCreatedOn().getTime() == o2.getCreatedOn().getTime())
-                        return 0;
-                    return (o1.getCreatedOn().getTime() > o2.getCreatedOn().getTime() ? -1 : 1);
-                }
-            });
-
-            switch (1) {
-                case 1: {
-                    currentRideList.addAll(rides.getData());
-                    if (currentRideList.size() > 0) {
-                        mEmpty.setVisibility(View.GONE);
-                    } else {
-                        mEmpty.setVisibility(View.VISIBLE);
-
-                    }
-                    mAdapter.updateItems(currentRideList, 1);
-
-                    return;
-                }
-                case 2: {
-                    pastRideList.addAll(rides.getData());
-                    if (pastRideList.size() > 0) {
-                        mEmpty.setVisibility(View.GONE);
-                    } else {
-                        mEmpty.setVisibility(View.VISIBLE);
-
-                    }
-                    mAdapter.updateItems(pastRideList, 2);
-                    return;
-                }
-                case 3: {
-                    scedualRideList.addAll(rides.getData());
-                    if (scedualRideList.size() > 0) {
-                        mEmpty.setVisibility(View.GONE);
-                    } else {
-                        mEmpty.setVisibility(View.VISIBLE);
-
-                    }
-                    mAdapter.updateItems(scedualRideList, 3);
-
-                    return;
-                }
-            }
-
-        } else {
-            mEmpty.setVisibility(View.VISIBLE);
-            DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
-        }
-
-    }
+//    void getData() {
+//        currentRideList.clear();
+//        Type listType = new TypeToken<RideResponse>() {
+//        }.getType();
+//        mProgress.dismiss();
+//
+//        RideResponse rides = new Gson().fromJson(result, listType);
+//
+//        if (rides != null) {
+//
+//            Collections.sort(rides.getData(), new Comparator<RideModel>() {
+//                @Override
+//                public int compare(RideModel o1, RideModel o2) {
+//                    if (o1.getCreatedOn().getTime() == o2.getCreatedOn().getTime())
+//                        return 0;
+//                    return (o1.getCreatedOn().getTime() > o2.getCreatedOn().getTime() ? -1 : 1);
+//                }
+//            });
+//
+//            switch (1) {
+//                case 1: {
+//                    currentRideList.addAll(rides.getData());
+//                    if (currentRideList.size() > 0) {
+//                        mEmpty.setVisibility(View.GONE);
+//                    } else {
+//                        mEmpty.setVisibility(View.VISIBLE);
+//
+//                    }
+//                    mAdapter.updateItems(currentRideList, 1);
+//
+//                    return;
+//                }
+//                case 2: {
+//                    pastRideList.addAll(rides.getData());
+//                    if (pastRideList.size() > 0) {
+//                        mEmpty.setVisibility(View.GONE);
+//                    } else {
+//                        mEmpty.setVisibility(View.VISIBLE);
+//
+//                    }
+//                    mAdapter.updateItems(pastRideList, 2);
+//                    return;
+//                }
+//                case 3: {
+//                    scedualRideList.addAll(rides.getData());
+//                    if (scedualRideList.size() > 0) {
+//                        mEmpty.setVisibility(View.GONE);
+//                    } else {
+//                        mEmpty.setVisibility(View.VISIBLE);
+//
+//                    }
+//                    mAdapter.updateItems(scedualRideList, 3);
+//
+//                    return;
+//                }
+//            }
+//
+//        } else {
+//            mEmpty.setVisibility(View.VISIBLE);
+//            DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+//        }
+//
+//    }
 }

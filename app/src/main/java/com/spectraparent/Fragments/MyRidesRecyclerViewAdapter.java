@@ -131,51 +131,43 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
         }
 
         void processEvents() {
-            if (mItem.getChildModel().get(0).getEvents() == null) return;
+//            if (mItem.getChildModel().get(0).getEvents() == null) return;
+//
+//            markNotStarted();
+//
+//            if (mItem.getChildModel().get(0).getEvents().size() == 1) {
+//                markPickedUp();
+//            } else if (mItem.getChildModel().get(0).getEvents().size() == 2) {
+//                markOnTheWay();
+//            } else if (mItem.getChildModel().get(0).getEvents().size() == 3) {
+//                markDroppedOff();
+//            }
+//            if (type == 1) {
+//                markOnTheWay();
+//            } else if (type == 2) {
+//                markNotStarted();
+//            } else {
+//                markNotStarted();
+//            }
+            if (mItem.getRideStatus() == 0 || mItem.getRideStatus() == 1 || mItem.getRideStatus() == 2) {
+                mViewOnTheWay.setAlpha((float) 0.6);
+                mViewPickedUp.setAlpha((float) 0.6);
+                mViewDroppedOff.setAlpha((float) 0.6);
 
-            markNotStarted();
-
-            if (mItem.getChildModel().get(0).getEvents().size() == 1) {
-                markPickedUp();
-            } else if (mItem.getChildModel().get(0).getEvents().size() == 2) {
-                markOnTheWay();
-            } else if (mItem.getChildModel().get(0).getEvents().size() == 3) {
-                markDroppedOff();
+                mSep1.setAlpha((float) 0.6);
+                mSep2.setAlpha((float) 0.6);
+            } else if (mItem.getRideStatus() == 3) {
+                mViewOnTheWay.setAlpha(1);
+                mSep1.setAlpha(1);
+                mViewPickedUp.setAlpha(1);
+            } else if (mItem.getRideStatus() == 4) {
+                mViewOnTheWay.setAlpha(1);
+                mSep1.setAlpha(1);
+                mViewPickedUp.setAlpha(1);
+                mViewDroppedOff.setAlpha(1);
+                mSep2.setAlpha(1);
             }
-            if (type == 1) {
-                markOnTheWay();
-            } else if (type == 2) {
-                markNotStarted();
-            } else {
-                markNotStarted();
-            }
 
-        }
-
-        void markNotStarted() {
-            mViewOnTheWay.setAlpha((float) 0.6);
-            mViewPickedUp.setAlpha((float) 0.6);
-            mViewDroppedOff.setAlpha((float) 0.6);
-
-            mSep1.setAlpha((float) 0.6);
-            mSep2.setAlpha((float) 0.6);
-        }
-
-        void markPickedUp() {
-            mViewPickedUp.setAlpha(1);
-        }
-
-        void markOnTheWay() {
-            markPickedUp();
-            mViewOnTheWay.setAlpha(1);
-            mSep1.setAlpha(1);
-        }
-
-        void markDroppedOff() {
-            markPickedUp();
-            markOnTheWay();
-            mViewDroppedOff.setAlpha(1);
-            mSep2.setAlpha(1);
         }
     }
 }
