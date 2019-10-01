@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.spectraparent.Helpers.DialogsHelper;
+import com.spectraparent.Helpers.EditOrDeleteChildInterface;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Interface.AdapterClickListerner;
 import com.spectraparent.Models.Child;
@@ -24,11 +26,12 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
     Context mContext;
     ArrayList<Child> mArrayList;
     AdapterClickListerner profileFragment;
-
-    public ProfileChildAdapter(Context context, AdapterClickListerner profileFragment) {
+    EditOrDeleteChildInterface editOrDeleteChildInterface;
+    public ProfileChildAdapter(Context context, AdapterClickListerner profileFragment, EditOrDeleteChildInterface editOrDeleteChildInterface) {
         mContext = context;
         mArrayList = new ArrayList<>();
         this.profileFragment = profileFragment;
+        this.editOrDeleteChildInterface=editOrDeleteChildInterface;
         if (LocalStorage.getStudent().getChild() != null) {
             mArrayList = LocalStorage.getStudent().getChild();
         }
@@ -56,7 +59,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
         profile_viewHolder.mBtnEditAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileFragment.onClickItem(2,mArrayList.get(i));
+                profileFragment.onClickItem(2, mArrayList.get(i));
 
             }
         });
@@ -68,8 +71,8 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
     }
 
     class Profile_ViewHolder extends RecyclerView.ViewHolder {
-            private final RecyclerView rcImages, rcNeeds;
-        TextView mFirstName, mLastName, mAbout,txtChildName;
+        private final RecyclerView rcImages, rcNeeds;
+        TextView mFirstName, mLastName, tvUpdate, mAbout, txtChildName;
         Button mBtnEditNeeds, mBtnEditAbout;
         ImageView imageView;
 
@@ -80,6 +83,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
             mLastName = itemView.findViewById(R.id.txtLastName);
             mBtnEditNeeds = itemView.findViewById(R.id.btnEditNeeds);
             mBtnEditAbout = itemView.findViewById(R.id.btnEditInfo);
+            tvUpdate = itemView.findViewById(R.id.tvUpdate);
             rcImages = itemView.findViewById(R.id.rcImages);
             rcNeeds = itemView.findViewById(R.id.rcNeeds);
             txtChildName = itemView.findViewById(R.id.txtChildName);
@@ -87,7 +91,7 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
             mAbout = itemView.findViewById(R.id.txtAbout);
         }
 
-        public void bindData(Child childModel) {
+        public void bindData(final Child childModel) {
             if (childModel.getImages() != null && childModel.getImages().size() > 0) {
                 rcImages.setAdapter(new ChildImagesAdapter(itemView.getContext(), (ArrayList<Images>) childModel.getImages()));
             }
@@ -97,6 +101,12 @@ public class ProfileChildAdapter extends RecyclerView.Adapter<ProfileChildAdapte
             mAbout.setText(childModel.getAbout());
             rcNeeds.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayout.VERTICAL, false));
             rcNeeds.setAdapter(new ChildNeedsAdapter(itemView.getContext(), childModel));
+            tvUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DialogsHelper.updateChildDialog(mContext,childModel,editOrDeleteChildInterface);
+                }
+            });
         }
     }
 

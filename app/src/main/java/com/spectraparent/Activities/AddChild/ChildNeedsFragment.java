@@ -130,9 +130,14 @@ public class ChildNeedsFragment extends Fragment {
 
         mCb8.setTag("8");
         mCbs.add(mCb8);
-        if (getArguments() != null) {
-            mChild = (Child) getArguments().getSerializable("child");
-            from = getArguments().getString("from");
+        if (getArguments() != null || (getActivity() instanceof AddChildActivity && ((AddChildActivity) getActivity()).childModel != null)) {
+            if (getArguments() != null) {
+                mChild = (Child) getArguments().getSerializable("child");
+                from = getArguments().getString("from");
+            } else if ((getActivity() instanceof AddChildActivity && ((AddChildActivity) getActivity()).childModel != null)) {
+                mChild = ((AddChildActivity) getActivity()).childModel;
+                from = ((AddChildActivity) getActivity()).from;
+            }
             if (mChild.getSpecialNeeds() != null && !mChild.getSpecialNeeds().isEmpty()) {
                 String checkedItem[] = mChild.getSpecialNeeds().split(",");
 
@@ -227,14 +232,14 @@ public class ChildNeedsFragment extends Fragment {
         AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
         alertDialogAndroid.show();
     }
-
+///             (getActivity() instanceof AddChildActivity && ((AddChildActivity) getActivity()).childModel == null)) {
     @OnClick(R.id.btnNext)
     void onNext() {
-        if (from != null && !from.isEmpty()) {
+        if (getArguments() != null ){
             btnNext.startAnimation();
             LocalStorage.storeChild(mChild);
             editChild();
-        } else {
+        }  else {
             mChild.setFirstName(LocalStorage.getChild().getFirstName());
             mChild.setLastName(LocalStorage.getChild().getLastName());
             LocalStorage.storeChild(mChild);

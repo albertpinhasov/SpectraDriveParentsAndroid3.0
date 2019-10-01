@@ -86,7 +86,7 @@ public class PersonalInfoFragment extends Fragment implements ActionSheet.Action
     }
 
     @OnClick(R.id.btnNext)
-    void onNextClicked(){
+    void onNextClicked() {
 
         updateProfile();
     }
@@ -99,12 +99,16 @@ public class PersonalInfoFragment extends Fragment implements ActionSheet.Action
         user.setLastName(mLastName.getText().toString());
 
         if (user.getFirstName() == null || user.getFirstName().length() < 2) {
-            DialogsHelper.showAlert(getActivity(),"Invalid First Name","Please enter your First Name to proceed with registration.","Ok",null, PromptDialog.DIALOG_TYPE_WARNING);
+            DialogsHelper.showAlert(getActivity(), "Invalid First Name", "Please enter your First Name to proceed with registration.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
 
         if (user.getLastName() == null || user.getLastName().length() < 2) {
-            DialogsHelper.showAlert(getActivity(),"Invalid Last Name","Please enter your Last Name to proceed with registration.","Ok",null, PromptDialog.DIALOG_TYPE_WARNING);
+            DialogsHelper.showAlert(getActivity(), "Invalid Last Name", "Please enter your Last Name to proceed with registration.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+            return;
+        }
+        if (mNumChild.getText().toString().trim().isEmpty()) {
+            DialogsHelper.showAlert(getActivity(), "Invalid Number Of Children", "Please Select number of children", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
 
@@ -122,17 +126,17 @@ public class PersonalInfoFragment extends Fragment implements ActionSheet.Action
 
                 mBtnNext.revertAnimation();
 
-                if(student != null){
+                if (student != null) {
                     if (student.isSuccess()) {
                         LocalStorage.storeStudent(student.getData());
 
-                        ((RegisterActivity)getActivity()).moveNext();
+                        ((RegisterActivity) getActivity()).moveNext();
 
-                    }else {
-                        DialogsHelper.showAlert(getActivity(),"Server error",student.getMessage(),"Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                    } else {
+                        DialogsHelper.showAlert(getActivity(), "Server error", student.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                     }
-                }else {
-                    DialogsHelper.showAlert(getActivity(),"Server error","Internal server error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                } else {
+                    DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
                 }
 
             }
@@ -144,7 +148,7 @@ public class PersonalInfoFragment extends Fragment implements ActionSheet.Action
             public void onErrorResponse(VolleyError error) {
                 mBtnNext.revertAnimation();
                 System.out.println(error);
-                DialogsHelper.showAlert(getActivity(),"Network error","Network error, please try again later","Ok",null, PromptDialog.DIALOG_TYPE_WRONG);
+                DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
             }
         }, new HashMap<String, String>());
 
@@ -158,47 +162,47 @@ public class PersonalInfoFragment extends Fragment implements ActionSheet.Action
 
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
-if(index == 3){
-    LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getActivity());
-    View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
-    AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getActivity());
-    alertDialogBuilderUserInput.setView(mView);
+        if (index == 3) {
+            LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getActivity());
+            View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getActivity());
+            alertDialogBuilderUserInput.setView(mView);
 
 
-    final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
-    final TextView title =  mView.findViewById(R.id.dialogTitle);
-    final TextView subTitle =  mView.findViewById(R.id.dialogSubTitle);
-    title.setText("Other number of children");
-    subTitle.setText("Enter number of children");
-    userInputDialogEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-    userInputDialogEditText.setHint("Number");
-    alertDialogBuilderUserInput
-            .setCancelable(false)
-            .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialogBox, int id) {
-                    String txt = userInputDialogEditText.getText().toString().trim();
-                    if(txt.length() == 0){
-                        DialogsHelper.showAlert(getActivity(),"Invalid Value","Please enter correct number of childern.", "Ok",null, PromptDialog.DIALOG_TYPE_WARNING);
-return;
-                    }
-                    LocalStorage.storeInt("numChild", Integer.parseInt(txt));
-                    mNumChild.setText(txt);
-                    dialogBox.cancel();
-                }
-            })
-
-            .setNegativeButton("Cancel",
-                    new DialogInterface.OnClickListener() {
+            final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+            final TextView title = mView.findViewById(R.id.dialogTitle);
+            final TextView subTitle = mView.findViewById(R.id.dialogSubTitle);
+            title.setText("Other number of children");
+            subTitle.setText("Enter number of children");
+            userInputDialogEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            userInputDialogEditText.setHint("Number");
+            alertDialogBuilderUserInput
+                    .setCancelable(false)
+                    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogBox, int id) {
+                            String txt = userInputDialogEditText.getText().toString().trim();
+                            if (txt.length() == 0) {
+                                DialogsHelper.showAlert(getActivity(), "Invalid Value", "Please enter correct number of childern.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
+                                return;
+                            }
+                            LocalStorage.storeInt("numChild", Integer.parseInt(txt));
+                            mNumChild.setText(txt);
                             dialogBox.cancel();
                         }
-                    });
+                    })
 
-    AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-    alertDialogAndroid.show();
-}else {
-    LocalStorage.storeInt("numChild", index + 1);
-    mNumChild.setText(String.valueOf(index + 1));
-}
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogBox, int id) {
+                                    dialogBox.cancel();
+                                }
+                            });
+
+            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+            alertDialogAndroid.show();
+        } else {
+            LocalStorage.storeInt("numChild", index + 1);
+            mNumChild.setText(String.valueOf(index + 1));
+        }
     }
 }

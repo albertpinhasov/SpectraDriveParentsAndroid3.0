@@ -179,7 +179,7 @@ public class LiveTrackingUtils(val mContext: Context) {
             val newPos = LatLng(lat, lng)
 /*
             if(latLngPathList.contains(newPos)){
-                Log.e("delete","delete")
+                Log.e("deleteChild","deleteChild")
                 latLngPathList.dropLastWhile { latLngPathList.contains(newPos) }
         }
            */

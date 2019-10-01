@@ -31,5 +31,6 @@
     <color name="color_type_success">#90b06e</color>
     <color name="colorSep">#dddddd</color>
     <color name="color_gray">#cdcdcd</color>
+    <color name="transparent">#00CDCDCD</color>
 
 </resources>

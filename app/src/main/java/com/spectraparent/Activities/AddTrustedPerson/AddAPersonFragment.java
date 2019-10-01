@@ -267,7 +267,7 @@ public class AddAPersonFragment extends Fragment {
                 LocalStorage.storeTrustedPerson(mPerson);
                 PersonRelationFragment aboutChildFragment = new PersonRelationFragment();
                 Bundle args = new Bundle();
-                args.putString("from", "edit");
+                args.putString("from", "editChild");
                 aboutChildFragment.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, aboutChildFragment)

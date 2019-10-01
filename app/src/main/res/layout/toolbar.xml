@@ -3,7 +3,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorNavPrimary"
+    android:background="@color/transparent"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
     app:theme="@style/ToolBarStyle"
     android:minHeight="?attr/actionBarSize">
@@ -17,7 +17,7 @@
         android:gravity="center"
         android:lines="1"
         android:maxLines="1"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         android:textStyle="bold" />
 

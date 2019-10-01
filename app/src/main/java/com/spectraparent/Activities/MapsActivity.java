@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -142,8 +143,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mTitle = toolbar.findViewById(R.id.toolbar_title);
 
         mTitle.setText("Rides");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Drawable backArrow = getResources().getDrawable(R.drawable.back );
+        backArrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(backArrow);
         getSupportActionBar().setTitle("");
     }
 

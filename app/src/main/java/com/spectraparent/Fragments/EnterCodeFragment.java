@@ -310,6 +310,7 @@ public class EnterCodeFragment extends Fragment {
     private void signInWithAPI() {
         VolleyUtils v = VolleyUtils.getInstance(getActivity());
         UserModel userModel = LocalStorage.getStudent();
+//        userModel.setPhoneNumber("9779908710");
         userModel.setDeviceToken(LocalStorage.getString("firebase_token"));
         userModel.setDeviceType("android");
         ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.SignInUrl, userModel, new Response.Listener<String>() {

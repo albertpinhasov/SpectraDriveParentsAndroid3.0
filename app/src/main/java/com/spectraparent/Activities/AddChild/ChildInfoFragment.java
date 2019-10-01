@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spectraparent.Helpers.ActionSheet;
+import com.spectraparent.Helpers.CircleTransform;
 import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Helpers.Tools;
@@ -30,6 +31,7 @@ import com.spectraparent.Models.ChildModel;
 import com.spectraparent.Models.KeyValueModel;
 import com.spectraparent.SpectraDrive;
 import com.spectraparent.android.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -96,10 +98,6 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (((AddChildActivity) getActivity()).from != null &&
-                !((AddChildActivity) getActivity()).from.isEmpty()) {
-            lblChildIndex.setText("Child Information");
-        }
         mImage1.setTag("0");
         mImage2.setTag("1");
         mImage3.setTag("2");
@@ -110,7 +108,28 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
         mImages.add(mImage3);
         mImages.add(mImage4);
 
-        mChild = new Child();
+        if (((AddChildActivity) getActivity()).from != null &&
+                !((AddChildActivity) getActivity()).from.isEmpty()) {
+            lblChildIndex.setText("Child Information");
+        }
+        if (((AddChildActivity) getActivity()).childModel != null) {
+            mChild = ((AddChildActivity) getActivity()).childModel;
+            mFirstName.setText(mChild.getFirstName());
+            mLastName.setText(mChild.getLastName());
+            if (mChild.getImages() != null && mChild.getImages().size() > 0) {
+                mLPlace.setVisibility(View.GONE);
+                mLImages.setVisibility(View.VISIBLE);
+                for (int i = 0; i < mChild.getImages().size(); i++) {
+                    Picasso.get().load(mChild.getImages().get(i).getSmallPhotoUrl()).
+                            placeholder(R.drawable.no_profile)
+                            .transform(new CircleTransform()).fit().centerCrop().into(mImages.get(i))
+                    ;
+                }
+            }
+        } else {
+            mChild = new Child();
+        }
+
 
         mFirstName.setText(mChild.getFirstName());
         mLastName.setText(mChild.getLastName());

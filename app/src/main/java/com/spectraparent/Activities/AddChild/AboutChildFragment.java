@@ -82,6 +82,10 @@ public class AboutChildFragment extends Fragment {
             from = getArguments().getString("from");
             mAbout.setText(mChild.getAbout() != null ? mChild.getAbout() : "");
             mBtnNextChild.setVisibility(View.GONE);
+        } else if (((AddChildActivity) getActivity()).childModel != null) {
+            mChild = ((AddChildActivity) getActivity()).childModel;
+            mAbout.setText(mChild.getAbout() != null ? mChild.getAbout() : "");
+            mBtnNextChild.setVisibility(View.GONE);
         } else {
             mChild = LocalStorage.getChild();
         }
@@ -219,7 +223,9 @@ public class AboutChildFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                if (from != null && !from.isEmpty())
+                if (getArguments() != null ||
+                        (getActivity() instanceof AddChildActivity &&
+                                ((AddChildActivity) getActivity()).childModel != null))
                     params.put("childId", mChild.getChildId());
                 params.put("FirstName", mChild.getFirstName());
                 params.put("LastName", mChild.getLastName());

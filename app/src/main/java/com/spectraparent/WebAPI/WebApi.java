@@ -16,6 +16,7 @@ public class WebApi {
 
     public static final String SignInUrl = BaseUrl+"Users/LoginOrRegister";
     public static final String GetMyRidesUrl = BaseUrl+"Users/GetUserRides";
+    public static final String RemoveChild = BaseUrl+"Users/RemoveChild";
     public static final String ReSignInUrl = "https://spectradriveapp.com/Login/ReSignIn?isDormWith=true";
     public static final String ForgotPasswordUrl = "https://spectradriveapp.com/Login/DormWithForgetPassword";
     public static final String OAuthSignInUrl = "https://spectradriveapp.com/Login/OAuthLogin?isDormWith=true";

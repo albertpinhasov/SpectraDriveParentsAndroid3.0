@@ -14,19 +14,36 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.spectraparent.Activities.AddChild.AboutChildFragment;
 import com.spectraparent.Activities.AddChild.AddChildActivity;
 import com.spectraparent.Activities.AddChild.ChildNeedsFragment;
 import com.spectraparent.Activities.AddTrustedPerson.AddAPersonFragment;
 import com.spectraparent.Adapters.ProfileChildAdapter;
 import com.spectraparent.Helpers.CircleTransform;
+import com.spectraparent.Helpers.DialogsHelper;
+import com.spectraparent.Helpers.EditOrDeleteChildInterface;
 import com.spectraparent.Helpers.LocalStorage;
+import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Interface.AdapterClickListerner;
 import com.spectraparent.Models.Child;
 import com.spectraparent.Models.TrustedPersonModel;
 import com.spectraparent.Models.UserModel;
+import com.spectraparent.Models.WebAPIResponseModel;
+import com.spectraparent.WebAPI.ApiRequest;
+import com.spectraparent.WebAPI.VolleyUtils;
+import com.spectraparent.WebAPI.WebApi;
 import com.spectraparent.android.R;
 import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +53,7 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class ProfileFragment extends Fragment implements AdapterClickListerner {
+public class ProfileFragment extends Fragment implements AdapterClickListerner, EditOrDeleteChildInterface {
 
     @BindView(R.id.txtFirstName)
     TextView mFirstName;
@@ -157,7 +174,7 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
             ChildNeedsFragment childNeedsFragment = new ChildNeedsFragment();
             Bundle args = new Bundle();
             args.putSerializable("child", child);
-            args.putString("from", "edit");
+            args.putString("from", "editChild");
 
             childNeedsFragment.setArguments(args);
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -168,7 +185,7 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
             AboutChildFragment aboutChildFragment = new AboutChildFragment();
             Bundle args = new Bundle();
             args.putSerializable("child", child);
-            args.putString("from", "edit");
+            args.putString("from", "editChild");
             aboutChildFragment.setArguments(args);
             getActivity().getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, aboutChildFragment)
@@ -181,7 +198,7 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
 
     public void setChildAdapter() {
         rcChild.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
-        rcChild.setAdapter(new ProfileChildAdapter(getActivity(), this));
+        rcChild.setAdapter(new ProfileChildAdapter(getActivity(), this, this));
 
     }
 
@@ -195,4 +212,68 @@ public class ProfileFragment extends Fragment implements AdapterClickListerner {
             }
         }
     }
+
+    @Override
+    public void editChild(Child childModel) {
+        Intent i = new Intent(getActivity(), AddChildActivity.class);
+        i.putExtra("from", "add");
+        i.putExtra("child", new Gson().toJson(childModel));
+        startActivityForResult(i, 1);
+    }
+
+    @Override
+    public void deleteChild(Child childModel) {
+        final KProgressHUD mProgress = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setDetailsLabel("Deleting Child")
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+        VolleyUtils v = VolleyUtils.getInstance(getActivity());
+        mProgress.show();
+
+        ApiRequest req = new ApiRequest(Request.Method.GET, WebApi.RemoveChild + "?childId=" + childModel.getChildId(), null, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Type type = new TypeToken<WebAPIResponseModel<ArrayList<Child>>>() {
+                }.getType();
+                System.out.println("Response " + WebApi.RemoveChild + "======>" + new Gson().toJson(response));
+                mProgress.dismiss();
+
+                WebAPIResponseModel<ArrayList<Child>> data = new Gson().fromJson(response, type);
+                if (data != null && data.isSuccess()) {
+                    UserModel user = LocalStorage.getStudent();
+                    user.setChild(data.getData());
+
+                    LocalStorage.storeStudent(user);
+                    DialogsHelper.showAlert(getContext(), "Success", data.getMessage(), "Ok", null, PromptDialog.DIALOG_TYPE_SUCCESS, new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.container, new ProfileFragment())
+                                    .commit();
+                        }
+                    });
+                } else {
+                    DialogsHelper.showAlert(getActivity(), "Server error", "Internal server error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+                }
+
+            }
+
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mProgress.dismiss();
+
+                DialogsHelper.showAlert(getActivity(), "Network error", "Network error, please try again later", "Ok", null, PromptDialog.DIALOG_TYPE_WRONG);
+            }
+        }, new HashMap<String, String>());
+
+        v.addToRequestQueue(req);
+    }
+
 }
