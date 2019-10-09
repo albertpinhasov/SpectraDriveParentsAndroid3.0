@@ -34,7 +34,7 @@ public class AddTrustedPersonActivity extends AppCompatActivity implements INavi
 
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
 
-        mTitle.setText("Add trusted person");
+        mTitle.setText("Add Main Contact person");
 
         getSupportActionBar().setTitle("");
 

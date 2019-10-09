@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Trusted Contact Information"
+        android:text="Main Contact Person Information"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
@@ -56,6 +56,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
         android:onClick="onAddClick"
-        android:text="Add Trusted Contact" />
+        android:text="Add Main Contact Person" />
 
 </RelativeLayout>
