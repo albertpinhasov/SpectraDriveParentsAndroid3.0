@@ -49,7 +49,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
-        android:text="Current Rides"
+        android:text="Current Routes"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -86,7 +86,7 @@
             android:layout_marginTop="80dp"
             android:layout_marginBottom="5dp"
             android:background="@null"
-            android:text="Import Sample Rides"
+            android:text="Import Sample Routes"
             android:textColor="@color/com_facebook_blue"
             android:visibility="gone" />
 
@@ -96,7 +96,7 @@
             android:layout_height="35dp"
             android:layout_marginBottom="5dp"
             android:background="@null"
-            android:text="Try a Sample Pool To School Ride"
+            android:text="Try a Sample Pool To School Route"
             android:textColor="@color/com_facebook_blue"
             android:visibility="gone" />
 
@@ -106,7 +106,7 @@
             android:layout_height="35dp"
             android:layout_marginBottom="10dp"
             android:background="@null"
-            android:text="Try a Sample Pool From Ride"
+            android:text="Try a Sample Pool From Route"
             android:textColor="@color/com_facebook_blue"
             android:visibility="gone" />
 

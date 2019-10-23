@@ -11,12 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.spectraparent.Activities.MapsActivity" />
+
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
         android:layout_centerInParent="true"/>
-    <include layout="@layout/toolbar" />
+    <include
+        layout="@layout/toolbar"
+     />
+    <TextView
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/statusOfDriverWithTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="50dp"
+        tools:text="Arriving in 10 minutes\nDriver is on the way"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,7 +115,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Trip time 8 minutes" />
+                            android:text="N/A" />
                     </LinearLayout>
 
                     <View
@@ -134,10 +147,11 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
 
                         <TextView
+                            android:id="@+id/tvPickupTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="11:00 AM" />
+                            android:text="N/A" />
 
                     </LinearLayout>
                 </LinearLayout>

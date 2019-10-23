@@ -59,12 +59,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker mDriver;
     @BindView(R.id.tvdriverName)
     TextView tvdriverName;
+    @BindView(R.id.statusOfDriverWithTime)
+    TextView statusOfDriverWithTime;
     @BindView(R.id.tvDrivingCar)
     TextView tvDrivingCar;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.tvCarNo)
     TextView tvCarNo;
+    @BindView(R.id.tvPickupTime)
+    TextView tvPickupTime;
     @BindView(R.id.tvTimeRequired)
     TextView tvTimeRequired;
     @BindView(R.id.ivDriveImage)
@@ -94,6 +98,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         ButterKnife.bind(this);
+        //View toolbarLayout = findViewById(R.id.toolbarLayout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mRide = new Gson().fromJson(getIntent().getStringExtra("json"), RideModel.class);
@@ -142,7 +147,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setData();
         mTitle = toolbar.findViewById(R.id.toolbar_title);
 
-        mTitle.setText("Rides");
+        mTitle.setText("Routes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Drawable backArrow = getResources().getDrawable(R.drawable.back );
         backArrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
@@ -153,7 +158,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setData() {
         markOntheWay(mRide.getRideStatus());
         tvdriverName.setText(mRide.getDriver().getFirstName());
-
+      //  tvPickupTime.setText(mRide.getChild().get(0).getPickup().getCreatedOn());
         Picasso.get().load(mRide.getDriver().getPhoto().getSmallPhotoUrl()).
                 placeholder(R.drawable.no_profile)
                 .fit().centerCrop().into(ivDriveImage);
@@ -278,8 +283,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void setDistanceAndTime(String distan, String duration) {
         tvTimeRequired.setText("Trip Time " + duration);
-    }
+        if(mRide.getRideStatus() == 3 && duration!=null && !duration.isEmpty()) {
+            statusOfDriverWithTime.setText("Arriving in " + duration + "\nDriver is on the way");
+            statusOfDriverWithTime.setVisibility(View.VISIBLE);
+        }
+        else
+            statusOfDriverWithTime.setVisibility(View.GONE);
 
+    }
     boolean checkDistance(LatLng source) {
         android.location.Location locationA = new android.location.Location("destination");
         locationA.setLatitude(source.latitude);

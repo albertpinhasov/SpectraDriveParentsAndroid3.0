@@ -64,7 +64,7 @@ public class MainHomeActivity extends BaseActivity
 
         mTitle = toolbar.findViewById(R.id.toolbar_title);
 
-        mTitle.setText("Rides");
+        mTitle.setText("Routes");
 
         getSupportActionBar().setTitle("");
 
@@ -127,7 +127,7 @@ public class MainHomeActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_rides) {
-            mTitle.setText("Rides");
+            mTitle.setText("Routes");
             onNavigationDrawerItemSelected(new RidesFragment());
         } else if (id == R.id.nav_profile) {
             onNavigationDrawerItemSelected(new ProfileFragment());

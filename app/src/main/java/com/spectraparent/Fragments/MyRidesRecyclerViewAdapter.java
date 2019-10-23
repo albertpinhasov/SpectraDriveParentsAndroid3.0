@@ -160,6 +160,8 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
                 mViewOnTheWay.setAlpha(1);
                 mSep1.setAlpha(1);
                 mViewPickedUp.setAlpha(1);
+                mSep2.setAlpha((float)0.6);
+                mViewDroppedOff.setAlpha((float)0.6);
             } else if (mItem.getRideStatus() == 4) {
                 mViewOnTheWay.setAlpha(1);
                 mSep1.setAlpha(1);
