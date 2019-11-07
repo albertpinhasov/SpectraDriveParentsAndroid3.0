@@ -3,6 +3,7 @@ package com.spectraparent.Activities.AddChild;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,13 +29,15 @@ import com.spectraparent.Helpers.Tools;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Helpers.cropper.CropImage;
 import com.spectraparent.Models.Child;
-import com.spectraparent.Models.ChildModel;
 import com.spectraparent.Models.KeyValueModel;
 import com.spectraparent.SpectraDrive;
 import com.spectraparent.android.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +54,8 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
 
     @BindView(R.id.img1)
     ImageView mImage1;
-
+    @BindView(R.id.txtDob)
+    EditText mDob;
     @BindView(R.id.img2)
     ImageView mImage2;
 
@@ -97,7 +102,26 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ButterKnife.bind(this, view);
+        mDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = Tools.datePicker(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        view.setMaxDate(System.currentTimeMillis());
+                        SimpleDateFormat df = new SimpleDateFormat("MM.dd.yyyy", Locale.getDefault());
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, month, dayOfMonth);
+                        mDob.setText(df.format(calendar.getTime()));
+                    }
+                });
+                Calendar calendar = Calendar.getInstance();
+                datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
         mImage1.setTag("0");
         mImage2.setTag("1");
         mImage3.setTag("2");
@@ -116,6 +140,7 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
             mChild = ((AddChildActivity) getActivity()).childModel;
             mFirstName.setText(mChild.getFirstName());
             mLastName.setText(mChild.getLastName());
+            mDob.setText(mChild.getDateOfBirth());
             if (mChild.getImages() != null && mChild.getImages().size() > 0) {
                 mLPlace.setVisibility(View.GONE);
                 mLImages.setVisibility(View.VISIBLE);
@@ -226,7 +251,7 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
 
         String firstName = mFirstName.getText().toString().trim();
         String lastName = mLastName.getText().toString();
-
+        String dob = mDob.getText().toString();
         if (firstName.length() == 0) {
             DialogsHelper.showAlert(getContext(), "Incomplete information", "Please enter first name of your child.", "Ok", null, PromptDialog.DIALOG_TYPE_INFO);
             return;
@@ -234,6 +259,10 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
 
         if (lastName.length() == 0) {
             DialogsHelper.showAlert(getContext(), "Incomplete information", "Please enter last name of your child.", "Ok", null, PromptDialog.DIALOG_TYPE_INFO);
+            return;
+        }
+        if (dob.length() < 2) {
+            DialogsHelper.showAlert(getActivity(), "Invalid D.O.B", "Please select Date Of Birth to proceed.", "Ok", null, PromptDialog.DIALOG_TYPE_WARNING);
             return;
         }
 
@@ -245,6 +274,7 @@ public class ChildInfoFragment extends Fragment implements ActionSheet.ActionShe
 
         mChild.setFirstName(firstName);
         mChild.setLastName(lastName);
+        mChild.setDateOfBirth(dob);
 
         LocalStorage.storeChild(mChild);
 

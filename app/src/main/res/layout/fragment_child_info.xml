@@ -56,6 +56,24 @@
             android:layout_height="wrap_content"
             android:hint="Type in here" />
 
+        <TextView
+            android:id="@+id/tvDob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/date_of_birth"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <EditText
+            android:id="@+id/txtDob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none"
+            android:hint="@string/_00_00_0000"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary" />
 
         <LinearLayout
             android:layout_width="match_parent"

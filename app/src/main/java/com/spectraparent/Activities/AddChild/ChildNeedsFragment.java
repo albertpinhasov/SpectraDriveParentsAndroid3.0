@@ -242,6 +242,7 @@ public class ChildNeedsFragment extends Fragment {
         }  else {
             mChild.setFirstName(LocalStorage.getChild().getFirstName());
             mChild.setLastName(LocalStorage.getChild().getLastName());
+            mChild.setDateOfBirth(LocalStorage.getChild().getDateOfBirth());
             LocalStorage.storeChild(mChild);
             ((AddChildActivity) getActivity()).moveNext();
         }
@@ -334,6 +335,7 @@ public class ChildNeedsFragment extends Fragment {
                 params.put("childId", mChild.getChildId());
                 params.put("FirstName", mChild.getFirstName());
                 params.put("LastName", mChild.getLastName());
+                params.put("DateOfBirth", mChild.getDateOfBirth());
                 params.put("About", mChild.getAbout());
                 params.put("SpecialNeeds", mChild.getSpecialNeeds());
                 params.put("OtherSpecialNeeds", mChild.getOtherSpecialNeeds());

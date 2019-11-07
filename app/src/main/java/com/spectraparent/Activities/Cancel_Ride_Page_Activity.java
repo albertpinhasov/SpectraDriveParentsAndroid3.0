@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
 import com.google.gson.Gson;
+import com.spectraparent.Helpers.DialogsHelper;
 import com.spectraparent.Helpers.Tools;
+import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Models.RideModel;
 import com.spectraparent.android.R;
 import com.squareup.picasso.Picasso;
@@ -95,10 +97,11 @@ public class Cancel_Ride_Page_Activity extends AppCompatActivity {
 
     @OnClick(R.id.btnCancelRide)
     void cancelRide() {
-        Intent intent = new Intent(this, Cancelellation_Form_Activity.class);
-        intent.putExtra("json", new Gson().toJson(mRide));
-        startActivity(intent);
-        finish();
+        DialogsHelper.showAlert(this,"Information","Please call your contact for the school district.","Ok","", PromptDialog.DIALOG_TYPE_INFO);
+//        Intent intent = new Intent(this, Cancelellation_Form_Activity.class);
+//        intent.putExtra("json", new Gson().toJson(mRide));
+//        startActivity(intent);
+//        finish();
     }
 
     @OnClick(R.id.btnEditRide)

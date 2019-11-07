@@ -1,7 +1,6 @@
 package com.spectraparent.Models;
 
 import java.io.Serializable;
-import java.io.SerializablePermission;
 import java.util.List;
 
 public class Child implements Serializable {
@@ -12,6 +11,16 @@ public class Child implements Serializable {
     private String lastName;
 
     private String fullName;
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    private String dateOfBirth;
 
     private String about;
 

@@ -229,6 +229,7 @@ public class AboutChildFragment extends Fragment {
                     params.put("childId", mChild.getChildId());
                 params.put("FirstName", mChild.getFirstName());
                 params.put("LastName", mChild.getLastName());
+                params.put("DateOfBirth", mChild.getDateOfBirth());
                 params.put("About", mChild.getAbout());
                 params.put("SpecialNeeds", mChild.getSpecialNeeds());
                 params.put("OtherSpecialNeeds", mChild.getOtherSpecialNeeds());
