@@ -168,7 +168,7 @@ public class LoginActivity extends BaseActivity {
     private void signInWithAPI() {
         VolleyUtils v = VolleyUtils.getInstance(this);
 
-        ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.SignInUrl, null, new Response.Listener<String>() {
+        ApiRequest req = new ApiRequest(Request.Method.POST, WebApi.SignInUrl, LocalStorage.getStudent(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Type listType = new TypeToken<WebAPIResponseModel<UserModel>>() {
