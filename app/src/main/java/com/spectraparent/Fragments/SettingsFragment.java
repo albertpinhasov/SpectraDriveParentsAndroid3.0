@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.spectraparent.Activities.AddChild.AddChildActivity;
-import com.spectraparent.Activities.UpdateLocationActivity;
 import com.spectraparent.Helpers.LocalStorage;
 import com.spectraparent.Models.Child;
-import com.spectraparent.Models.ChildModel;
 import com.spectraparent.android.R;
 
 import butterknife.BindView;
@@ -52,9 +50,9 @@ public class SettingsFragment extends Fragment {
 
     @OnClick({R.id.txtHome, R.id.txtSchool, R.id.txtLearningCenter})
     void onLocChangeClicked(View view){
-        Intent intent = new Intent(getActivity(), UpdateLocationActivity.class);
-        intent.putExtra("type",view.getTag().equals("1") ? "home" : (view.getTag().equals("2") ? "school" : "learning"));
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), UpdateLocationActivity.class);
+//        intent.putExtra("type",view.getTag().equals("1") ? "home" : (view.getTag().equals("2") ? "school" : "learning"));
+//        startActivity(intent);
     }
 
     @OnClick(R.id.txtAddChild)

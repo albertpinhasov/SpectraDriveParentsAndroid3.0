@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:visibility="gone"
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
@@ -26,10 +27,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@color/colorSep" />
 
         <LinearLayout
             android:id="@+id/txtHome"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/colorWhite"
@@ -82,6 +85,8 @@
             android:id="@+id/txtSchool"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:visibility="gone"
+
             android:background="@color/colorWhite"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -131,6 +136,8 @@
         <LinearLayout
             android:id="@+id/txtLearningCenter"
             android:layout_width="match_parent"
+            android:visibility="gone"
+
             android:layout_height="40dp"
             android:background="@color/colorWhite"
             android:gravity="center_vertical"
@@ -238,7 +245,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Privacy setings"
+            android:text="Notifications"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />

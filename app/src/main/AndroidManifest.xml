@@ -77,7 +77,7 @@
         <activity android:name="com.spectraparent.Activities.InviteFriendsActivity" />
         <activity android:name="com.spectraparent.Activities.HelpFAQ.FAQActivity" />
         <activity android:name="com.spectraparent.Activities.ContactUsActivity" />
-        <activity android:name="com.spectraparent.Activities.UpdateLocationActivity" />
+<!--        <activity android:name="com.spectraparent.Activities.UpdateLocationActivity" />-->
         <activity android:name="com.spectraparent.Activities.FAQActivity.HelpAndFAQActivity"></activity>
     </application>
 

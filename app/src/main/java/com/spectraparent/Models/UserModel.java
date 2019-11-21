@@ -1,5 +1,7 @@
 package com.spectraparent.Models;
 
+import com.spectraparent.Helpers.Location;
+
 import java.util.ArrayList;
 
 public class UserModel {
@@ -12,7 +14,7 @@ public class UserModel {
     private String birthday;
     private String profile;
     private String userIdStr;
-    private String schoolLocation;
+    private LocationModel schoolLocation;
     private String DeviceType ;
 
     public String getDeviceType() {
@@ -57,27 +59,27 @@ public class UserModel {
         this.userIdStr = userIdStr;
     }
 
-    public String getSchoolLocation() {
+    public LocationModel getSchoolLocation() {
         return schoolLocation;
     }
 
-    public void setSchoolLocation(String schoolLocation) {
+    public void setSchoolLocation(LocationModel schoolLocation) {
         this.schoolLocation = schoolLocation;
     }
 
-    public String getLearningCenterLocation() {
+    public LocationModel getLearningCenterLocation() {
         return learningCenterLocation;
     }
 
-    public void setLearningCenterLocation(String learningCenterLocation) {
+    public void setLearningCenterLocation(LocationModel learningCenterLocation) {
         this.learningCenterLocation = learningCenterLocation;
     }
 
-    public String getHomeLocation() {
+    public LocationModel getHomeLocation() {
         return homeLocation;
     }
 
-    public void setHomeLocation(String homeLocation) {
+    public void setHomeLocation(LocationModel homeLocation) {
         this.homeLocation = homeLocation;
     }
 
@@ -129,8 +131,8 @@ public class UserModel {
         this.gender = gender;
     }
 
-    private String learningCenterLocation;
-    private String homeLocation;
+    private LocationModel learningCenterLocation;
+    private LocationModel homeLocation;
     private String userId;
     private String title;
     private Photo photo;

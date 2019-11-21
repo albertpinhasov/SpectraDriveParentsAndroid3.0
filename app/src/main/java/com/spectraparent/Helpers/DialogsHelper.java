@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.ligl.android.widget.iosdialog.IOSSheetDialog;
-import com.spectraparent.Activities.UpdateLocationActivity;
 import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Models.Child;
 
@@ -38,21 +37,21 @@ public class DialogsHelper {
                     }
                 }).show();
     }
-
-    public static void showAlertWithCloseActivity(final Context context, String title, String body, String okTitle, String cancelTitle, int type) {
-        new PromptDialog(context)
-                .setDialogType(type)
-                .setAnimationEnable(true)
-                .setTitleText(title)
-                .setContentText(body)
-                .setPositiveListener(okTitle, new PromptDialog.OnPositiveListener() {
-                    @Override
-                    public void onClick(PromptDialog dialog) {
-                        dialog.dismiss();
-                        ((UpdateLocationActivity) context).finish();
-                    }
-                }).show();
-    }
+//
+//    public static void showAlertWithCloseActivity(final Context context, String title, String body, String okTitle, String cancelTitle, int type) {
+//        new PromptDialog(context)
+//                .setDialogType(type)
+//                .setAnimationEnable(true)
+//                .setTitleText(title)
+//                .setContentText(body)
+//                .setPositiveListener(okTitle, new PromptDialog.OnPositiveListener() {
+//                    @Override
+//                    public void onClick(PromptDialog dialog) {
+//                        dialog.dismiss();
+//                        ((UpdateLocationActivity) context).finish();
+//                    }
+//                }).show();
+//    }
 
     public static void updateChildDialog(final Context context, final Child childModel, final EditOrDeleteChildInterface editOrDeleteChildInterface) {
         IOSSheetDialog.SheetItem[] items = new IOSSheetDialog.SheetItem[2];
