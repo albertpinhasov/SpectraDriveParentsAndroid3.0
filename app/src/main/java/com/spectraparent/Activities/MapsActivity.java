@@ -38,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.spectraparent.Helpers.DirectionHelper;
 import com.spectraparent.Helpers.*;
 import com.spectraparent.Models.RideModel;
@@ -86,6 +87,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean isTrackingStarted = false;
     LiveTrackingUtils liveTrackingUtils;
     int count = 0;
+    private KProgressHUD mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         ButterKnife.bind(this);
+        mProgress = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setDetailsLabel("Getting routes")
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f).show();
         //View toolbarLayout = findViewById(R.id.toolbarLayout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -115,7 +124,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         locationHashMap.put("drop_long", mRide.getChildModel().get(0).getDrop().getLon());
                         locationHashMap.put("driver_lat", driverLatLng[0]);
                         locationHashMap.put("driver_lon", driverLatLng[1]);
-                        liveTrackingUtils.mapPathDraw(mMap, locationHashMap, MapsActivity.this, progressBar, isTrackingStarted, directionHelper);
+                        liveTrackingUtils.mapPathDraw(mMap, locationHashMap, MapsActivity.this,      mProgress, isTrackingStarted, directionHelper);
                         isTrackingStarted = true;
                     } else {
                         oldCordinates = new LatLng(Double.parseDouble(locationHashMap.get("driver_lat").toString()),
@@ -125,7 +134,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         if (checkDistance(oldCordinates)) {
                             if (count == 3) {
                                 count = 0;
-                                liveTrackingUtils.mapPathDrawWithoutmarker(locationHashMap, MapsActivity.this, progressBar);
+                                liveTrackingUtils.mapPathDrawWithoutmarker(locationHashMap, MapsActivity.this, mProgress);
                                 //   liveTrackingUtils.updateUI(locationHashMap, MapsActivity.this);
                             } else {
                                 count++;
@@ -271,13 +280,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void startStopProgressBar(int start) {
         if (start == 1) {
-              progressBar.setVisibility(View.VISIBLE);
+            mProgress.show();
         } else if (start == 0) {
-            progressBar.setVisibility(View.GONE);
-
+            mProgress.dismiss();
         } else if (start == 2) {
             Toast.makeText(this, "No Path Found", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     public void setDistanceAndTime(String distan, String duration) {

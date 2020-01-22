@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.gson.Gson
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.logicbeanzs.uberpolylineanimation.MapAnimator
 import com.spectraparent.Activities.MapsActivity
 import com.spectraparent.android.BuildConfig
@@ -44,7 +45,7 @@ public class LiveTrackingUtils(val mContext: Context) {
     private var v: Float = 0.toFloat()
     lateinit var directionHelper: DirectionHelper
 
-    fun mapPathDraw(googleMap: GoogleMap, newLoc: LinkedHashMap<*, *>?, mapFragment: Context, progressBar: ProgressBar, isTrackingStarted: Boolean, directionHelper: DirectionHelper) {
+    fun mapPathDraw(googleMap: GoogleMap, newLoc: LinkedHashMap<*, *>?, mapFragment: Context, progressBar: KProgressHUD, isTrackingStarted: Boolean, directionHelper: DirectionHelper) {
 
         newLocation = newLoc
         this.googleMap = googleMap
@@ -109,7 +110,7 @@ public class LiveTrackingUtils(val mContext: Context) {
 //    }
 
 
-    fun mapPathDrawWithoutmarker(newLoc: LinkedHashMap<*, *>?, mapFragment: Context, progressBar: ProgressBar) {
+    fun mapPathDrawWithoutmarker(newLoc: LinkedHashMap<*, *>?, mapFragment: Context, progressBar: KProgressHUD) {
 
         //   newLocation = newLoc
 
@@ -258,12 +259,15 @@ public class LiveTrackingUtils(val mContext: Context) {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=true&mode=driving&key=${google_map_api_key}"
     }
 
-    private inner class GetDirection(val url: String, val context: Context, val progressbar: ProgressBar) : AsyncTask<Void, Void, List<LatLng>>() {
+    private inner class GetDirection(val url: String, val context: Context, val progressbar: KProgressHUD) : AsyncTask<Void, Void, List<LatLng>>() {
 
         override fun onPreExecute() {
             super.onPreExecute()
-            if (context is MapsActivity) {
-                context.startStopProgressBar(1)
+            if (context is MapsActivity && !context.isFinishing) {
+                try {
+                    context.startStopProgressBar(1)
+                } catch (e: Exception) {
+                }
             }
 
         }
@@ -306,7 +310,7 @@ public class LiveTrackingUtils(val mContext: Context) {
             //  mProgress.hideProgress()
 
             latLngPathList = result
-            if (context is MapsActivity) {
+            if (context is MapsActivity && !context.isFinishing) {
                 context.startStopProgressBar(0)
             }
 
@@ -317,7 +321,7 @@ public class LiveTrackingUtils(val mContext: Context) {
             if (result.isNotEmpty()) {
                 drwaPath(result, context)
             } else {
-                if (context is MapsActivity) {
+                if (context is MapsActivity && !context.isFinishing) {
                     context.startStopProgressBar(2)
                 }
 
