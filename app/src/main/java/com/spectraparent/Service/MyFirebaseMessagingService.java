@@ -18,8 +18,10 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.spectraparent.Activities.MainHomeActivity;
+import com.spectraparent.Models.UpdatePickedUpTime;
 import com.spectraparent.android.R;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -43,6 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String title = (String) json.get("title");
             String body = (String) json.get("body");
             sendNotification(title, body);
+            EventBus.getDefault().post(new UpdatePickedUpTime());
         } catch (Exception e) {
             e.printStackTrace();
         }

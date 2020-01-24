@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.github.tintinscorpion:Dual-color-Polyline-Animation:1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.51"
     implementation 'com.itlgl:iosdialog:1.0.1'
-
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }
 repositories {
     mavenCentral()

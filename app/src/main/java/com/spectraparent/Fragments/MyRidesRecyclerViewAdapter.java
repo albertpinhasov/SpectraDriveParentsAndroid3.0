@@ -113,7 +113,17 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
 
         public void bindData() {
             mRideId.setText(mItem.getRideName());
-            mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getCreatedOn()).getTime()));
+            if (type == 1) {
+                if (mItem.getRideStatus() == 3) {
+                    mCreatedOn.setVisibility(View.VISIBLE);
+                    mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getChild().get(0).getPickedupTime().getTime())));
+                } else {
+                    mCreatedOn.setVisibility(View.GONE);
+                }
+            } else {
+                mCreatedOn.setVisibility(View.VISIBLE);
+                mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getCreatedOn()).getTime()));
+            }
             try {
                 txtPickup.setText(mItem.getChildModel().get(0).getPickup().getName());
                 txtDrop.setText(mItem.getChildModel().get(0).getDrop().getName());
@@ -160,8 +170,8 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
                 mViewOnTheWay.setAlpha(1);
                 mSep1.setAlpha(1);
                 mViewPickedUp.setAlpha(1);
-                mSep2.setAlpha((float)0.6);
-                mViewDroppedOff.setAlpha((float)0.6);
+                mSep2.setAlpha((float) 0.6);
+                mViewDroppedOff.setAlpha((float) 0.6);
             } else if (mItem.getRideStatus() == 4) {
                 mViewOnTheWay.setAlpha(1);
                 mSep1.setAlpha(1);

@@ -37,10 +37,15 @@ import com.spectraparent.Helpers.colordialog.PromptDialog;
 import com.spectraparent.Models.RideModel;
 import com.spectraparent.Models.RideRequest;
 import com.spectraparent.Models.RideResponse;
+import com.spectraparent.Models.UpdatePickedUpTime;
 import com.spectraparent.WebAPI.ApiRequest;
 import com.spectraparent.WebAPI.VolleyUtils;
 import com.spectraparent.WebAPI.WebApi;
 import com.spectraparent.android.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -166,6 +171,26 @@ public class RidesFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(UpdatePickedUpTime event) {
+        if (checkedId == R.id.b1) {
+            currentRideList.clear();
+            current_Ride_Page = 1;
+            getMyRides(1, current_Ride_Page);
+        }
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
