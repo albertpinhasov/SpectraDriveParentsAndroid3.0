@@ -116,13 +116,14 @@ public class MyRidesRecyclerViewAdapter extends RecyclerView.Adapter<MyRidesRecy
             if (type == 1) {
                 if (mItem.getRideStatus() == 3) {
                     mCreatedOn.setVisibility(View.VISIBLE);
-                    mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getChild().get(0).getPickedupTime().getTime())));
+                    mCreatedOn.setText("Picked up at "+Tools.getFormattedDate(itemView.getContext(), (mItem.getChild().get(0).getPickedupTime().getTime())));
+
                 } else {
                     mCreatedOn.setVisibility(View.GONE);
                 }
             } else {
                 mCreatedOn.setVisibility(View.VISIBLE);
-                mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getCreatedOn()).getTime()));
+                mCreatedOn.setText(Tools.getFormattedDate(itemView.getContext(), (mItem.getSchendual()).getTime()));
             }
             try {
                 txtPickup.setText(mItem.getChildModel().get(0).getPickup().getName());

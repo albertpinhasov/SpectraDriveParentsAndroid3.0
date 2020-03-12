@@ -76,8 +76,8 @@ public class Cancel_Ride_Page_Activity extends AppCompatActivity {
             mPickup.setText(mRide.getChildModel().get(0).getPickup().getName());
         if (mRide.getChildModel().get(0).getDrop() != null && mRide.getChildModel().get(0).getDrop().getName() != null)
             mDrop.setText(mRide.getChildModel().get(0).getDrop().getName());
-        if (mRide.getCreatedOn() != null)
-            mCreatedOn.setText(Tools.getFormattedDate(this, mRide.getCreatedOn().getTime()));
+        if (mRide.getSchendual() != null)
+            mCreatedOn.setText(Tools.getFormattedDate(this, mRide.getSchendual().getTime()));
     }
 
     private void setData() {

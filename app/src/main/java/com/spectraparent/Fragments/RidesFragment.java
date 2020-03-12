@@ -280,14 +280,14 @@ public class RidesFragment extends Fragment {
 
                 if (rides != null) {
 
-                    Collections.sort(rides.getData(), new Comparator<RideModel>() {
-                        @Override
-                        public int compare(RideModel o1, RideModel o2) {
-                            if (o1.getCreatedOn().getTime() == o2.getCreatedOn().getTime())
-                                return 0;
-                            return (o1.getCreatedOn().getTime() > o2.getCreatedOn().getTime() ? -1 : 1);
-                        }
-                    });
+//                    Collections.sort(rides.getData(), new Comparator<RideModel>() {
+//                        @Override
+//                        public int compare(RideModel o1, RideModel o2) {
+//                            if (o1.getCreatedOn().getTime() == o2.getCreatedOn().getTime())
+//                                return 0;
+//                            return (o1.getCreatedOn().getTime() > o2.getCreatedOn().getTime() ? -1 : 1);
+//                        }
+//                    });
 
                     switch (type) {
                         case 1: {

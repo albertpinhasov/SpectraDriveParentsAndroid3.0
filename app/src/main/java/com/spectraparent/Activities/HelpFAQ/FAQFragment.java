@@ -84,15 +84,8 @@ public class FAQFragment extends Fragment {
 
     @OnClick(R.id.call)
     public void setCall() {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.CALL_PHONE},
-                    1);
-        } else {
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "8779386161"));
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "8779386161"));
             startActivity(intent);
-        }
     }
 
     @Override
@@ -104,7 +97,7 @@ public class FAQFragment extends Fragment {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "8779386161"));
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "8779386161"));
                     startActivity(intent);
                 } else {
 

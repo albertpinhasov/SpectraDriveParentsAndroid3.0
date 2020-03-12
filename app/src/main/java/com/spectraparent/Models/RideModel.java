@@ -45,6 +45,7 @@ public class RideModel {
     private String comments;
 
     private Date createdOn;
+    private Date scheduledRideOn;
 
     public boolean isActive() {
         return isActive;
@@ -130,8 +131,14 @@ public class RideModel {
     public void setCreatedOn(Date createdOn){
         this.createdOn = createdOn;
     }
+    public void setSchedualOn(Date scheduledRideOn){
+        this.scheduledRideOn = scheduledRideOn;
+    }
     public Date getCreatedOn(){
         return this.createdOn;
+    }
+    public Date getSchendual(){
+        return this.scheduledRideOn;
     }
     public void setUpdatedOn(String updatedOn){
         this.updatedOn = updatedOn;

@@ -74,7 +74,8 @@ public class InviteFriendsActivity extends AppCompatActivity {
                 i.setAction(Intent.ACTION_SEND);
             i.setType("text/plain");
             i.putExtra(Intent.EXTRA_SUBJECT, "Invitation to download Spectra Drive");
-            i.putExtra(Intent.EXTRA_TEXT, "Hi, check out Spectra Drive app");
+            String value = "Hi, check out Spectra Parent app\nhttps://play.google.com/store/apps/details?id=com.spectradrive.android";
+            i.putExtra(Intent.EXTRA_TEXT, value);
             i .setPackage("com.instagram.android");
             startActivity(i);
         } else {
@@ -128,10 +129,9 @@ public class InviteFriendsActivity extends AppCompatActivity {
 
     @OnClick(R.id.lContact)
     void onContact() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED ) {
             // TODO: Consider calling
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS}, 5);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 5);
 
             return;
         }
@@ -140,7 +140,7 @@ public class InviteFriendsActivity extends AppCompatActivity {
                 .hideScrollbar(false) //Optional - default: false
                 .showTrack(true) //Optional - default: true
                 .searchIconColor(Color.WHITE) //Option - default: White
-                .setChoiceMode(MultiContactPicker.CHOICE_MODE_MULTIPLE) //Optional - default: CHOICE_MODE_MULTIPLE
+                .setChoiceMode(MultiContactPicker.CHOICE_MODE_SINGLE) //Optional - default: CHOICE_MODE_MULTIPLE
                 .handleColor(ContextCompat.getColor(InviteFriendsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
                 .bubbleColor(ContextCompat.getColor(InviteFriendsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
                 .bubbleTextColor(Color.WHITE) //Optional - default: White
@@ -157,7 +157,7 @@ public class InviteFriendsActivity extends AppCompatActivity {
     private void shareTwitter(String message) {
         Intent tweetIntent = new Intent(Intent.ACTION_SEND);
         tweetIntent.putExtra(Intent.EXTRA_SUBJECT, "Invitation to download Spectra Drive");
-        tweetIntent.putExtra(Intent.EXTRA_TEXT, "Hi, check out Spectra Drive app");
+        tweetIntent.putExtra(Intent.EXTRA_TEXT, "Hi, check out Spectra Parent app\nhttps://play.google.com/store/apps/details?id=com.spectradrive.android");
         tweetIntent.setType("text/plain");
 
         PackageManager packManager = getPackageManager();
@@ -206,7 +206,14 @@ public class InviteFriendsActivity extends AppCompatActivity {
                     SmsManager smsManager = SmsManager.getDefault();
                     for (ContactResult contact : results) {
                         if (contact.getPhoneNumbers() != null && contact.getPhoneNumbers().size() > 0) {
-                            smsManager.sendTextMessage(contact.getPhoneNumbers().get(0).getNumber(), null, "Hi, check out Spectra Drive app", null, null);
+//                            smsManager.sendTextMessage(contact.getPhoneNumbers().get(0).getNumber(), null, "Hi, check out Spectra Drive app", null, null);
+
+                            Uri uri = Uri.parse("smsto:"+contact.getPhoneNumbers().get(0).getNumber());
+                            Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                            intent.putExtra("sms_body", "Hi, check out Spectra Parent app\nhttps://play.google.com/store/apps/details?id=com.spectradrive.android");
+                            startActivity(intent);
+
+
                         }
                     }
 
@@ -221,7 +228,7 @@ public class InviteFriendsActivity extends AppCompatActivity {
                 Log.d("MyTag", results.get(0).getDisplayName());
 
                 if (results.size() > 0) {
-                    Intent i = new Intent(Intent.ACTION_SEND);
+                    Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setType("message/rfc822");
 
                     String[] to = new String[results.size()];
@@ -231,7 +238,7 @@ public class InviteFriendsActivity extends AppCompatActivity {
                     }
                     i.putExtra(Intent.EXTRA_EMAIL, to);
                     i.putExtra(Intent.EXTRA_SUBJECT, "Invitation to download Spectra Drive");
-                    i.putExtra(Intent.EXTRA_TEXT, "Hi, check out Spectra Drive app");
+                    i.putExtra(Intent.EXTRA_TEXT, "Hi, check out Spectra Parent app\nhttps://play.google.com/store/apps/details?id=com.spectradrive.android");
                     try {
                         startActivity(Intent.createChooser(i, "Send mail invitation..."));
                     } catch (android.content.ActivityNotFoundException ex) {
